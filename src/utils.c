@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 19:10:38 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/21 23:15:30 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	print_array(t_map *map)
 {
-	int	i;
-	t_collectibles *tmp;
+	int				i;
+	t_collectibles	*tmp;
+
 	i = 0;
 	while (map->array[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 18:52:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/21 23:15:38 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	check_border(t_map *map)
 
 int	else_if(t_map *map, int x, int y)
 {
-	ft_printf("%d %d \n", y, x);
 	if (map->array[y][x] == 'C')
 		add_new_collectible(map, x, y);
 	else if (map->array[y][x] == 'E')
@@ -53,10 +52,10 @@ int	else_if(t_map *map, int x, int y)
 	}
 	else if (map->array[y][x] == 'P')
 	{
-		if (!map->player_starting_x)
+		if (!map->player_start_x)
 		{
-			map->player_starting_x = x;
-			map->player_starting_y = y;
+			map->player_start_x = x;
+			map->player_start_y = y;
 		}
 		else
 			return (-1);
@@ -83,7 +82,7 @@ int	finder(t_map *map)
 			y++;
 		}
 	}
-	if (!map->collectibles || !map->exit_x || !map->player_starting_x)
+	if (!map->collectibles || !map->exit_x || !map->player_start_x)
 		return (-1);
 	return (0);
 }
@@ -93,5 +92,6 @@ int	check_map(t_map *map)
 {
 	if (check_border(map) || finder(map))
 		return (-1);
+	a_star(map);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 18:50:56 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/21 23:29:57 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct coords
+{
+	float				x;
+	float				y;
+}						t_coords;
+
+typedef struct cell
+{
+	float				f;
+	float				h;
+	float				g;
+}						t_cell;
+
 typedef struct collectibles
 {
 	int					x;
@@ -47,10 +60,10 @@ typedef struct map
 	int					height;
 	int					max_height;
 	int					min_height;
-	int					player_starting_x;
-	int					player_starting_y;
-	int					exit_x;
-	int					exit_y;
+	float				player_start_x;
+	float				player_start_y;
+	float				exit_x;
+	float				exit_y;
 	t_collectibles		*collectibles;
 }						t_map;
 
@@ -59,6 +72,7 @@ int						check_map(t_map *map);
 
 void					free_memory(t_map *map);
 void					add_new_collectible(t_map *map, int x, int y);
+void					a_star(t_map *map);
 
 // utils
 void					print_array(t_map *map);
