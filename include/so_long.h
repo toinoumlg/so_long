@@ -14,12 +14,12 @@
 # define SO_LONG_H
 
 # include "../mlx/mlx.h"
-# include "../gnl/get_next_line.h"
 # include "../libftprintf/include/ft_printf.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 typedef struct map {
 	char **grid;
