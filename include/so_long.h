@@ -13,6 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+
 # include "../mlx/mlx.h"
 # include "../libftprintf/include/ft_printf.h"
 # include <stdlib.h>
@@ -22,11 +23,14 @@
 # include <fcntl.h>
 
 typedef struct map {
-	char **grid;
+	char **array;
+	char **screen_res;
 	char *file_name;
 	int width;
 	int height;
-}	map;
+	int max_width;
+	int max_height;
+}	t_map;
 
 
 #endif
