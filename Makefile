@@ -1,10 +1,12 @@
 NAME = a.out
 SRC_DIR = src
-SRCS = main.c map_init.c map_checker.c free_memory.c
+SRCS = main.c map_init.c map_checker.c free_memory.c \
+	utils.c
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
 C_FLAGS = -Werror -Wextra -Wall
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+INCLUDE_DIR = include
 INCLUDES = -I/usr/include -Imlx -Ilibft/include
 MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
@@ -16,7 +18,7 @@ CHECK_SYSTEM = config.txt
 all: $(CHECK_SYSTEM) $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
 
 norminette:
-	norminette $(SRC_DIR)
+	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
 $(NAME): $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB)
 	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)

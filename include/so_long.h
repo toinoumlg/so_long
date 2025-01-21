@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 14:32:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:36:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ typedef struct map
 }			t_map;
 
 int			set_map(t_map *map);
+int			check_map(t_map *map);
 
 void		free_memory(t_map *map);
-void		check_map(t_map *map);
+void		print_array(t_map *map);
 
 #endif
