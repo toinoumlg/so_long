@@ -1,6 +1,6 @@
 NAME = a.out
 SRC_DIR = src
-SRCS = main.c
+SRCS = main.c map_init.c map_checker.c free_memory.c
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
 C_FLAGS = -Werror -Wextra -Wall
@@ -14,6 +14,9 @@ LIBFTPRINTF_DIR = libftprintf
 CHECK_SYSTEM = config.txt
 
 all: $(CHECK_SYSTEM) $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
+
+norminette:
+	norminette $(SRC_DIR)
 
 $(NAME): $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB)
 	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)

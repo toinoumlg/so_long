@@ -1,26 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 14:30:29 by amalangu         ###   ########.fr       */
+/*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
+/*   Updated: 2025/01/21 14:33:36 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	main(void)
+// x ordinate y abscissa
+int	check_border(t_map *map)
 {
-	t_map	map;
-	int		map_error;
+	int	i;
+	int	x;
+	int	y;
 
-	map_error = set_map(&map);
-	if (map_error)
-		ft_printf("map_error %d", map_error);
-	else
-		ft_printf("map ok %d", map_error);
-	free_memory(&map);
+	i = 0;
+	x = 0;
+	y = 0;
+	(void)i;
+	while (map->array[y])
+	{
+		if (map->array[y][x] == '1')
+			x++;
+		else if (x == map->width)
+		{
+			x = 0;
+			y += map->height - 1;
+		}
+		else
+			return (-1);
+	}
+	return (0);
+}
+
+void	check_map(t_map *map)
+{
+	check_border(map);
 }
