@@ -1,7 +1,8 @@
 NAME = a.out
 SRC_DIR = src
 SRCS = main.c map_init.c map_checker.c free_memory.c \
-	utils.c collectibles.c a_star.c 
+	test_utils.c collectibles.c a_star.c a_start_utils.c \
+
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
 C_FLAGS = -Werror -Wextra -Wall

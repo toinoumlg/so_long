@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 15:32:27 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:10:00 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	get_resolution(int fd, t_map *map)
 {
 	char	*raw_res;
 
-	map->screen_res = malloc(sizeof(char *) * 2);
-	map->screen_res[0] = malloc(sizeof(char) * 5);
-	map->screen_res[1] = malloc(sizeof(char) * 5);
+	map->screen_res = ft_calloc(sizeof(char *), 2);
+	map->screen_res[0] = ft_calloc(sizeof(char), 5);
+	map->screen_res[1] = ft_calloc(sizeof(char), 5);
 	raw_res = get_next_line(fd);
 	ft_strlcpy(map->screen_res[0], raw_res, 5);
 	ft_strlcpy(map->screen_res[1], raw_res + 5, 5);

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 19:53:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:08:08 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	add_new_collectible(t_map *map, int x, int y)
 	t_collectibles	*new_collectible;
 	t_collectibles	*tmp;
 
-	new_collectible = malloc(sizeof(t_collectibles));
+	new_collectible = ft_calloc(sizeof(t_collectibles), 1);
 	new_collectible->x = x;
 	new_collectible->y = y;
 	new_collectible->next_collectible = NULL;

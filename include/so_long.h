@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/22 10:34:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:49:17 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,16 @@
 
 typedef struct coords
 {
-	float				x;
-	float				y;
+	int					x;
+	int					y;
 }						t_coords;
+
+typedef struct a_star_list
+{
+	float				f;
+	t_coords			coords;
+	struct a_star_list	*next;
+}						t_a_star_list;
 
 typedef struct possible_directions
 {
@@ -77,9 +84,11 @@ typedef struct map
 int						set_map(t_map *map);
 int						check_map(t_map *map);
 
+void					init_list(t_a_star_list *list, float f, int x, int y);
 void					free_memory(t_map *map);
 void					add_new_collectible(t_map *map, int x, int y);
-void					a_star(t_map *map);
+void					set_list(t_a_star_list *list, float f, int x, int y);
+int						a_star(t_map *map);
 
 // utils
 void					print_array(t_map *map);

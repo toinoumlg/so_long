@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/22 10:59:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:12:14 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,75 @@ int	is_blocked(char **array, int y, int x)
 int	a_star_search(t_coords start, t_coords end,
 		t_possible_directions *possible_directions, t_map *map)
 {
+	t_cell			**cell_details;
+	t_a_star_list	*open_list;
+	signed char		**closed_list;
+	int				i;
+	int				j;
+
+	// t_a_star_list	*tmp;
+	// int			found_dest;
+	// found_dest = -1;
 	ft_printf("Start [%d][%d]\n", (int)start.y, (int)start.x);
 	ft_printf("End [%d][%d]\n", (int)end.y, (int)end.x);
-	ft_printf("caca %d %d", (int)possible_directions->possible_directions[7].x,
+	ft_printf("caca %d %d\n",
+		(int)possible_directions->possible_directions[7].x,
 		(int)possible_directions->possible_directions[7].y);
-	if(is_end(start.y,start.x, end))
-		return 0;
-	t_cell **results;
-	*results = ft_calloc(sizeof(t_cell*), map->height);
-	
-	results = ft_calloc(sizeof(t_cell*), map->height);
+	if (is_end(start.y, start.x, end))
+		return (0);
+	i = 0;
+	closed_list = ft_calloc(sizeof(signed char *), map->height);
+	while (i < map->height)
+	{
+		closed_list[i] = ft_calloc(sizeof(signed char), map->width);
+		i++;
+	}
+	i = 0;
+	cell_details = ft_calloc(sizeof(t_cell *), map->height);
+	open_list = ft_calloc(sizeof(t_a_star_list), 1);
+	while (i < map->height)
+	{
+		cell_details[i] = ft_calloc(sizeof(t_cell), map->width);
+		i++;
+	}
+	i = 0;
+	j = 0;
+	while (i < map->height)
+	{
+		while (j < map->width)
+		{
+			cell_details[i][j].f = __FLT_MAX__;
+			cell_details[i][j].h = __FLT_MAX__;
+			cell_details[i][j].g = __FLT_MAX__;
+			cell_details[i][j].parent.x = -1;
+			cell_details[i][j].parent.y = -1;
+			j++;
+		}
+		i++;
+		j = 0;
+	}
+	cell_details[start.y][start.x].f = 0;
+	cell_details[start.y][start.x].h = 0;
+	cell_details[start.y][start.x].g = 0;
+	cell_details[start.y][start.x].parent.y = start.y;
+	cell_details[start.y][start.x].parent.x = start.x;
+	set_list(open_list, 0, start.x, start.y);
+	while (open_list)
+	{
+		return (0);
+	}
+	ft_printf("crotte de cuk %d", open_list->coords.x);
+	return (0);
+	ft_printf("%d %d dada \n", i, j);
+	i = 3;
+	j = 3;
+	// while (cell_details[i])
+	// {
+	// 	while (cell_details[i][j])
+	// 	{
+	// 		free(cell_details[i])
+	// 	}
+	// }
 	// check_neighboorg(possible_directions);
 	return (-1);
 }
@@ -73,7 +132,7 @@ void	init_possible_directions(t_possible_directions *possible_directions)
 	possible_directions->tmp_index = 0;
 }
 
-void	a_star(t_map *map)
+int	a_star(t_map *map)
 {
 	t_map					*tmp_map;
 	t_coords				start;
@@ -91,9 +150,10 @@ void	a_star(t_map *map)
 		end.x = collectibles->x;
 		end.y = collectibles->y;
 		if (a_star_search(start, end, &possible_directions, tmp_map))
-			return ;
+			return (-1);
 		start.x = collectibles->x;
 		start.y = collectibles->y;
 		collectibles = collectibles->next_collectible;
 	}
+	return (0);
 }

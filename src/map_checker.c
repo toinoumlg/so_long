@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 23:15:38 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:40:45 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	check_map(t_map *map)
 {
 	if (check_border(map) || finder(map))
 		return (-1);
-	a_star(map);
+	if (a_star(map))
+		return (-1);
 	return (0);
 }
