@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/21 23:29:57 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:34:48 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,24 @@ typedef struct coords
 	float				y;
 }						t_coords;
 
+typedef struct possible_directions
+{
+	int					tmp_index;
+	t_coords			*possible_directions;
+}						t_possible_directions;
+
 typedef struct cell
 {
 	float				f;
 	float				h;
 	float				g;
+	t_coords			parent;
 }						t_cell;
 
 typedef struct collectibles
 {
-	int					x;
-	int					y;
+	float				x;
+	float				y;
 	struct collectibles	*next_collectible;
 }						t_collectibles;
 
