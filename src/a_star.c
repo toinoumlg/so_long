@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/22 19:12:14 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/23 00:08:22 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,51 @@ int	is_blocked(char **array, int y, int x)
 		return (1);
 }
 
+void	init_closed_list(int **closed_list, t_map *map)
+{
+	int	y;
+	int	x;
+
+	x = 0;
+	y = 0;
+	while (y < map->height)
+	{
+		closed_list[y] = ft_calloc(sizeof(int), map->width);
+		y++;
+	}
+	y = 0;
+	while (y < map->height)
+	{
+		while (x < map->width)
+		{
+			closed_list[y][x] = -1;
+			x++;
+		}
+		y++;
+		x = 0;
+	}
+	return ;
+}
+
 int	a_star_search(t_coords start, t_coords end,
 		t_possible_directions *possible_directions, t_map *map)
 {
 	t_cell			**cell_details;
 	t_a_star_list	*open_list;
-	signed char		**closed_list;
+	int				**closed_list;
 	int				i;
 	int				j;
+	t_a_star_list	*tmp;
 
 	// t_a_star_list	*tmp;
 	// int			found_dest;
 	// found_dest = -1;
-	ft_printf("Start [%d][%d]\n", (int)start.y, (int)start.x);
-	ft_printf("End [%d][%d]\n", (int)end.y, (int)end.x);
-	ft_printf("caca %d %d\n",
-		(int)possible_directions->possible_directions[7].x,
-		(int)possible_directions->possible_directions[7].y);
+	(void)possible_directions;
 	if (is_end(start.y, start.x, end))
 		return (0);
-	i = 0;
-	closed_list = ft_calloc(sizeof(signed char *), map->height);
-	while (i < map->height)
-	{
-		closed_list[i] = ft_calloc(sizeof(signed char), map->width);
-		i++;
-	}
+	closed_list = ft_calloc(sizeof(int *), map->height);
+	init_closed_list(closed_list, map);
+	ft_printf("prout %d", closed_list[1][1]);
 	i = 0;
 	cell_details = ft_calloc(sizeof(t_cell *), map->height);
 	open_list = ft_calloc(sizeof(t_a_star_list), 1);
@@ -74,6 +93,7 @@ int	a_star_search(t_coords start, t_coords end,
 	j = 0;
 	while (i < map->height)
 	{
+		
 		while (j < map->width)
 		{
 			cell_details[i][j].f = __FLT_MAX__;
@@ -94,6 +114,7 @@ int	a_star_search(t_coords start, t_coords end,
 	set_list(open_list, 0, start.x, start.y);
 	while (open_list)
 	{
+		tmp = open_list;
 		return (0);
 	}
 	ft_printf("crotte de cuk %d", open_list->coords.x);
