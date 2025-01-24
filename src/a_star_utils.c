@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   a_star_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 01:09:27 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:34:30 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_a_star_list	*set_list(float f, int x, int y)
 	list->next = NULL;
 	return (list);
 }
-
 
 t_cell	set_cell_details(float f, float h, float g, int x, int y)
 {

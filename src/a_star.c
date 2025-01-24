@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   a_star.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 01:28:53 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:34:27 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
 
 int	is_end(int y, int x, t_coords end)
 {
@@ -55,7 +54,6 @@ signed char	**init_closed_list(t_map *map)
 	}
 	return (closed_list);
 }
-
 
 void	set_to_next(t_a_star_list *open_list)
 {
