@@ -6,61 +6,67 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 16:15:05 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 23:24:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-t_a_star_list	*init_list(float f, int x, int y)
+int	is_destination(int y, int x, t_coords end)
 {
-	t_a_star_list	*list;
-
-	list = ft_calloc(sizeof(t_a_star_list), 1);
-	list->coords.x = x;
-	list->coords.y = y;
-	list->f = f;
-	list->next = NULL;
-	return (list);
+	if (y == end.y && x == end.x)
+		return (1);
+	else
+		return (0);
 }
 
-t_cell	set_cell_details(float f, float h, float g, int x, int y)
+int	is_blocked(char **array, int y, int x)
 {
-	t_cell	cell_details;
-
-	cell_details.f = f;
-	cell_details.h = h;
-	cell_details.g = g;
-	cell_details.parent.x = x;
-	cell_details.parent.y = y;
-	return (cell_details);
+	if (array[y][x] == '1')
+		return (0);
+	else
+		return (1);
 }
 
-t_cell	**init_and_set_cell_details(t_coords start, t_map *map)
+float	calculate_new_h_value(int y, int x, t_coords end)
 {
-	int y = 0;
-	int x = 0;
-	t_cell **cell_details;
+	return (sqrtf(powf((y - end.y), 2) + powf((x - end.x), 2)));
+}
 
-	cell_details = ft_calloc(sizeof(t_cell *), map->height);
-	while (y < map->height)
-	{
-		cell_details[y] = ft_calloc(sizeof(t_cell), map->width);
-		y++;
-	}
-	y = 0;
-	while (y < map->height)
-	{
-		x = 0;
-		while (x < map->width)
-		{
-			cell_details[y][x] = set_cell_details(__FLT_MAX__, __FLT_MAX__,
-					__FLT_MAX__, -1, -1);
-			x++;
-		}
-		y++;
-	}
-	cell_details[start.y][start.x] = set_cell_details(0, 0, 0, start.x,
-			start.y);
-	return (cell_details);
+/*
+			Generating all the 4 directions
+
+						N
+						|
+						|
+				W-----Cell-----E
+						|
+						|
+						S
+
+			Cell-->Popped Cell (y, x)
+			N -->  North       (y-1, x)
+			S -->  South       (y+1, x)
+			E -->  East        (y, x+1)
+			W -->  West        (y, x-1)*/
+
+t_coords	init_direction(int y, int x)
+{
+	t_coords	direction;
+
+	direction.x = x;
+	direction.y = y;
+	return (direction);
+}
+
+t_coords	*init_possible_directions(void)
+{
+	t_coords	*possible_directions;
+
+	possible_directions = ft_calloc(sizeof(t_coords), 4);
+	possible_directions[0] = init_direction(0, -1);
+	possible_directions[1] = init_direction(0, 1);
+	possible_directions[2] = init_direction(1, 0);
+	possible_directions[3] = init_direction(-1, 0);
+	return (possible_directions);
 }

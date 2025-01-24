@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 01:34:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 00:52:30 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_map(t_map *map)
 	int	fd;
 	int	i;
 
-	fd = open("maps/map_ok.ber", O_RDWR);
+	fd = open("maps/map_ok_big3.ber", O_RDWR);
 	map->array = ft_calloc(sizeof(char *), map->max_height);
 	i = 0;
 	while (i < map->max_height)

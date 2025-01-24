@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 01:34:34 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 00:31:37 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ int	else_if(t_map *map, int x, int y)
 		add_new_collectible(map, x, y);
 	else if (map->array[y][x] == 'E')
 	{
-		if (!map->exit_x)
+		if (!map->exit.x)
 		{
-			map->exit_x = x;
-			map->exit_y = y;
+			map->exit.x = x;
+			map->exit.y = y;
 		}
 		else
 			return (-1);
 	}
 	else if (map->array[y][x] == 'P')
 	{
-		if (!map->player_start_x)
+		if (!map->player_start.x)
 		{
-			map->player_start_x = x;
-			map->player_start_y = y;
+			map->player_start.x = x;
+			map->player_start.y = y;
 		}
 		else
 			return (-1);
@@ -65,34 +65,34 @@ int	else_if(t_map *map, int x, int y)
 
 int	finder(t_map *map)
 {
-	int	x;
-	int	y;
+	t_coords	coords;
 
-	x = 1;
-	y = 1;
-	while (y < map->height - 1 && x < map->width - 1)
+	coords.x = 1;
+	coords.y = 1;
+	while (coords.y < map->height - 1 && coords.x < map->width - 1)
 	{
-		if (!else_if(map, x, y))
-			x++;
+		if (!else_if(map, coords.x, coords.y))
+			coords.x++;
 		else
 			return (-1);
-		if (x == map->width - 1)
+		if (coords.x == map->width - 1)
 		{
-			x = 0;
-			y++;
+			coords.x = 0;
+			coords.y++;
 		}
 	}
-	if (!map->collectibles || !map->exit_x || !map->player_start_x)
+	if (!map->collectibles || !map->exit.x || !map->player_start.x)
 		return (-1);
 	return (0);
 }
 
-// x ordinate y abscissa
 int	check_map(t_map *map)
 {
-	if (check_border(map) || finder(map))
+	if (check_border(map))
 		return (-1);
+	if (finder(map))
+		return (-2);
 	if (a_star(map))
-		return (-1);
+		return (-3);
 	return (0);
 }

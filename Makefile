@@ -2,6 +2,7 @@ NAME = a.out
 SRC_DIR = src
 SRCS = main.c map_init.c map_checker.c free_memory.c \
 	test_utils.c collectibles.c a_star.c a_star_utils.c \
+	a_star_list.c  a_star_cell_details.c a_star_struct.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj

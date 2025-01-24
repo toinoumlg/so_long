@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 11:57:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:50:15 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ void	free_collectibles(t_collectibles *collectibles)
 }
 
 void	free_a_star_search(signed char **closed_list, t_cell **cell_details,
-		t_a_star_list *open_list, int map_height)
+		int map_height)
 {
 	free_closed_list(closed_list, map_height);
 	free_cell_details(cell_details, map_height);
-	(void)open_list;
-	// free(open_list);
 }
+
 void	free_memory(t_map *map)
 {
 	int	i;
