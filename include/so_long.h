@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/23 00:48:31 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:07:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,23 @@ typedef struct map
 	t_collectibles		*collectibles;
 }						t_map;
 
+void					free_a_star_search(signed char **closed_list,
+							t_cell **cell_details, t_a_star_list *open_list,
+							int map_height);
+void					free_closed_list(signed char **closed_list,
+							int map_height);
 int						set_map(t_map *map);
 int						check_map(t_map *map);
-
+void					free_cell_details(t_cell **cell_details,
+							int map_height);
 void					init_list(t_a_star_list *list, float f, int x, int y);
 void					free_memory(t_map *map);
 void					add_new_collectible(t_map *map, int x, int y);
-void					set_list(t_a_star_list *list, float f, int x, int y);
+t_a_star_list			*set_list(float f, int x, int y);
 int						a_star(t_map *map);
-
+t_cell					set_cell_details(float f, float h, float g, int x,
+							int y);
+t_cell					**init_and_set_cell_details(t_coords start, t_map *map);
 // utils
 void					print_array(t_map *map);
 

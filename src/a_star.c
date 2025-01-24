@@ -6,18 +6,12 @@
 /*   By: amalangu <amalangu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/23 00:08:22 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 01:28:53 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-//  possible_moves = [
-// (x+1, y), (x-1, y),    # Right, Left
-// (x, y+1), (x, y-1),    # Up, Down
-// (x+1, y+1), (x-1, y-1),  # Diagonal moves
-// (x+1, y-1), (x-1, y+1)
-// ]
 
 int	is_end(int y, int x, t_coords end)
 {
@@ -27,7 +21,6 @@ int	is_end(int y, int x, t_coords end)
 		return (0);
 }
 
-// Returns true if the cell is not blocked else false
 int	is_blocked(char **array, int y, int x)
 {
 	if (array[y][x] == '1')
@@ -36,30 +29,41 @@ int	is_blocked(char **array, int y, int x)
 		return (1);
 }
 
-void	init_closed_list(int **closed_list, t_map *map)
+signed char	**init_closed_list(t_map *map)
 {
-	int	y;
-	int	x;
+	int			y;
+	int			x;
+	signed char	**closed_list;
 
-	x = 0;
 	y = 0;
+	closed_list = ft_calloc(sizeof(signed char *), map->height);
 	while (y < map->height)
 	{
-		closed_list[y] = ft_calloc(sizeof(int), map->width);
+		closed_list[y] = ft_calloc(sizeof(signed char), map->width);
 		y++;
 	}
 	y = 0;
 	while (y < map->height)
 	{
+		x = 0;
 		while (x < map->width)
 		{
 			closed_list[y][x] = -1;
 			x++;
 		}
 		y++;
-		x = 0;
 	}
-	return ;
+	return (closed_list);
+}
+
+
+void	set_to_next(t_a_star_list *open_list)
+{
+	t_a_star_list	*tmp;
+
+	tmp = open_list;
+	open_list = tmp->next;
+	free(tmp);
 }
 
 int	a_star_search(t_coords start, t_coords end,
@@ -67,70 +71,23 @@ int	a_star_search(t_coords start, t_coords end,
 {
 	t_cell			**cell_details;
 	t_a_star_list	*open_list;
-	int				**closed_list;
-	int				i;
-	int				j;
-	t_a_star_list	*tmp;
+	signed char		**closed_list;
+	t_a_star_list	*first;
 
-	// t_a_star_list	*tmp;
-	// int			found_dest;
-	// found_dest = -1;
 	(void)possible_directions;
 	if (is_end(start.y, start.x, end))
 		return (0);
-	closed_list = ft_calloc(sizeof(int *), map->height);
-	init_closed_list(closed_list, map);
-	ft_printf("prout %d", closed_list[1][1]);
-	i = 0;
-	cell_details = ft_calloc(sizeof(t_cell *), map->height);
-	open_list = ft_calloc(sizeof(t_a_star_list), 1);
-	while (i < map->height)
-	{
-		cell_details[i] = ft_calloc(sizeof(t_cell), map->width);
-		i++;
-	}
-	i = 0;
-	j = 0;
-	while (i < map->height)
-	{
-		
-		while (j < map->width)
-		{
-			cell_details[i][j].f = __FLT_MAX__;
-			cell_details[i][j].h = __FLT_MAX__;
-			cell_details[i][j].g = __FLT_MAX__;
-			cell_details[i][j].parent.x = -1;
-			cell_details[i][j].parent.y = -1;
-			j++;
-		}
-		i++;
-		j = 0;
-	}
-	cell_details[start.y][start.x].f = 0;
-	cell_details[start.y][start.x].h = 0;
-	cell_details[start.y][start.x].g = 0;
-	cell_details[start.y][start.x].parent.y = start.y;
-	cell_details[start.y][start.x].parent.x = start.x;
-	set_list(open_list, 0, start.x, start.y);
+	closed_list = init_closed_list(map);
+	cell_details = init_and_set_cell_details(start, map);
+	open_list = set_list(0, start.x, start.y);
 	while (open_list)
 	{
-		tmp = open_list;
+		first = open_list;
+		(void)first;
+		free_a_star_search(closed_list, cell_details, open_list, map->height);
 		return (0);
 	}
-	ft_printf("crotte de cuk %d", open_list->coords.x);
 	return (0);
-	ft_printf("%d %d dada \n", i, j);
-	i = 3;
-	j = 3;
-	// while (cell_details[i])
-	// {
-	// 	while (cell_details[i][j])
-	// 	{
-	// 		free(cell_details[i])
-	// 	}
-	// }
-	// check_neighboorg(possible_directions);
-	return (-1);
 }
 
 void	init_direction(t_coords *direction, float x, float y)
@@ -176,5 +133,6 @@ int	a_star(t_map *map)
 		start.y = collectibles->y;
 		collectibles = collectibles->next_collectible;
 	}
+	free(possible_directions.possible_directions);
 	return (0);
 }
