@@ -6,19 +6,19 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 01:34:30 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:15:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-t_a_star_list	*set_list(float f, int x, int y)
+t_a_star_list	*init_list(float f, int x, int y)
 {
 	t_a_star_list	*list;
 
 	list = ft_calloc(sizeof(t_a_star_list), 1);
 	list->coords.x = x;
-	list->coords.x = y;
+	list->coords.y = y;
 	list->f = f;
 	list->next = NULL;
 	return (list);

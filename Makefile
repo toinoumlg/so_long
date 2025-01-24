@@ -6,7 +6,7 @@ SRCS = main.c map_init.c map_checker.c free_memory.c \
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
 C_FLAGS = -Werror -Wextra -Wall
-MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 INCLUDE_DIR = include
 INCLUDES = -I/usr/include -Imlx -Ilibft/include
 MLX_DIR = mlx

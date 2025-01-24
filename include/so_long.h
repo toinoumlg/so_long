@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 01:34:55 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:27:06 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ typedef struct map
 	int					height;
 	int					max_height;
 	int					min_height;
-	float				player_start_x;
-	float				player_start_y;
-	float				exit_x;
-	float				exit_y;
+	int					player_start_x;
+	int					player_start_y;
+	int					exit_x;
+	int					exit_y;
 	t_collectibles		*collectibles;
 }						t_map;
 
@@ -90,10 +90,9 @@ int						set_map(t_map *map);
 int						check_map(t_map *map);
 void					free_cell_details(t_cell **cell_details,
 							int map_height);
-void					init_list(t_a_star_list *list, float f, int x, int y);
+t_a_star_list			*init_list(float f, int x, int y);
 void					free_memory(t_map *map);
 void					add_new_collectible(t_map *map, int x, int y);
-t_a_star_list			*set_list(float f, int x, int y);
 int						a_star(t_map *map);
 t_cell					set_cell_details(float f, float h, float g, int x,
 							int y);
