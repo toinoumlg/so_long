@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 00:52:30 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 01:31:07 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,12 @@ void	init_map(t_map *map)
 	map->height = i;
 }
 
-int	set_map(t_map *map)
+int	check_if_rectangular(t_map *map)
 {
-	int		i;
 	char	*tmp;
 	char	*cr;
+	int		i;
 
-	get_resolution(open("config.txt", O_RDWR), map);
-	init_map(map);
 	i = 0;
 	while (i < map->height)
 	{
@@ -69,6 +67,32 @@ int	set_map(t_map *map)
 		if (((int)ft_strlen(map->array[i])) != map->width)
 			return (-1);
 		i++;
+	}
+	return (0);
+}
+
+int	set_map(t_map *map)
+{
+	int	error;
+
+	get_resolution(open("config.txt", O_RDWR), map);
+	init_map(map);
+	if (check_if_rectangular(map))
+		return (ft_printf("Error\nMap is not Rectangular"), -1);
+	error = check_map(map);
+	if (error == -1)
+		return (ft_printf("Error\nBorder arent correct"), -1);
+	if (error == -2)
+	{
+		ft_printf("Error\nMissing either collectibles,exit or start ");
+		ft_printf("(can be double or missing max collectibles 30)");
+		return (-1);
+	}
+	if (error == -3)
+	{
+		ft_printf("Error\nNo available path for ");
+		ft_printf("taking collectibles and exiting");
+		return (-1);
 	}
 	return (0);
 }

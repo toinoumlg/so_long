@@ -1,8 +1,9 @@
 NAME = a.out
 SRC_DIR = src
-SRCS = main.c map_init.c map_checker.c free_memory.c \
-	test_utils.c collectibles.c a_star.c a_star_utils.c \
-	a_star_list.c  a_star_cell_details.c a_star_struct.c
+SRCS = main.c map/map_init.c map/map_checker.c free_memory.c \
+	test_utils.c collectibles.c a_star/a_star.c a_star/a_star_utils.c \
+	a_star/a_star_list.c  a_star/a_star_cell_details.c a_star/a_star_struct.c \
+	start.c 
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
@@ -39,6 +40,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/map
+	mkdir -p $(OBJ_DIR)/a_star
 
 clean:
 	@rm -fr $(OBJ_DIR) $(CHECK_SYSTEM)

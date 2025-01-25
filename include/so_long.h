@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 00:47:06 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 01:06:41 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 # include "../libftprintf/include/ft_printf.h"
 # include "../mlx/mlx.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -56,13 +58,13 @@ typedef struct cell
 	t_coords				parent;
 }							t_cell;
 
-typedef struct collectibles
+typedef struct s_collectibles
 {
 	t_coords				coords;
-	struct collectibles		*next_collectible;
+	struct s_collectibles	*next_collectible;
 }							t_collectibles;
 
-typedef struct map
+typedef struct s_map
 {
 	char					**array;
 	char					**screen_res;
@@ -78,7 +80,7 @@ typedef struct map
 	t_collectibles			*collectibles;
 }							t_map;
 
-typedef struct new_values
+typedef struct s_new_values
 {
 	int						y;
 	int						x;
@@ -87,7 +89,7 @@ typedef struct new_values
 	float					f;
 }							t_new_values;
 
-typedef struct a_star_struct
+typedef struct s_a_star_struct
 {
 	t_cell					**cell_details;
 	t_a_star_list			*open_list;
@@ -100,16 +102,17 @@ typedef struct a_star_struct
 
 int							set_map(t_map *map);
 int							check_map(t_map *map);
+int							a_star(t_map *map);
+void						start(t_map *map);
 
-t_a_star_list				*init_list(float f, int x, int y);
 int							is_destination(int y, int x, t_coords end);
 int							is_blocked(char **array, int y, int x);
+float						calculate_new_h_value(int y, int x, t_coords end);
 
 void						add_new_collectible(t_map *map, int x, int y);
-int							a_star(t_map *map);
-
 t_coords					*init_possible_directions(void);
 signed char					**init_closed_list(t_map *map);
+t_a_star_list				*init_list(float f, int x, int y);
 t_a_star_list				*add_to_list(t_a_star_list *open_list, float f,
 								int y, int x);
 t_cell						set_cell_details(t_new_values new, t_coords coords);
