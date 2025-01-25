@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 13:18:33 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:33:09 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,31 @@ t_a_star_struct	a_star_neighbor(t_a_star_struct a_star, t_map *map)
 	return (a_star);
 }
 
-t_a_star_struct	a_star_find_lowest_f(t_a_star_struct a_star)
+t_a_star_list	*move_lowest_f_to_front(t_a_star_list **open_list)
 {
-	
+	t_a_star_list	*lowest_prev;
+	t_a_star_list	*current;
+	t_a_star_list	*lowest;
+
+	current = *open_list;
+	lowest = *open_list;
+	lowest_prev = NULL;
+	while (current->next)
+	{
+		if (current->next->f < lowest->f)
+		{
+			lowest_prev = current;
+			lowest = current->next;
+		}
+		current = current->next;
+	}
+	if (lowest == *open_list)
+		return (*open_list);
+	if (lowest_prev)
+		lowest_prev->next = lowest->next;
+	lowest->next = *open_list;
+	*open_list = lowest;
+	return (*open_list);
 }
 
 t_a_star_struct	a_star_loop(t_a_star_struct a_star, t_map *map)
@@ -60,9 +82,9 @@ t_a_star_struct	a_star_loop(t_a_star_struct a_star, t_map *map)
 		a_star.first = a_star.open_list;
 		a_star.open_list = a_star.open_list->next;
 		a_star = a_star_neighbor(a_star, map);
-		a_star = a_star_find_lowest_f(a_star);
 		if (a_star.found_end)
 			break ;
+		a_star.open_list = move_lowest_f_to_front(&a_star.open_list);
 	}
 	return (a_star);
 }
@@ -76,7 +98,8 @@ int	a_star_search(t_coords start, t_coords end,
 	a_star = a_star_loop(a_star, map);
 	if (trace_path(a_star.cell_details, end, a_star.found_end))
 		return (free_a_star_search(a_star, map->height), -1);
-	return (free_a_star_search(a_star, map->height), 0);
+	else
+		return (free_a_star_search(a_star, map->height), 0);
 }
 
 int	a_star(t_map *map)
