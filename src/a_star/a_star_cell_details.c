@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:45:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 23:39:06 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:33:21 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_cell	**init_and_set_cell_details(t_coords start, t_map *map)
 	{
 		coords.x = 0;
 		while (coords.x < map->width)
-			cell_details[coords.y][coords.x++] = set_cells_detail_init(0, -1,
-					-1);
+			cell_details[coords.y][coords.x++] = set_cells_detail_init(100000,
+					-1, -1);
 		coords.y++;
 	}
 	cell_details[start.y][start.x] = set_cells_detail_init(0, start.y, start.x);

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 01:06:41 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:28:08 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # ifndef PIXEL_PADDING
 #  define PIXEL_PADDING 32
+# endif
+
+# ifndef SCREEN_HEIGHT
+#  define SCREEN_HEIGHT 1920
+# endif
+
+# ifndef SCREEN_WIDTH
+#  define SCREEN_WIDTH 1080
 # endif
 
 # ifndef MAX_COLLECTIBLES
@@ -67,7 +75,6 @@ typedef struct s_collectibles
 typedef struct s_map
 {
 	char					**array;
-	char					**screen_res;
 	char					*file_name;
 	int						width;
 	int						max_width;
@@ -98,6 +105,7 @@ typedef struct s_a_star_struct
 	t_coords				start;
 	t_coords				end;
 	t_possible_directions	*possible_directions;
+	char					found_end;
 }							t_a_star_struct;
 
 int							set_map(t_map *map);
@@ -125,14 +133,13 @@ t_a_star_struct				find_new_f(t_new_values new, t_coords actual,
 t_a_star_struct				init_a_star(t_map *map, t_coords start,
 								t_coords end,
 								t_possible_directions *possible_directions);
+void						print_list(t_a_star_list *list);
 
 void						free_memory(t_map *map);
-void						free_a_star_search(signed char **closed_list,
-								t_cell **cell_details, int map_height);
-void						free_closed_list(signed char **closed_list,
+void						free_a_star_search(t_a_star_struct a_star,
 								int map_height);
-void						free_cell_details(t_cell **cell_details,
-								int map_height);
+
+void						free_open_list(t_a_star_list *open_list);
 // utils
 void						print_array(t_map *map);
 void						print_final_path(t_cell **cell_details,

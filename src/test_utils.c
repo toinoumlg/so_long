@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 23:50:02 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:50:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ void	print_final_path(t_cell **cell_details, t_coords end)
 	}
 	ft_printf("[%d][%d]\n", final_path[i].y, final_path[i].x);
 	free(final_path);
+}
+
+void	print_list(t_a_star_list *list)
+{
+	while (list)
+	{
+		list = list->next;
+	}
 }
 
 void	print_array(t_map *map)

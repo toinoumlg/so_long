@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 23:50:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:05:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ t_a_star_struct	init_a_star(t_map *map, t_coords start, t_coords end,
 t_a_star_struct	find_new_f(t_new_values new, t_coords actual,
 		t_a_star_struct a_star)
 {
-	new.g = a_star.cell_details[new.y][new.x].g + 1;
+	new.g = a_star.cell_details[actual.y][actual.x].g + 1;
 	new.h = calculate_new_h_value(new.y, new.x, a_star.end);
 	new.f = new.g + new.h;
-	if (a_star.cell_details[new.y][new.x].f == 0
-		|| a_star.cell_details[new.y][new.x].f > new.f)
+	if (a_star.cell_details[new.y][new.x].f == 100000
+		|| a_star.cell_details[new.y][new.x].f >= new.f)
 	{
 		a_star.open_list = add_to_list(a_star.open_list, new.f, new.y, new.x);
 		a_star.cell_details[new.y][new.x] = set_cell_details(new, actual);
@@ -46,5 +46,6 @@ t_a_star_struct	found_destination(t_new_values new, t_coords actual,
 {
 	a_star.cell_details[new.y][new.x].parent.x = actual.x;
 	a_star.cell_details[new.y][new.x].parent.y = actual.y;
+	a_star.found_end = 1;
 	return (a_star);
 }

@@ -6,27 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 01:31:07 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:51:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-void	get_resolution(int fd, t_map *map)
-{
-	char	*raw_res;
-
-	map->screen_res = ft_calloc(sizeof(char *), 2);
-	map->screen_res[0] = ft_calloc(sizeof(char), 5);
-	map->screen_res[1] = ft_calloc(sizeof(char), 5);
-	raw_res = get_next_line(fd);
-	ft_strlcpy(map->screen_res[0], raw_res, 5);
-	ft_strlcpy(map->screen_res[1], raw_res + 5, 5);
-	free(raw_res);
-	map->max_width = ft_atoi(map->screen_res[0]) / PIXEL_PADDING;
-	map->max_height = ft_atoi(map->screen_res[1]) / PIXEL_PADDING;
-	close(fd);
-}
 
 void	init_map(t_map *map)
 {
@@ -34,6 +18,8 @@ void	init_map(t_map *map)
 	int	i;
 
 	fd = open("maps/map_ok_big3.ber", O_RDWR);
+	map->max_height = SCREEN_HEIGHT / 32;
+	map->max_width = SCREEN_WIDTH / 32;
 	map->array = ft_calloc(sizeof(char *), map->max_height);
 	i = 0;
 	while (i < map->max_height)
@@ -75,7 +61,6 @@ int	set_map(t_map *map)
 {
 	int	error;
 
-	get_resolution(open("config.txt", O_RDWR), map);
 	init_map(map);
 	if (check_if_rectangular(map))
 		return (ft_printf("Error\nMap is not Rectangular"), -1);

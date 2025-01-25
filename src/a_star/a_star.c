@@ -6,16 +6,15 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 00:51:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 11:32:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	trace_path(t_cell **cell_details, t_coords end)
+int	trace_path(t_cell **cell_details, t_coords end, char found)
 {
-	if (cell_details[end.y][end.x].parent.y == -1
-		|| cell_details[end.y][end.x].parent.x == -1)
+	if (!found)
 		return (-1);
 	else
 		print_final_path(cell_details, end);
@@ -48,13 +47,17 @@ t_a_star_struct	a_star_neighbor(t_map *map, t_a_star_struct a_star)
 	return (a_star);
 }
 
-t_a_star_struct	loop_a_star(t_a_star_struct a_star, t_map *map)
+
+t_a_star_struct	a_star_loop(t_a_star_struct a_star, t_map *map)
 {
+	a_star.found_end = 0;
 	while (a_star.open_list)
 	{
 		a_star.first = a_star.open_list;
 		a_star.open_list = a_star.open_list->next;
 		a_star = a_star_neighbor(map, a_star);
+		if (a_star.found_end)
+			break ;
 	}
 	return (a_star);
 }
@@ -65,12 +68,10 @@ int	a_star_search(t_coords start, t_coords end,
 	t_a_star_struct	a_star;
 
 	a_star = init_a_star(map, start, end, possible_directions);
-	a_star = loop_a_star(a_star, map);
-	if (trace_path(a_star.cell_details, end))
-		return (free_a_star_search(a_star.closed_list, a_star.cell_details,
-				map->height), -1);
-	return (free_a_star_search(a_star.closed_list, a_star.cell_details,
-			map->height), 0);
+	a_star = a_star_loop(a_star, map);
+	if (trace_path(a_star.cell_details, end, a_star.found_end))
+		return (free_a_star_search(a_star, map->height), -1);
+	return (free_a_star_search(a_star, map->height), 0);
 }
 
 int	a_star(t_map *map)
@@ -86,16 +87,12 @@ int	a_star(t_map *map)
 	while (collectibles)
 	{
 		end = collectibles->coords;
-		// ft_printf("start y:[%d], x:[%d]\n", start.y, start.x);
-		// ft_printf("end y:[%d], x:[%d]\n", end.y, end.x);
 		if (a_star_search(start, end, &possible_directions, map))
 			return (free(possible_directions.possible_directions), -1);
 		start = collectibles->coords;
 		collectibles = collectibles->next_collectible;
 	}
 	end = map->exit;
-	// ft_printf("start y:[%d], x:[%d]\n", start.y, start.x);
-	// ft_printf("end y:[%d], x:[%d]\n", end.y, end.x);
 	if (a_star_search(start, end, &possible_directions, map))
 		return (free(possible_directions.possible_directions), -1);
 	return (free(possible_directions.possible_directions), 0);
