@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 11:32:20 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 13:18:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	trace_path(t_cell **cell_details, t_coords end, char found)
 	return (0);
 }
 
-t_a_star_struct	a_star_neighbor(t_map *map, t_a_star_struct a_star)
+t_a_star_struct	a_star_neighbor(t_a_star_struct a_star, t_map *map)
 {
 	t_coords		possible_direction;
 	t_coords		actual;
@@ -47,6 +47,10 @@ t_a_star_struct	a_star_neighbor(t_map *map, t_a_star_struct a_star)
 	return (a_star);
 }
 
+t_a_star_struct	a_star_find_lowest_f(t_a_star_struct a_star)
+{
+	
+}
 
 t_a_star_struct	a_star_loop(t_a_star_struct a_star, t_map *map)
 {
@@ -55,7 +59,8 @@ t_a_star_struct	a_star_loop(t_a_star_struct a_star, t_map *map)
 	{
 		a_star.first = a_star.open_list;
 		a_star.open_list = a_star.open_list->next;
-		a_star = a_star_neighbor(map, a_star);
+		a_star = a_star_neighbor(a_star, map);
+		a_star = a_star_find_lowest_f(a_star);
 		if (a_star.found_end)
 			break ;
 	}

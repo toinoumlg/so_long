@@ -6,11 +6,33 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 00:31:37 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 13:10:31 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+int	check_if_rectangular(t_map *map)
+{
+	char	*tmp;
+	char	*cr;
+	int		i;
+
+	i = 0;
+	while (i < map->height)
+	{
+		cr = ft_strchr(map->array[i], '\n');
+		if (cr)
+		{
+			map->array[i] = ft_strtrim((tmp = map->array[i]), cr);
+			free(tmp);
+		}
+		if (((int)ft_strlen(map->array[i])) != map->width)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
 
 int	check_border(t_map *map)
 {
@@ -36,7 +58,7 @@ int	check_border(t_map *map)
 	return (0);
 }
 
-int	else_if(t_map *map, int x, int y)
+int	what_is_on_path(t_map *map, int x, int y)
 {
 	if (map->array[y][x] == 'C')
 		add_new_collectible(map, x, y);
@@ -71,7 +93,7 @@ int	finder(t_map *map)
 	coords.y = 1;
 	while (coords.y < map->height - 1 && coords.x < map->width - 1)
 	{
-		if (!else_if(map, coords.x, coords.y))
+		if (!what_is_on_path(map, coords.x, coords.y))
 			coords.x++;
 		else
 			return (-1);
@@ -88,11 +110,13 @@ int	finder(t_map *map)
 
 int	check_map(t_map *map)
 {
-	if (check_border(map))
+	if (check_if_rectangular(map))
 		return (-1);
-	if (finder(map))
+	if (check_border(map))
 		return (-2);
-	if (a_star(map))
+	if (finder(map))
 		return (-3);
+	if (a_star(map))
+		return (-4);
 	return (0);
 }

@@ -6,28 +6,35 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 11:28:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/25 12:35:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# ifndef PIXEL_PADDING
+# ifndef VARS
 #  define PIXEL_PADDING 32
-# endif
-
-# ifndef SCREEN_HEIGHT
 #  define SCREEN_HEIGHT 1920
-# endif
-
-# ifndef SCREEN_WIDTH
 #  define SCREEN_WIDTH 1080
-# endif
-
-# ifndef MAX_COLLECTIBLES
 #  define MAX_COLLECTIBLES 30
 # endif
+
+# ifndef FT_PRINTF_COLORS
+#  define RESET "\x1B[0m"
+#  define RED "\x1B[31m"
+#  define GREEN "\x1B[32m"
+#  define YELLOW "\x1B[33m"
+#  define BLUE "\x1B[34m"
+#  define MAGENTA "\x1B[35m"
+#  define CYAN "\x1B[36m"
+#  define WHITE "\x1B[37m"
+# endif
+
+# ifndef MAPS
+# define PATH "maps/"
+# define EXT ".ber"
+#endif
 
 # include "../libftprintf/include/ft_printf.h"
 # include "../mlx/mlx.h"
