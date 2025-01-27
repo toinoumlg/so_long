@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 19:42:15 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/26 22:08:55 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 int	main(int ac, char **av)
 {
-	t_map	*map;
+	t_data	data;
 
+	data.mlx = mlx_init();
 	if (ac > 2)
 		return (ft_printf(RED "Error\nToo much arguments" RESET), -1);
-	map = ft_calloc(sizeof(t_map), 1);
+	data.map = ft_calloc(sizeof(t_map), 1);
 	if (ac == 1)
-		map->file_name = "map_ok_debbug";
+		data.map->file_name = "debbug";
 	else
-		map->file_name = av[1];
-	if (set_map(map))
-		return (free_memory(map), -1);
-	else
-	{
-		print_array(map);
-		start(map);
-	}
-	free_memory(map);
+		data.map->file_name = av[1];
+	if (set_map(data.map))
+		return (free(data.mlx), -1);
+	print_array(data.map->array);
+	start(data);
+	free_memory_map(data.map);
 	// free(get_next_line(0));
 }

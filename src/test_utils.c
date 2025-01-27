@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 18:44:52 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/26 13:59:12 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	print_list(t_a_star_list *list)
 	}
 }
 
-void	print_array(t_map *map)
+void	print_array(char **array)
 {
 	int	i;
 
 	i = 0;
-	while (map->array[i])
-		ft_printf("%s\n", map->array[i++]);
+	while (array[i])
+		ft_printf("%s\n", array[i++]);
 }

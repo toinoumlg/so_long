@@ -6,17 +6,30 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 18:33:33 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/27 00:18:30 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# ifndef INCLUDES
+#  include "../libftprintf/include/ft_printf.h"
+#  include "../mlx/mlx.h"
+#  include <X11/X.h>
+#  include <X11/keysym.h>
+#  include <fcntl.h>
+#  include <math.h>
+#  include <stdio.h>
+#  include <stdlib.h>
+#  include <time.h>
+#  include <unistd.h>
+# endif
+
 # ifndef VARS
 #  define PIXEL_PADDING 32
-#  define SCREEN_HEIGHT 1920
-#  define SCREEN_WIDTH 1080
+#  define SCREEN_HEIGHT 1080
+#  define SCREEN_WIDTH 1920
 #  define MAX_COLLECTIBLES 200
 # endif
 
@@ -32,19 +45,26 @@
 # endif
 
 # ifndef MAPS
-# define PATH "maps/"
-# define EXT ".ber"
-#endif
+#  define PATH "maps/"
+#  define BER ".ber"
+#  define DEBBUG "debbug"
+# endif
 
-# include "../libftprintf/include/ft_printf.h"
-# include "../mlx/mlx.h"
-# include <X11/X.h>
-# include <X11/keysym.h>
-# include <fcntl.h>
-# include <math.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+# ifndef TEXTURES
+#  define GROUND1 "textures/ground1.xpm"
+#  define GROUND2 "textures/ground2.xpm"
+#  define WATER1 "textures/water1.xpm"
+#  define WATER2 "textures/water2.xpm"
+#  define BORDER_N "textures/border_N.xpm"
+#  define BORDER_NE "textures/border_NE.xpm"
+#  define BORDER_E "textures/border_E.xpm"
+#  define BORDER_SE "textures/border_SE.xpm"
+#  define BORDER_S "textures/border_S.xpm"
+#  define BORDER_SW "textures/border_SW.xpm"
+#  define BORDER_W "textures/border_W.xpm"
+#  define BORDER_NW "textures/border_NW.xpm"
+#  define WALL1 "textures/wall1.xpm"
+# endif
 
 typedef struct coords
 {
@@ -115,10 +135,34 @@ typedef struct s_a_star_struct
 	char					found_end;
 }							t_a_star_struct;
 
+typedef struct s_window
+{
+	void					*ptr;
+	char					**screen_array;
+	t_coords				max;
+	t_coords				min;
+}							t_window;
+
+typedef struct s_textures
+{
+	void					**ground;
+	void					**water;
+	void					**border;
+	void					**wall;
+}							t_textures;
+
+typedef struct s_data
+{
+	void					*mlx;
+	t_textures				textures;
+	t_window				window;
+	t_map					*map;
+}							t_data;
+
 int							set_map(t_map *map);
 int							check_map(t_map *map);
 int							a_star(t_map *map);
-void						start(t_map *map);
+void						start(t_data data);
 
 int							is_destination(int y, int x, t_coords end);
 int							is_blocked(char **array, int y, int x);
@@ -142,13 +186,13 @@ t_a_star_struct				init_a_star(t_map *map, t_coords start,
 								t_possible_directions *possible_directions);
 void						print_list(t_a_star_list *list);
 
-void						free_memory(t_map *map);
+void						free_memory_map(t_map *map);
 void						free_a_star_search(t_a_star_struct a_star,
 								int map_height);
 
 void						free_open_list(t_a_star_list *open_list);
 // utils
-void						print_array(t_map *map);
+void						print_array(char **array);
 void						print_final_path(t_cell **cell_details,
 								t_coords end);
 

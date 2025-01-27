@@ -6,14 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 12:36:44 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:31:24 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
 /* 5*PIXEL_PADDING for min height and width to have a 3x3 playable area */
-void	init_map(t_map *map)
+int	init_map(t_map *map)
 {
 	int		fd;
 	int		i;
@@ -21,9 +21,15 @@ void	init_map(t_map *map)
 	char	*tmp;
 
 	file_path = ft_strjoin(PATH, map->file_name);
-	file_path = ft_strjoin((tmp = file_path), EXT);
+	file_path = ft_strjoin((tmp = file_path), BER);
 	free(tmp);
 	fd = open(file_path, O_RDWR);
+	if (fd < 0)
+	{
+		free(file_path);
+		close(fd);
+		return (-1);
+	}
 	map->max_height = SCREEN_HEIGHT / PIXEL_PADDING;
 	map->max_width = SCREEN_WIDTH / PIXEL_PADDING;
 	map->min_width = PIXEL_PADDING * 5;
@@ -42,24 +48,30 @@ void	init_map(t_map *map)
 	close(fd);
 	free(file_path);
 	map->height = i;
+	return (0);
 }
 
 int	set_map(t_map *map)
 {
 	int	error;
 
-	init_map(map);
+	if (init_map(map))
+		return (free(map), ft_printf(RED "Error\nWrong map name" RESET), -2);
 	error = check_map(map);
 	if (error == -1)
-		return (ft_printf(RED "Error\nMap is not Rectangular" RESET), -1);
+		return (free_memory_map(map),
+			ft_printf(RED "Error\nMap is not Rectangular" RESET), -1);
 	if (error == -2)
-		return (ft_printf(RED "Error\nBorder arent correct" RESET), -1);
+		return (free_memory_map(map),
+			ft_printf(RED "Error\nBorder arent correct" RESET), -1);
 	if (error == -3)
-		return (ft_printf(RED "Error\nMissing either collectibles,exit or start "),
+		return (free_memory_map(map),
+			ft_printf(RED "Error\nMissing either collectibles,exit or start "),
 			ft_printf("(can be double or missing max collectibles 30)" RESET),
 			-1);
 	if (error == -4)
-		return (ft_printf(RED "Error\nNo available path for "),
+		return (free_memory_map(map),
+			ft_printf(RED "Error\nNo available path for "),
 			ft_printf("taking collectibles and exiting" RESET), -1);
 	return (0);
 }
