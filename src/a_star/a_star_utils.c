@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/24 23:24:58 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:27:08 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,11 @@ t_coords	init_direction(int y, int x)
 	return (direction);
 }
 
-t_coords	*init_possible_directions(void)
+void	init_possible_directions(t_map *map)
 {
-	t_coords	*possible_directions;
-
-	possible_directions = ft_calloc(sizeof(t_coords), 4);
-	possible_directions[0] = init_direction(0, -1);
-	possible_directions[1] = init_direction(0, 1);
-	possible_directions[2] = init_direction(1, 0);
-	possible_directions[3] = init_direction(-1, 0);
-	return (possible_directions);
+	map->possible_directions = ft_calloc(sizeof(t_coords), 4);
+	map->possible_directions[0] = init_direction(0, -1);
+	map->possible_directions[1] = init_direction(0, 1);
+	map->possible_directions[2] = init_direction(1, 0);
+	map->possible_directions[3] = init_direction(-1, 0);
 }

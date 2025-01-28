@@ -6,13 +6,13 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/26 13:59:12 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:30:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	print_final_path(t_cell **cell_details, t_coords end)
+void	test_print_final_path(t_cell **cell_details, t_coords end)
 {
 	t_coords	*final_path;
 	t_coords	tmp;

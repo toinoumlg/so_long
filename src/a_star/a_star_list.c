@@ -6,11 +6,38 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/26 16:28:18 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:29:08 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+t_a_star_list	*move_lowest_f_to_front(t_a_star_list **open_list)
+{
+	t_a_star_list	*lowest_prev;
+	t_a_star_list	*current;
+	t_a_star_list	*lowest;
+
+	current = *open_list;
+	lowest = *open_list;
+	lowest_prev = NULL;
+	while (current->next)
+	{
+		if (current->next->f < lowest->f)
+		{
+			lowest_prev = current;
+			lowest = current->next;
+		}
+		current = current->next;
+	}
+	if (lowest == *open_list)
+		return (*open_list);
+	if (lowest_prev)
+		lowest_prev->next = lowest->next;
+	lowest->next = *open_list;
+	*open_list = lowest;
+	return (*open_list);
+}
 
 t_a_star_list	*add_to_list(t_a_star_list *open_list, float f, int y, int x)
 {

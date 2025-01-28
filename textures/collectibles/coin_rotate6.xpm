@@ -1,0 +1,27 @@
+/* XPM */
+static const char *coin_0059[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 5 1 ",
+"  c #14182E",
+". c #CF752B",
+"X c #F0B541",
+"o c #FFEE83",
+"O c None",
+/* pixels */
+"OOOOOOOOOOOOOOOO",
+"OOOOOOOOOOOOOOOO",
+"OOOOOO    OOOOOO",
+"OOOOO oooo OOOOO",
+"OOOOO ooXX OOOOO",
+"OOOO ooXXXo OOOO",
+"OOOO ooXXXX OOOO",
+"OOO ooXXXXXo OOO",
+"OOO XoXXXXXX OOO",
+"OOO ..XXXXXX OOO",
+"OOO X.XXXXX. OOO",
+"OOOO ..XXXX OOOO",
+"OOOO ..XXX. OOOO",
+"OOOOO ..XX OOOOO",
+"OOOOO .... OOOOO",
+"OOOOOO    OOOOOO"
+};

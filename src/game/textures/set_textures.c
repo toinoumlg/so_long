@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 01:07:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:21:37 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	set_textures_wgw(t_textures *textures, void *mlx)
 	textures->ground[0].image = mlx_xpm_file_to_image(mlx, GROUND1,
 			&textures->ground[0].wh.x, &textures->ground[0].wh.y);
 	textures->ground[1].image = mlx_xpm_file_to_image(mlx, GROUND2,
-			&textures->ground[0].wh.x, &textures->ground[0].wh.y);
+			&textures->ground[1].wh.x, &textures->ground[1].wh.y);
 	textures->water[0].image = mlx_xpm_file_to_image(mlx, WATER1,
 			&textures->water[0].wh.x, &textures->water[0].wh.y);
 	textures->water[1].image = mlx_xpm_file_to_image(mlx, WATER2,
@@ -71,6 +71,14 @@ void	set_textures_walls(t_image *walls, void *mlx)
 	}
 }
 
+void	set_textures_player(t_image *player, void *mlx)
+{
+	player[0].image = mlx_xpm_file_to_image(mlx, PLAYER_IDLE1, &player[0].wh.x,
+			&player[0].wh.y);
+	player[0].addr = mlx_get_data_addr(player[0].image, &player[0].bpp,
+				&player[0].size_l, &player[0].endian);
+}
+
 void	set_textures(t_textures *textures, void *mlx)
 {
 	int	c;
@@ -79,7 +87,9 @@ void	set_textures(t_textures *textures, void *mlx)
 	textures->ground = ft_calloc(sizeof(t_image), 2);
 	textures->water = ft_calloc(sizeof(t_image), 2);
 	textures->border = ft_calloc(sizeof(t_image), 8);
+	textures->player = ft_calloc(sizeof(t_image), 1);
 	set_textures_border(textures->border, mlx, &c);
 	set_textures_walls(textures->walls, mlx);
 	set_textures_wgw(textures, mlx);
+	set_textures_player(textures->player, mlx);
 }

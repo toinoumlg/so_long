@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 01:07:11 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:15:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,25 @@
 # endif
 
 # ifndef TEXTURES
-#  define GROUND1 "textures/ground1.xpm"
-#  define GROUND2 "textures/ground2.xpm"
-#  define WATER1 "textures/water1.xpm"
-#  define WATER2 "textures/water2.xpm"
-#  define BORDER_N "textures/border_N.xpm"
-#  define BORDER_NE "textures/border_NE.xpm"
-#  define BORDER_E "textures/border_E.xpm"
-#  define BORDER_SE "textures/border_SE.xpm"
-#  define BORDER_S "textures/border_S.xpm"
-#  define BORDER_SW "textures/border_SW.xpm"
-#  define BORDER_W "textures/border_W.xpm"
-#  define BORDER_NW "textures/border_NW.xpm"
-#  define WALL1 "textures/wall1.xpm"
-#  define WALL2 "textures/wall2.xpm"
-#  define WALL3 "textures/wall3.xpm"
-#  define WALL4 "textures/wall4.xpm"
-#  define WALL5 "textures/wall5.xpm"
-#  define WALL6 "textures/wall6.xpm"
-#  define WALL7 "textures/wall7.xpm"
+#  define GROUND1 "textures/world/ground/ground1.xpm"
+#  define GROUND2 "textures/world/ground/ground2.xpm"
+#  define WATER1 "textures/world/water/water1.xpm"
+#  define WATER2 "textures/world/water/water2.xpm"
+#  define BORDER_N "textures/world/borders/border_N.xpm"
+#  define BORDER_NE "textures/world/borders/border_NE.xpm"
+#  define BORDER_E "textures/world/borders/border_E.xpm"
+#  define BORDER_SE "textures/world/borders/border_SE.xpm"
+#  define BORDER_S "textures/world/borders/border_S.xpm"
+#  define BORDER_SW "textures/world/borders/border_SW.xpm"
+#  define BORDER_W "textures/world/borders/border_W.xpm"
+#  define BORDER_NW "textures/world/borders/border_NW.xpm"
+#  define WALL1 "textures/world/walls/wall1.xpm"
+#  define WALL2 "textures/world/walls/wall2.xpm"
+#  define WALL3 "textures/world/walls/wall3.xpm"
+#  define WALL4 "textures/world/walls/wall4.xpm"
+#  define WALL5 "textures/world/walls/wall5.xpm"
+#  define WALL6 "textures/world/walls/wall6.xpm"
+#  define WALL7 "textures/world/walls/wall7.xpm"
 #  define PLAYER_IDLE1 "textures/player_idle1.xpm"
 # endif
 
@@ -85,12 +85,6 @@ typedef struct a_star_list
 	t_coords				coords;
 	struct a_star_list		*next;
 }							t_a_star_list;
-
-typedef struct possible_directions
-{
-	int						tmp_index;
-	t_coords				*possible_directions;
-}							t_possible_directions;
 
 typedef struct cell
 {
@@ -116,6 +110,7 @@ typedef struct s_map
 	int						height;
 	int						max_height;
 	int						min_height;
+	t_coords				*possible_directions;
 	t_coords				player_start;
 	t_coords				exit;
 	t_collectibles			*collectibles;
@@ -138,7 +133,6 @@ typedef struct s_a_star_struct
 	t_a_star_list			*first;
 	t_coords				start;
 	t_coords				end;
-	t_possible_directions	*possible_directions;
 	char					found_end;
 }							t_a_star_struct;
 
@@ -166,6 +160,7 @@ typedef struct s_textures
 	t_image					*water;
 	t_image					*walls;
 	t_image					*border;
+	t_image					*player;
 }							t_textures;
 
 typedef struct s_data
@@ -176,46 +171,62 @@ typedef struct s_data
 	t_map					*map;
 }							t_data;
 
+// main
 int							set_map(t_map *map);
-int							check_map(t_map *map);
 int							a_star(t_map *map);
 void						start(t_data data);
 
-int							is_destination(int y, int x, t_coords end);
-int							is_blocked(char **array, int y, int x);
-float						calculate_new_h_value(int y, int x, t_coords end);
-
-void						add_new_collectible(t_map *map, int x, int y);
-t_coords					*init_possible_directions(void);
-signed char					**init_closed_list(t_map *map);
+// a_star
+void						init_a_star(t_map *map, t_coords start,
+								t_coords end, t_a_star_struct *a_star);
+t_cell						**init_and_set_cell_details(t_coords start,
+								t_map *map);
+t_cell						set_cell_details(t_new_values new, t_coords coords);
+void						init_possible_directions(t_map *map);
 t_a_star_list				*init_list(float f, int x, int y);
 t_a_star_list				*add_to_list(t_a_star_list *open_list, float f,
 								int y, int x);
-t_cell						set_cell_details(t_new_values new, t_coords coords);
-t_cell						**init_and_set_cell_details(t_coords start,
-								t_map *map);
-t_a_star_struct				found_destination(t_new_values new, t_coords actual,
-								t_a_star_struct a_star);
-t_a_star_struct				find_new_f(t_new_values new, t_coords actual,
-								t_a_star_struct a_star);
-t_a_star_struct				init_a_star(t_map *map, t_coords start,
-								t_coords end,
-								t_possible_directions *possible_directions);
-void						print_list(t_a_star_list *list);
+t_a_star_list				*move_lowest_f_to_front(t_a_star_list **open_list);
+signed char					**init_closed_list(t_map *map);
+int							is_destination(int y, int x, t_coords end);
+int							is_blocked(char **array, int y, int x);
+float						calculate_new_h_value(int y, int x, t_coords end);
+void						found_destination(t_new_values new, t_coords actual,
+								t_a_star_struct *a_star);
+void						find_new_f(t_new_values new, t_coords actual,
+								t_a_star_struct *a_star);
+
+// map
+int							check_map(t_map *map);
+void						add_new_collectible(t_map *map, int x, int y);
+
+// game
+// ==> start
 void						set_textures(t_textures *textures, void *mlx);
+void						init_window(t_map *map, t_window *window, void *mlx,
+								t_textures textures);
+// ==> textures
+void						combine_image(t_image front, t_image background,
+								void *mlx, t_window window, t_coords i);
+// ==> window
 void						get_map_coords_in_screen(t_window *window,
 								t_map *map);
-void						init_screen_array(t_map *map, t_window window);
-void						init_window(t_map *map, t_window window, void *mlx,
-								t_textures textures);
+void						init_screen_array(t_map *map, t_window *window);
+void						print_screen_array(char **screen,
+								t_textures textures, t_window *window,
+								void *mlx);
+
+// free
 void						free_memory_map(t_map *map);
 void						free_a_star_search(t_a_star_struct a_star,
 								int map_height);
-
+void						free_game(t_data data);
 void						free_open_list(t_a_star_list *open_list);
-// utils
+
+// test utils
 void						print_array(char **array);
-void						print_final_path(t_cell **cell_details,
+void						test_print_final_path(t_cell **cell_details,
 								t_coords end);
+void						print_list(t_a_star_list *list);
 
 #endif
