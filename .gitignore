@@ -54,5 +54,3 @@ dkms.conf
 # IDE
 .idea
 .vscode
-
-config.txt

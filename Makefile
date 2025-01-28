@@ -3,7 +3,8 @@ SRC_DIR = src
 SRCS = main.c map/map_init.c map/map_checker.c free_memory.c \
 	test_utils.c collectibles.c a_star/a_star.c a_star/a_star_utils.c \
 	a_star/a_star_list.c  a_star/a_star_cell_details.c a_star/a_star_struct.c \
-	start.c a_star/a_star_free_memory.c
+	game/start.c a_star/a_star_free_memory.c game/init_screen_array.c game/set_textures.c \
+	game/init_window.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
@@ -42,6 +43,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)/map
 	mkdir -p $(OBJ_DIR)/a_star
+	mkdir -p $(OBJ_DIR)/game
 
 clean:
 	@rm -fr $(OBJ_DIR) $(CHECK_SYSTEM)

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/26 22:08:55 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 00:26:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int	main(int ac, char **av)
 	print_array(data.map->array);
 	start(data);
 	free_memory_map(data.map);
+	mlx_destroy_display(data.mlx);
+	free(data.mlx);
 	// free(get_next_line(0));
 }

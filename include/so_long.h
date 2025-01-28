@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/27 00:18:30 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 01:07:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # ifndef VARS
 #  define PIXEL_PADDING 32
-#  define SCREEN_HEIGHT 1080
+#  define SCREEN_HEIGHT 1056
 #  define SCREEN_WIDTH 1920
 #  define MAX_COLLECTIBLES 200
 # endif
@@ -64,6 +64,13 @@
 #  define BORDER_W "textures/border_W.xpm"
 #  define BORDER_NW "textures/border_NW.xpm"
 #  define WALL1 "textures/wall1.xpm"
+#  define WALL2 "textures/wall2.xpm"
+#  define WALL3 "textures/wall3.xpm"
+#  define WALL4 "textures/wall4.xpm"
+#  define WALL5 "textures/wall5.xpm"
+#  define WALL6 "textures/wall6.xpm"
+#  define WALL7 "textures/wall7.xpm"
+#  define PLAYER_IDLE1 "textures/player_idle1.xpm"
 # endif
 
 typedef struct coords
@@ -138,17 +145,27 @@ typedef struct s_a_star_struct
 typedef struct s_window
 {
 	void					*ptr;
-	char					**screen_array;
+	char					**screen;
 	t_coords				max;
 	t_coords				min;
 }							t_window;
 
+typedef struct s_image
+{
+	void					*image;
+	char					*addr;
+	t_coords				wh;
+	int						size_l;
+	int						bpp;
+	int						endian;
+}							t_image;
+
 typedef struct s_textures
 {
-	void					**ground;
-	void					**water;
-	void					**border;
-	void					**wall;
+	t_image					*ground;
+	t_image					*water;
+	t_image					*walls;
+	t_image					*border;
 }							t_textures;
 
 typedef struct s_data
@@ -185,7 +202,12 @@ t_a_star_struct				init_a_star(t_map *map, t_coords start,
 								t_coords end,
 								t_possible_directions *possible_directions);
 void						print_list(t_a_star_list *list);
-
+void						set_textures(t_textures *textures, void *mlx);
+void						get_map_coords_in_screen(t_window *window,
+								t_map *map);
+void						init_screen_array(t_map *map, t_window window);
+void						init_window(t_map *map, t_window window, void *mlx,
+								t_textures textures);
 void						free_memory_map(t_map *map);
 void						free_a_star_search(t_a_star_struct a_star,
 								int map_height);
