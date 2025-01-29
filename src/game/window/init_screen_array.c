@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 17:31:13 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 18:56:31 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	set_screen_array_c(t_coords *map_coords, t_coords *screen_coords,
 {
 	if (is_in_map(*screen_coords, window))
 	{
-		window->screen[screen_coords->y][screen_coords->x] = map->array[map_coords->y][map_coords->x];
+		window->screen[screen_coords->y][screen_coords->x]
+			= map->array[map_coords->y][map_coords->x];
 		map_coords->x++;
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 17:15:20 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 22:16:21 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 #  define WALL6 "textures/world/walls/wall6.xpm"
 #  define WALL7 "textures/world/walls/wall7.xpm"
 #  define PLAYER_IDLE1 "textures/player_idle1.xpm"
+#  define COIN_R1 "textures/coins/coin_rotate2.xpm"
 # endif
 
 typedef struct coords
@@ -140,8 +141,10 @@ typedef struct s_window
 {
 	void					*ptr;
 	char					**screen;
+	t_coords				start;
 	t_coords				max;
 	t_coords				min;
+	t_coords				actual;
 }							t_window;
 
 typedef struct s_image
@@ -161,11 +164,14 @@ typedef struct s_textures
 	t_image					*walls;
 	t_image					*border;
 	t_image					*player;
+	t_image					*coins_r;
 }							t_textures;
 
 typedef struct s_data
 {
 	void					*mlx;
+	clock_t					t;
+	double					time_taken;
 	t_textures				textures;
 	t_window				window;
 	t_map					*map;
@@ -207,7 +213,7 @@ void						init_window(t_map *map, t_window *window, void *mlx,
 								t_textures textures);
 // ==> textures
 void						combine_image(t_image front, t_image background,
-								void *mlx, t_window window, t_coords i);
+								void *mlx, t_window window);
 // ==> window
 void						get_map_coords_in_screen(t_window *window,
 								t_map *map);

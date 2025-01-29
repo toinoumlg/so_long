@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 16:30:24 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 20:35:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ void	free_game(t_data data)
 	i = -1;
 	while (i++ < 1)
 		mlx_destroy_image(data.mlx, data.textures.ground[i].image);
+	i = -1;
+	while (i++ < 0)
+		mlx_destroy_image(data.mlx, data.textures.player[i].image);
+	i = -1;
+	while (i++ < 0)
+		mlx_destroy_image(data.mlx, data.textures.coins_r[i].image);
 	i = 0;
 	while (data.window.screen[i])
 	{
@@ -39,6 +45,8 @@ void	free_game(t_data data)
 	free(data.textures.walls);
 	free(data.textures.water);
 	free(data.textures.border);
+	free(data.textures.player);
+	free(data.textures.coins_r);
 	mlx_destroy_window(data.mlx, data.window.ptr);
 	mlx_destroy_display(data.mlx);
 	free(data.mlx);

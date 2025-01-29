@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 13:43:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/28 21:55:08 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
+	data.t = clock();
 	data.mlx = mlx_init();
 	if (ac > 2)
 		return (ft_printf(RED "Error\nToo much arguments" RESET), -1);
@@ -28,6 +29,5 @@ int	main(int ac, char **av)
 		return (free(data.mlx), -1);
 	print_array(data.map->array);
 	start(data);
-	free_memory_map(data.map);
 	// free(get_next_line(0));
 }
