@@ -6,11 +6,26 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/29 20:08:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:44:02 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+void	update_collectibles(t_data *data)
+{
+	t_collectibles	*tmp;
+
+	tmp = data->game.collectibles;
+	while (tmp)
+	{
+		print_collectibles(data, tmp);
+		tmp->i_image++;
+		if (tmp->i_image > 12)
+			tmp->i_image = 0;
+		tmp = tmp->next_collectible;
+	}
+}
 
 void	add_new_collectible(t_map *map, int x, int y)
 {

@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_screen_array.c                                :+:      :+:    :+:   */
+/*   screen_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 02:07:39 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:50:25 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	get_map_coords_in_screen(t_window *window, t_map *map)
+void	update_screen_array(t_data *data)
 {
-	// ft_printf("%d\n%d\n", ((map->actual.x) / 2) + ((map->actual.x) % 2) + 2,
-	// 	((map->actual.y + 4) / 2) + ((map->actual.y + 4) % 2));
-	// window->max.x = ((map->actual.x) / 2) + ((map->actual.x) % 2) + 2;
-	// window->max.y = ((map->actual.y) / 2) + ((map->actual.y) % 2) + 2;
-	window->min.x = 2;
-	window->min.y = 2;
-	window->max.x = map->actual.x + 2;
-	window->max.y = map->actual.y + 2;
+	t_coords	new_coords;
+
+	new_coords.x = data->window.actual.x + data->window.move.x;
+	new_coords.y = data->window.actual.y + data->window.move.y;
+	data->window.screen[data->window.actual.y][data->window.actual.x] = '0';
+	if (data->window.screen[new_coords.y][new_coords.x] == 'C')
+	{
+		destroy_collectible(&data->game.collectibles, new_coords);
+		if (!data->game.collectibles)
+			data->game.game_finished = 1;
+	}
+	if ((new_coords.x == data->window.exit.x
+			&& new_coords.y == data->window.exit.y)
+		&& data->game.game_finished == 2)
+	{
+		data->game.game_finished = 3;
+		return ;
+	}
+	data->window.screen[new_coords.y][new_coords.x] = 'P';
+	data->game.player.is_moving = 1;
+	data->game.player.moves++;
+	ft_printf("player move:%d\n", data->game.player.moves);
 }
 
 int	is_in_map(t_coords screen, t_window *window)

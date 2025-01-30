@@ -1,11 +1,25 @@
 NAME = a.out
 SRC_DIR = src
-SRCS = main.c map/map_init.c map/map_checker.c free_memory.c \
-	test_utils.c collectibles.c a_star/a_star.c a_star/a_star_utils.c \
-	a_star/a_star_list.c  a_star/a_star_cell_details.c a_star/a_star_struct.c \
-	game/game.c a_star/a_star_free_memory.c game/window/init_screen_array.c game/textures/set_textures.c \
-	game/window/init_window.c game/window/utils_window.c game/textures/combine_image.c \
-	game/textures/print_image.c
+SRCS = main.c 									\
+	map/map_init.c 								\
+	map/map_checker.c 							\
+	a_star/a_star.c 							\
+	a_star/a_star_utils.c 						\
+	a_star/a_star_list.c 						\
+	a_star/a_star_cell_details.c 				\
+	a_star/a_star_struct.c 						\
+	a_star/a_star_free_memory.c 				\
+	game/game.c 								\
+	game/player.c 								\
+	game/collectibles.c 						\
+	game/window/screen_array.c 					\
+	game/window/init_window.c 					\
+	game/window/utils_window.c 					\
+	game/textures/set_textures.c 				\
+	game/textures/print_image.c 				\
+	game/textures/combine_image.c 				\
+	free_memory.c 								\
+	test_utils.c 
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
@@ -25,20 +39,17 @@ all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
 norminette:
 	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
-$(NAME): $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) $(CHECK_SYSTEM) 
+$(NAME): $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) 
 	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)
 
-$(CHECK_SYSTEM):
-	xrandr | awk '/ connected primary/ {print $$4}' > $(CHECK_SYSTEM)
-
 $(MLX_LIB):
-	@make --no-print-directory -C $(MLX_DIR)
+	make --no-print-directory -C $(MLX_DIR)
 
 $(LIBFTPRINTF_LIB):
 	make -C $(LIBFTPRINTF_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(OBJ_DIR)
-	@$(CC) $(C_FLAGS) -c -o $@ $< $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(C_FLAGS) -c -o $@ $< $(INCLUDES)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
@@ -49,10 +60,10 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)/game/window
 
 clean:
-	@rm -fr $(OBJ_DIR) $(CHECK_SYSTEM)
+	@rm -fr $(OBJ_DIR)
 	@make clean --no-print-directory -C $(LIBFTPRINTF_DIR)
 
 fclean:
-	@rm -fr $(OBJ_DIR) $(NAME) $(CHECK_SYSTEM)
+	@rm -fr $(OBJ_DIR) $(NAME)
 	@make fclean --no-print-directory -C $(LIBFTPRINTF_DIR)
 

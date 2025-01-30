@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 02:17:02 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:50:17 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,10 @@
 # ifndef INCLUDES
 #  include "../libftprintf/include/ft_printf.h"
 #  include "../mlx/mlx.h"
-#  include <X11/X.h>
-#  include <X11/keysym.h>
-#  include <fcntl.h>
+#  include "../mlx/mlx_int.h"
 #  include <math.h>
 #  include <stdio.h>
 #  include <stdlib.h>
-#  include <time.h>
-#  include <unistd.h>
 # endif
 
 # ifndef VARS
@@ -188,19 +184,25 @@ typedef struct s_textures
 	t_image					*exit;
 }							t_textures;
 
+typedef struct s_player
+{
+	int						is_moving;
+	int						moves;
+}							t_player;
+
 typedef struct s_game
 {
 	t_collectibles			*collectibles;
-	t_possible_directions	move;
+	t_possible_directions	moves;
+	t_player				player;
 	int						game_finished;
-	int						player_moves;
+
 }							t_game;
 
 typedef struct s_data
 {
 	int						frames;
 	void					*mlx;
-
 	t_textures				textures;
 	t_window				window;
 	t_game					game;
@@ -259,12 +261,15 @@ void						init_screen_array(t_map *map, t_window *window);
 void						print_screen_array(char **screen,
 								t_textures textures, t_window *window,
 								void *mlx);
+void						update_screen_array(t_data *data);
+void						move_player(int key_stroked, t_data *data);
 // ==> collectibles
 void						add_new_collectible(t_map *map, int x, int y);
 void						update_collectible_coords(t_collectibles *collectibles,
 								t_coords min);
 void						destroy_collectible(t_collectibles **collectibles,
 								t_coords coords);
+void						update_collectibles(t_data *data);
 
 // free
 void						free_memory_map(t_map *map);

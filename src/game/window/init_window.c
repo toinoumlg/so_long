@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:15:13 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 02:21:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:29:41 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	init_window(t_map *map, t_window *window, void *mlx,
 		t_textures textures)
 {
 	window->screen = ft_calloc(sizeof(char *), (map->actual.y + 4) + 1);
-	get_map_coords_in_screen(window, map);
+	window->min.y = 2;
+	window->min.x = 2;
+	window->max.x = map->actual.x + 2;
+	window->max.y = map->actual.y + 2;
 	init_screen_array(map, window);
 	window->ptr = mlx_new_window(mlx, (map->actual.x + 4) * PIXEL_PADDING,
 			(map->actual.y + 4) * PIXEL_PADDING, "caca dans culotte");
