@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 18:59:58 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:26:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_border_and_water(t_window *window, t_textures textures, void *mlx)
 				window->max);
 		if (i_border >= 0)
 			mlx_put_image_to_window(mlx, window->ptr,
-				textures.border[i_border].image, window->actual.x
+				textures.borders[i_border].image, window->actual.x
 				* PIXEL_PADDING, window->actual.y * PIXEL_PADDING);
 		else
 			combine_image(textures.walls[rand() % 6], textures.ground[rand()

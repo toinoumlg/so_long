@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/25 13:10:31 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:12:18 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_if_rectangular(t_map *map)
 	int		i;
 
 	i = 0;
-	while (i < map->height)
+	while (i < map->actual.y)
 	{
 		cr = ft_strchr(map->array[i], '\n');
 		if (cr)
@@ -27,7 +27,7 @@ int	check_if_rectangular(t_map *map)
 			map->array[i] = ft_strtrim((tmp = map->array[i]), cr);
 			free(tmp);
 		}
-		if (((int)ft_strlen(map->array[i])) != map->width)
+		if (((int)ft_strlen(map->array[i])) != map->actual.x)
 			return (-1);
 		i++;
 	}
@@ -45,15 +45,15 @@ int	check_border(t_map *map)
 	{
 		if (map->array[y][x] != '1')
 			return (-1);
-		if (x == map->width - 1)
+		if (x == map->actual.x - 1)
 		{
 			y++;
 			x = 0;
 		}
-		else if (y == 0 || y == map->height - 1)
+		else if (y == 0 || y == map->actual.y - 1)
 			x++;
 		else
-			x += map->width - 1;
+			x += map->actual.x - 1;
 	}
 	return (0);
 }
@@ -91,13 +91,13 @@ int	finder(t_map *map)
 
 	coords.x = 1;
 	coords.y = 1;
-	while (coords.y < map->height - 1 && coords.x < map->width - 1)
+	while (coords.y < map->actual.y - 1 && coords.x < map->actual.x - 1)
 	{
 		if (!what_is_on_path(map, coords.x, coords.y))
 			coords.x++;
 		else
 			return (-1);
-		if (coords.x == map->width - 1)
+		if (coords.x == map->actual.x - 1)
 		{
 			coords.x = 0;
 			coords.y++;

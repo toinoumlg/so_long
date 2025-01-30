@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 15:29:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:13:43 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ signed char	**init_closed_list(t_map *map)
 	signed char	**closed_list;
 
 	i = 0;
-	closed_list = ft_calloc(sizeof(signed char *), map->height);
-	while (i < map->height)
+	closed_list = ft_calloc(sizeof(signed char *), map->actual.y);
+	while (i < map->actual.y)
 	{
-		closed_list[i] = ft_calloc(sizeof(signed char), map->width);
-		ft_memset(closed_list[i], -1, map->width);
+		closed_list[i] = ft_calloc(sizeof(signed char), map->actual.x);
+		ft_memset(closed_list[i], -1, map->actual.x);
 		i++;
 	}
 	return (closed_list);

@@ -3,8 +3,9 @@ SRC_DIR = src
 SRCS = main.c map/map_init.c map/map_checker.c free_memory.c \
 	test_utils.c collectibles.c a_star/a_star.c a_star/a_star_utils.c \
 	a_star/a_star_list.c  a_star/a_star_cell_details.c a_star/a_star_struct.c \
-	game/start.c a_star/a_star_free_memory.c game/window/init_screen_array.c game/textures/set_textures.c \
-	game/window/init_window.c game/window/utils_window.c game/textures/combine_image.c
+	game/game.c a_star/a_star_free_memory.c game/window/init_screen_array.c game/textures/set_textures.c \
+	game/window/init_window.c game/window/utils_window.c game/textures/combine_image.c \
+	game/textures/print_image.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj

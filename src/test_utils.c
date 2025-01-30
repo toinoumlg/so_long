@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 18:55:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/29 23:37:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	test_print_final_path(t_cell **cell_details, t_coords end)
 	final_path = ft_calloc(sizeof(t_coords), 100);
 	ft_printf("Path is : ");
 	while (!(cell_details[end.y][end.x].parent.x == end.x
-		&& cell_details[end.y][end.x].parent.y == end.y))
+			&& cell_details[end.y][end.x].parent.y == end.y))
 	{
 		final_path[i] = end;
 		tmp = cell_details[end.y][end.x].parent;
@@ -39,19 +39,21 @@ void	test_print_final_path(t_cell **cell_details, t_coords end)
 	free(final_path);
 }
 
-void	print_list(t_a_star_list *list)
+int	trace_path(t_cell **cell_details, t_coords end, char found)
 {
-	int	i;
+	if (!found)
+		return (-1);
+	else
+		test_print_final_path(cell_details, end);
+	return (0);
+}
 
-	i = 0;
+void	print_list(t_collectibles *list)
+{
 	while (list)
 	{
-		printf("f%d %f  [%d][%d]\n", i, list->f, list->coords.y,
-			list->coords.x);
-		list = list->next;
-		i++;
-		if (i > 50)
-			break ;
+		printf("[%d][%d]\n", list->coords.y, list->coords.x);
+		list = list->next_collectible;
 	}
 }
 

@@ -6,23 +6,23 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/28 16:27:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/29 23:33:21 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	is_destination(int y, int x, t_coords end)
+int	is_destination(t_coords actual, t_coords end)
 {
-	if (y == end.y && x == end.x)
+	if (actual.y == end.y && actual.x == end.x)
 		return (1);
 	else
 		return (0);
 }
 
-int	is_blocked(char **array, int y, int x)
+int	is_blocked(char **array, t_coords actual)
 {
-	if (array[y][x] == '1')
+	if (array[actual.y][actual.x] == '1')
 		return (0);
 	else
 		return (1);
@@ -33,37 +33,19 @@ float	calculate_new_h_value(int y, int x, t_coords end)
 	return (sqrtf(powf((y - end.y), 2) + powf((x - end.x), 2)));
 }
 
-/*
-			Generating all the 4 directions
-
-						N
-						|
-						|
-				W-----Cell-----E
-						|
-						|
-						S
-
-			Cell-->Popped Cell (y, x)
-			N -->  North       (y-1, x)
-			S -->  South       (y+1, x)
-			E -->  East        (y, x+1)
-			W -->  West        (y, x-1)*/
-
-t_coords	init_direction(int y, int x)
+t_possible_directions	set_move(void)
 {
-	t_coords	direction;
+	t_possible_directions move;
 
-	direction.x = x;
-	direction.y = y;
-	return (direction);
-}
-
-void	init_possible_directions(t_map *map)
-{
-	map->possible_directions = ft_calloc(sizeof(t_coords), 4);
-	map->possible_directions[0] = init_direction(0, -1);
-	map->possible_directions[1] = init_direction(0, 1);
-	map->possible_directions[2] = init_direction(1, 0);
-	map->possible_directions[3] = init_direction(-1, 0);
+	move.up.y = -1;
+	move.up.x = 0;
+	move.down.y = 1;
+	move.down.x = 0;
+	move.right.y = 0;
+	move.right.x = 1;
+	move.left.y = 0;
+	move.left.x = -1;
+	move.zero.y = 0;
+	move.zero.x = 0;
+	return (move);
 }

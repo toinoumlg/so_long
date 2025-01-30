@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:45:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/26 16:16:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:14:04 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ t_cell	**init_and_set_cell_details(t_coords start, t_map *map)
 	t_cell		**cell_details;
 
 	coords.y = 0;
-	cell_details = ft_calloc(sizeof(t_cell *), map->height);
-	while (coords.y < map->height)
-		cell_details[coords.y++] = ft_calloc(sizeof(t_cell), map->width);
+	cell_details = ft_calloc(sizeof(t_cell *), map->actual.y);
+	while (coords.y < map->actual.y)
+		cell_details[coords.y++] = ft_calloc(sizeof(t_cell), map->actual.x);
 	coords.y = 0;
-	while (coords.y < map->height)
+	while (coords.y < map->actual.y)
 	{
 		coords.x = 0;
-		while (coords.x < map->width)
+		while (coords.x < map->actual.x)
 			cell_details[coords.y][coords.x++] = set_cells_detail_init(100000,
 					-1, -1);
 		coords.y++;
