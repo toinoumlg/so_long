@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 11:44:02 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:25:59 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	add_new_collectible(t_map *map, int x, int y)
 	return ;
 }
 
-void	destroy_collectible(t_collectibles **collectibles, t_coords coords)
+void	destroy_collectible(t_collectibles **collectibles, t_vector2 coords)
 {
 	t_collectibles	*previous;
 	t_collectibles	*tmp;
@@ -74,9 +74,10 @@ void	destroy_collectible(t_collectibles **collectibles, t_coords coords)
 	free(tmp);
 }
 
-void	update_collectible_coords(t_collectibles *collectibles, t_coords min)
+void	update_collectible_coords(t_collectibles *collectibles, t_vector2 min)
 {
-	t_collectibles *tmp;
+	t_collectibles	*tmp;
+
 	tmp = collectibles;
 	while (tmp)
 	{

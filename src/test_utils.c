@@ -6,23 +6,23 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/29 23:37:20 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:22:12 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	test_print_final_path(t_cell **cell_details, t_coords end)
+void	test_print_final_path(t_cell **cell_details, t_vector2 end)
 {
-	t_coords	*final_path;
-	t_coords	tmp;
+	t_vector2	*final_path;
+	t_vector2	tmp;
 	int			i;
 
 	i = 0;
-	final_path = ft_calloc(sizeof(t_coords), 100);
+	final_path = ft_calloc(sizeof(t_vector2), 100);
 	ft_printf("Path is : ");
 	while (!(cell_details[end.y][end.x].parent.x == end.x
-			&& cell_details[end.y][end.x].parent.y == end.y))
+		&& cell_details[end.y][end.x].parent.y == end.y))
 	{
 		final_path[i] = end;
 		tmp = cell_details[end.y][end.x].parent;
@@ -39,7 +39,7 @@ void	test_print_final_path(t_cell **cell_details, t_coords end)
 	free(final_path);
 }
 
-int	trace_path(t_cell **cell_details, t_coords end, char found)
+int	trace_path(t_cell **cell_details, t_vector2 end, char found)
 {
 	if (!found)
 		return (-1);

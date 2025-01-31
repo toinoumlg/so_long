@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 00:13:43 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:24:16 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ t_a_star_list	*add_to_list(t_a_star_list *open_list, float f, int y, int x)
 	t_a_star_list	*new_list;
 
 	new_list = ft_calloc(sizeof(t_a_star_list), 1);
-	new_list->coords.x = x;
-	new_list->coords.y = y;
+	new_list->coords = set_vector2(y, x);
 	new_list->f = f;
 	new_list->next = NULL;
 	if (!open_list)
@@ -63,8 +62,7 @@ t_a_star_list	*init_list(float f, int x, int y)
 	t_a_star_list	*list;
 
 	list = ft_calloc(sizeof(t_a_star_list), 1);
-	list->coords.x = x;
-	list->coords.y = y;
+	list->coords = set_vector2(y, x);
 	list->f = f;
 	list->next = NULL;
 	return (list);

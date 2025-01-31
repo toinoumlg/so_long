@@ -6,13 +6,22 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/29 23:33:21 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:22:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	is_destination(t_coords actual, t_coords end)
+t_vector2	set_vector2(int y, int x)
+{
+	t_vector2	vector2;
+
+	vector2.y = y;
+	vector2.x = x;
+	return (vector2);
+}
+
+int	is_destination(t_vector2 actual, t_vector2 end)
 {
 	if (actual.y == end.y && actual.x == end.x)
 		return (1);
@@ -20,7 +29,7 @@ int	is_destination(t_coords actual, t_coords end)
 		return (0);
 }
 
-int	is_blocked(char **array, t_coords actual)
+int	is_blocked(char **array, t_vector2 actual)
 {
 	if (array[actual.y][actual.x] == '1')
 		return (0);
@@ -28,24 +37,19 @@ int	is_blocked(char **array, t_coords actual)
 		return (1);
 }
 
-float	calculate_new_h_value(int y, int x, t_coords end)
+float	calculate_new_h_value(int y, int x, t_vector2 end)
 {
 	return (sqrtf(powf((y - end.y), 2) + powf((x - end.x), 2)));
 }
 
 t_possible_directions	set_move(void)
 {
-	t_possible_directions move;
+	t_possible_directions	move;
 
-	move.up.y = -1;
-	move.up.x = 0;
-	move.down.y = 1;
-	move.down.x = 0;
-	move.right.y = 0;
-	move.right.x = 1;
-	move.left.y = 0;
-	move.left.x = -1;
-	move.zero.y = 0;
-	move.zero.x = 0;
+	move.up = set_vector2(-1, 0);
+	move.down = set_vector2(1, 0);
+	move.right = set_vector2(0, 1);
+	move.left = set_vector2(0, -1);
+	move.zero = set_vector2(0, 0);
 	return (move);
 }

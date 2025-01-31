@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 15:50:25 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:26:15 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	update_screen_array(t_data *data)
 {
-	t_coords	new_coords;
+	t_vector2	new_coords;
 
-	new_coords.x = data->window.actual.x + data->window.move.x;
-	new_coords.y = data->window.actual.y + data->window.move.y;
+	new_coords = set_vector2(data->window.actual.y + data->window.move.y,
+			data->window.actual.x + data->window.move.x);
 	data->window.screen[data->window.actual.y][data->window.actual.x] = '0';
 	if (data->window.screen[new_coords.y][new_coords.x] == 'C')
 	{
@@ -28,17 +28,14 @@ void	update_screen_array(t_data *data)
 	if ((new_coords.x == data->window.exit.x
 			&& new_coords.y == data->window.exit.y)
 		&& data->game.game_finished == 2)
-	{
 		data->game.game_finished = 3;
-		return ;
-	}
 	data->window.screen[new_coords.y][new_coords.x] = 'P';
 	data->game.player.is_moving = 1;
 	data->game.player.moves++;
 	ft_printf("player move:%d\n", data->game.player.moves);
 }
 
-int	is_in_map(t_coords screen, t_window *window)
+int	is_in_map(t_vector2 screen, t_window *window)
 {
 	if ((screen.x >= window->min.x && screen.x < window->max.x)
 		&& (screen.y >= window->min.y && screen.y < window->max.y))
@@ -47,12 +44,13 @@ int	is_in_map(t_coords screen, t_window *window)
 		return (0);
 }
 
-void	set_screen_array_c(t_coords *map_coords, t_coords *screen_coords,
+void	set_screen_array_c(t_vector2 *map_coords, t_vector2 *screen_coords,
 		t_map *map, t_window *window)
 {
 	if (is_in_map(*screen_coords, window))
 	{
-		window->screen[screen_coords->y][screen_coords->x] = map->array[map_coords->y][map_coords->x];
+		window->screen[screen_coords->y][screen_coords->x]
+			= map->array[map_coords->y][map_coords->x];
 		map_coords->x++;
 	}
 	else
@@ -62,8 +60,8 @@ void	set_screen_array_c(t_coords *map_coords, t_coords *screen_coords,
 
 void	init_screen_array(t_map *map, t_window *window)
 {
-	t_coords	screen_coords;
-	t_coords	map_coords;
+	t_vector2	screen_coords;
+	t_vector2	map_coords;
 
 	screen_coords.y = 0;
 	map_coords.y = 0;
@@ -77,7 +75,6 @@ void	init_screen_array(t_map *map, t_window *window)
 			set_screen_array_c(&map_coords, &screen_coords, map, window);
 		if (map_coords.x)
 			map_coords.y++;
-		ft_printf("%s\n", window->screen[screen_coords.y]);
 		screen_coords.y++;
 	}
 }

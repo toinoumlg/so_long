@@ -6,19 +6,18 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 00:13:23 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:07:15 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
 void	a_star_neighbor_direction(t_a_star_struct *a_star, t_map *map,
-		t_coords direction, t_coords actual)
+		t_vector2 direction, t_vector2 actual)
 {
 	t_new_values	new;
 
-	new.parent.y = actual.y + direction.y;
-	new.parent.x = actual.x + direction.x;
+	new.parent = set_vector2(actual.y + direction.y, actual.x + direction.x);
 	if (is_destination(new.parent, a_star->end))
 		return (found_destination(new.parent, actual, a_star));
 	else if (a_star->closed_list[new.parent.y][new.parent.x] == -1
@@ -28,7 +27,7 @@ void	a_star_neighbor_direction(t_a_star_struct *a_star, t_map *map,
 
 void	a_star_neighbor(t_a_star_struct *a_star, t_map *map)
 {
-	t_coords	actual;
+	t_vector2	actual;
 
 	actual = a_star->first->coords;
 	a_star->closed_list[actual.y][actual.x] = 0;
@@ -53,7 +52,7 @@ void	a_star_loop(t_a_star_struct *a_star, t_map *map)
 	}
 }
 
-int	a_star_search(t_coords start, t_coords end, t_map *map)
+int	a_star_search(t_vector2 start, t_vector2 end, t_map *map)
 {
 	t_a_star_struct	a_star;
 
@@ -67,7 +66,7 @@ int	a_star_search(t_coords start, t_coords end, t_map *map)
 
 int	a_star(t_map *map)
 {
-	t_coords		start;
+	t_vector2		start;
 	t_collectibles	*collectibles;
 
 	map->direction = set_move();

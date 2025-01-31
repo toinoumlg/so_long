@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/29 19:36:52 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:07:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 void	set_textures_border(t_image *borders, void *mlx)
 {
-	char	*borders_files[] = {BORDER_N, BORDER_NE, BORDER_E, BORDER_SE,
-			BORDER_S, BORDER_SW, BORDER_W, BORDER_NW};
+	char	*borders_files[8];
 	int		i;
 
+	borders_files[0] = BORDER_N;
+	borders_files[1] = BORDER_NE;
+	borders_files[2] = BORDER_E;
+	borders_files[3] = BORDER_SE;
+	borders_files[4] = BORDER_S;
+	borders_files[5] = BORDER_SW;
+	borders_files[6] = BORDER_W;
+	borders_files[7] = BORDER_NW;
 	i = 0;
 	while (i < 8)
 	{
@@ -61,8 +68,15 @@ void	set_textures_wgw(t_textures *textures, void *mlx)
 void	set_textures_walls(t_image *walls, void *mlx)
 {
 	int		i;
-	char	*walls_files[] = {WALL1, WALL2, WALL3, WALL4, WALL5, WALL6, WALL7};
+	char	*walls_files[7];
 
+	walls_files[0] = WALL1;
+	walls_files[1] = WALL2;
+	walls_files[2] = WALL3;
+	walls_files[3] = WALL4;
+	walls_files[4] = WALL5;
+	walls_files[5] = WALL6;
+	walls_files[6] = WALL7;
 	i = 0;
 	while (i < 7)
 	{
@@ -84,11 +98,22 @@ void	set_textures_player(t_image *player, void *mlx)
 
 void	set_textures_coins(t_image *coins, void *mlx)
 {
-	char	*coin_files[] = {COIN_R1, COIN_R2, COIN_R3, COIN_R4, COIN_R5,
-			COIN_R6, COIN_R7, COIN_R8, COIN_R9, COIN_R10, COIN_R11, COIN_R12,
-			COIN_R13};
+	char	*coin_files[13];
 	int		i;
 
+	coin_files[0] = COIN_R1;
+	coin_files[1] = COIN_R2;
+	coin_files[2] = COIN_R3;
+	coin_files[3] = COIN_R4;
+	coin_files[4] = COIN_R5;
+	coin_files[5] = COIN_R6;
+	coin_files[6] = COIN_R7;
+	coin_files[7] = COIN_R8;
+	coin_files[8] = COIN_R9;
+	coin_files[9] = COIN_R10;
+	coin_files[10] = COIN_R11;
+	coin_files[11] = COIN_R12;
+	coin_files[12] = COIN_R13;
 	i = 0;
 	while (i < 13)
 	{

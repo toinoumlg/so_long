@@ -6,13 +6,13 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/29 15:26:39 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:58:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	get_border_image_index(t_coords coords, t_coords min, t_coords max)
+int	get_border_image_index(t_vector2 coords, t_vector2 min, t_vector2 max)
 {
 	if (coords.y == min.y && coords.x == min.x)
 		return (7);

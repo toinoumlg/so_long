@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 02:39:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:20:28 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,23 @@ void	set_map_array(int fd, t_map *map)
 	ft_printf("actual %d %d\n", map->actual.x, map->actual.y);
 }
 
-char	*set_file_path(char *file_name)
-{
-	char	*tmp;
-	char	*file_path;
-
-	file_path = ft_strjoin(PATH, file_name);
-	file_path = ft_strjoin((tmp = file_path), BER);
-	free(tmp);
-	ft_printf("%s\n", file_path);
-	return (file_path);
-}
-
 /* 5*PIXEL_PADDING for min height and width to have a 3x3 playable area */
 int	init_map(t_map *map)
 {
 	int		fd;
 	char	*file_path;
 
-	file_path = set_file_path(map->file_name);
+	file_path = ft_strjoin(PATH, map->file_name);
+	ft_printf("%s", file_path);
 	fd = open(file_path, O_RDWR);
 	if (fd < 0)
 		return (ft_printf(RED "Error\nWrong map name" RESET), free(file_path),
 			close(fd), -1);
 	free(file_path);
 	set_map_array(fd, map);
-	map->max.y = (map->actual.y + 4) * PIXEL_PADDING;
-	map->max.x = (map->actual.x + 4) * PIXEL_PADDING;
-	map->min.y = 5;
-	map->min.x = 5;
-	ft_printf("max %d %d\nmin %d %d\nmap %d %d", map->max.y, map->max.x, 
-	map->min.y ,map->min.y, map->actual.y,map->actual.x);
+	map->max = set_vector2((map->actual.y + 4) * PIXEL_PADDING, (map->actual.x
+				+ 4) * PIXEL_PADDING);
+	map->min = set_vector2(5, 5);
 	if (map->max.y > SCREEN_HEIGHT || map->max.x > SCREEN_WIDTH
 		|| map->min.x > map->actual.x || map->min.y > map->actual.y)
 		return (ft_printf(RED "Error\nMap is too big or too small" RESET), -1);

@@ -6,29 +6,15 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:06:51 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/29 22:41:57 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:28:18 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-unsigned int	get_pixel_color(t_image *image, t_coords i)
-{
-	return (*(unsigned int *)(image->addr + (i.y * image->size_l + i.x
-				* (image->bpp / 8))));
-}
-
-void	put_pixel(t_image *image, t_coords i, unsigned int color)
-{
-	char	*pixel;
-
-	pixel = image->addr + (i.y * image->size_l + i.x * (image->bpp / 8));
-	*(unsigned int *)pixel = color;
-}
-
 void	set_background_color(t_image *background, t_image *combined)
 {
-	t_coords	i;
+	t_vector2	i;
 
 	i.y = 0;
 	while (i.y < background->wh.y)
@@ -40,47 +26,10 @@ void	set_background_color(t_image *background, t_image *combined)
 	}
 }
 
-void	set_front_color_offset(t_image *front, t_image *combined)
-{
-	unsigned int	front_color;
-	t_coords		i;
-	t_coords		c_comb;
-	t_coords		offset;
-
-	offset.x = front->wh.x / 2;
-	offset.y = front->wh.y / 2;
-	i.y = 0;
-	c_comb.y = 0;
-	while (i.y < combined->wh.y)
-	{
-		c_comb.x = 0;
-		i.x = 0;
-		while (i.x < combined->wh.x)
-		{
-			if ((i.x < offset.x || i.y < offset.y) || (i.x >= offset.x
-					+ front->wh.x || i.y >= offset.y + front->wh.y))
-			{
-				front_color = get_pixel_color(combined, i);
-				put_pixel(combined, i, front_color);
-			}
-			else
-			{
-				c_comb.x = i.x - offset.x;
-				c_comb.y = i.y - offset.y;
-				front_color = get_pixel_color(front, c_comb);
-				if ((front_color & 0xFF000000) == 0)
-					put_pixel(combined, i, front_color);
-			}
-			i.x++;
-		}
-		i.y++;
-	}
-}
-
 void	set_front_color(t_image *front, t_image *combined)
 {
 	unsigned int	front_color;
-	t_coords		i;
+	t_vector2		i;
 
 	i.y = -1;
 	while (i.y++ < front->wh.y)

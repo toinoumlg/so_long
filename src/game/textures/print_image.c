@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:08:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 14:38:21 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:28:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,3 @@ void	print_collectibles(t_data *data, t_collectibles *tmp)
 		tmp->coords.x * PIXEL_PADDING, tmp->coords.y * PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);
 }
-

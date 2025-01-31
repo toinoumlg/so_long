@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:23:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 13:49:10 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:25:28 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	move_player(int key_stroked, t_data *data)
 	if (key_stroked == 100)
 		data->window.move = data->game.moves.right;
 	if (data->window.screen[data->window.actual.y
-		+ data->window.move.y][data->window.actual.x
+			+ data->window.move.y][data->window.actual.x
 		+ data->window.move.x] != '1')
 		update_screen_array(data);
 	else
@@ -37,7 +37,7 @@ void	move_player(int key_stroked, t_data *data)
 
 void	print_player(t_data *data)
 {
-	t_image combined;
+	t_image	combined;
 
 	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
 	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,

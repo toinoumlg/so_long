@@ -1,25 +1,26 @@
 NAME = a.out
 SRC_DIR = src
-SRCS = main.c 									\
-	map/map_init.c 								\
-	map/map_checker.c 							\
-	a_star/a_star.c 							\
-	a_star/a_star_utils.c 						\
-	a_star/a_star_list.c 						\
-	a_star/a_star_cell_details.c 				\
-	a_star/a_star_struct.c 						\
-	a_star/a_star_free_memory.c 				\
-	game/game.c 								\
-	game/player.c 								\
-	game/collectibles.c 						\
-	game/window/screen_array.c 					\
-	game/window/init_window.c 					\
-	game/window/utils_window.c 					\
-	game/textures/set_textures.c 				\
-	game/textures/print_image.c 				\
-	game/textures/combine_image.c 				\
-	free_memory.c 								\
-	test_utils.c 
+SRCS = main.c									\
+	map/map_init.c								\
+	map/map_checker.c							\
+	a_star/a_star.c								\
+	a_star/a_star_utils.c						\
+	a_star/a_star_list.c						\
+	a_star/a_star_cell_details.c				\
+	a_star/a_star_struct.c						\
+	a_star/a_star_free_memory.c					\
+	game/game.c									\
+	game/player.c								\
+	game/collectibles.c							\
+	game/window/screen_array.c					\
+	game/window/init_window.c					\
+	game/window/utils_window.c					\
+	game/textures/set_textures.c				\
+	game/textures/print_image.c					\
+	game/textures/combine_image.c				\
+	game/textures/combine_image_utils.c			\
+	free_memory.c								\
+	test_utils.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj

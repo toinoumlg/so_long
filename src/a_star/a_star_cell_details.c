@@ -6,21 +6,20 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:45:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 00:14:04 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:05:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-t_cell	set_cell_details(t_new_values new, t_coords coords)
+t_cell	set_cell_details(t_new_values new, t_vector2 coords)
 {
 	t_cell	cell_details;
 
 	cell_details.f = new.f;
 	cell_details.h = new.h;
 	cell_details.g = new.g;
-	cell_details.parent.x = coords.x;
-	cell_details.parent.y = coords.y;
+	cell_details.parent = set_vector2(coords.y, coords.x);
 	return (cell_details);
 }
 
@@ -28,20 +27,19 @@ t_cell	set_cells_detail_init(float fhg, int y, int x)
 {
 	t_cell			cell_details;
 	t_new_values	new;
-	t_coords		coords;
+	t_vector2		coords;
 
 	new.f = fhg;
 	new.h = fhg;
 	new.g = fhg;
-	coords.x = x;
-	coords.y = y;
+	coords = set_vector2(y, x);
 	cell_details = set_cell_details(new, coords);
 	return (cell_details);
 }
 
-t_cell	**init_and_set_cell_details(t_coords start, t_map *map)
+t_cell	**init_and_set_cell_details(t_vector2 start, t_map *map)
 {
-	t_coords	coords;
+	t_vector2	coords;
 	t_cell		**cell_details;
 
 	coords.y = 0;

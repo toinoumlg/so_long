@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 15:28:51 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:16:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ void	print_actual_arrays(t_data *data)
 		i++;
 	}
 }
-
-
-
 
 void	spawn_exit(t_data *data)
 {
@@ -95,11 +92,9 @@ void	start_game(t_data data)
 
 void	init_game(t_data *data)
 {
-	
 	data->game.player.moves = 0;
 	data->frames = 0;
-	data->window.move.x = 0;
-	data->window.move.y = 0;
+	data->window.move = set_vector2(0, 0);
 	data->game.game_finished = 0;
 	data->game.player.is_moving = 0;
 	data->game.moves = set_move();
