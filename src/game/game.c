@@ -6,48 +6,17 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 14:16:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:12:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	print_actual_arrays(t_data *data)
+int	handle_mouse(int button, int x, int y, t_data *data)
 {
-	int	i;
-
-	i = 0;
-	ft_printf("actual %d %d\nscreen:\n", data->window.actual.x,
-		data->window.actual.y);
-	while (data->window.screen[i])
-	{
-		ft_printf("[%d]-%s\n", i, data->window.screen[i]);
-		i++;
-	}
+	return (0);
+	(void)data;
 }
-
-void	spawn_exit(t_data *data)
-{
-	t_image	combined;
-
-	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
-	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
-			&combined.size_l, &combined.endian);
-	combined.wh = data->textures.ground[0].wh;
-	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color_offset(&data->textures.exit[0], &combined);
-	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
-		data->window.exit.x * PIXEL_PADDING, data->window.exit.y
-		* PIXEL_PADDING);
-	mlx_destroy_image(data->mlx, combined.image);
-	data->game.game_finished = 2;
-}
-
-// int	handle_mouse(int button, int x, int y, t_data *data)
-// {
-// 	return (0);
-// 	(void)data;
-// }
 
 int	handle_keys(int key_stroked, t_data *data)
 {
@@ -80,32 +49,13 @@ int	update(t_data *data)
 	return (0);
 }
 
-void	start_game(t_data data)
-{
-	mlx_hook(data.window.ptr, 2, (1L << 0), handle_keys, &data);
-	// mlx_mouse_hook(data.window.ptr, handle_mouse, &data);
-	// mlx_key_hook(data.window.ptr, handle_keys, &data);
-	mlx_hook(data.window.ptr, 17, 0, on_destroy, &data);
-	mlx_loop_hook(data.mlx, update, &data);
-	mlx_loop(data.mlx);
-}
-
-void	init_game(t_data *data)
-{
-	data->game.player.moves = 0;
-	data->frames = 0;
-	data->window.move = set_vector2(0, 0);
-	data->game.game_finished = 0;
-	data->game.player.is_moving = 0;
-	data->game.moves = set_move();
-	set_textures(data);
-	init_window(data->map, &data->window, data->mlx, data->textures);
-	update_collectible_coords(data->game.collectibles, data->window.min);
-}
-
 void	game(t_data data)
 {
 	init_game(&data);
-	start_game(data);
+	mlx_hook(data.window.ptr, 2, (1L << 0), handle_keys, &data);
+	mlx_mouse_hook(data.window.ptr, handle_mouse, &data);
+	mlx_hook(data.window.ptr, 17, 0, on_destroy, &data);
+	mlx_loop_hook(data.mlx, update, &data);
+	mlx_loop(data.mlx);
 	free_game(data);
 }

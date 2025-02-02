@@ -6,17 +6,22 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:23:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 14:25:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:11:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
+
+
 void	move_player(int key_stroked, t_data *data)
 {
 	char	*str;
+	char	*itoa;
 
-	str = ft_strjoin("player move", ft_itoa(data->game.player.moves));
+	itoa = ft_itoa(data->game.player.moves);
+	str = ft_strjoin("player move: ", itoa);
+	free(itoa);
 	mlx_string_put(data->mlx, data->window.ptr, 50, 50, 0xffd700, str);
 	if (key_stroked == 119)
 		data->window.move = data->game.moves.up;

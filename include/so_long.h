@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 15:34:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:13:12 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,10 +241,13 @@ t_possible_directions		set_move(void);
 
 // game
 // ==> start
+void						init_game(t_data *data);
 void						set_textures(t_data *data);
 void						init_window(t_map *map, t_window *window, void *mlx,
 								t_textures textures);
 // ==> textures
+void						set_textures_coins(t_image *coins, void *mlx);
+void						set_textures_walls(t_image *walls, void *mlx);
 void						combine_image(t_image front, t_image background,
 								void *mlx, t_window window);
 void						set_background_color(t_image *background,
@@ -258,7 +261,7 @@ void						print_collectibles(t_data *data,
 unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
 								unsigned int color);
-
+void						spawn_exit(t_data *data);
 // ==> window
 void						get_map_coords_in_screen(t_window *window,
 								t_map *map);
@@ -270,8 +273,8 @@ void						update_screen_array(t_data *data);
 void						move_player(int key_stroked, t_data *data);
 // ==> collectibles
 void						add_new_collectible(t_map *map, int x, int y);
-void						update_collectible_coords(t_collectibles
-								*collectibles, t_vector2 min);
+void						update_collectible_coords(t_collectibles *collectibles,
+								t_vector2 min);
 void						destroy_collectible(t_collectibles **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);
@@ -284,6 +287,7 @@ void						free_open_list(t_a_star_list *open_list);
 void						free_collectibles(t_collectibles *collectibles);
 // test utils
 void						print_array(char **array);
+void						print_actual_arrays(t_data *data);
 int							trace_path(t_cell **cell_details, t_vector2 end,
 								char found);
 void						print_list(t_collectibles *list);

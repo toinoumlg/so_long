@@ -19,6 +19,7 @@ SRCS = main.c									\
 	game/textures/print_image.c					\
 	game/textures/combine_image.c				\
 	game/textures/combine_image_utils.c			\
+	game/textures/set_textures_wallls_coins.c	\
 	free_memory.c								\
 	test_utils.c
 

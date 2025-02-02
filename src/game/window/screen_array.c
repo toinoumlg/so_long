@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 14:26:15 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:07:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,19 @@ void	init_screen_array(t_map *map, t_window *window)
 		if (map_coords.x)
 			map_coords.y++;
 		screen_coords.y++;
+	}
+}
+
+void	print_actual_arrays(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	ft_printf("actual %d %d\nscreen:\n", data->window.actual.x,
+		data->window.actual.y);
+	while (data->window.screen[i])
+	{
+		ft_printf("[%d]-%s\n", i, data->window.screen[i]);
+		i++;
 	}
 }

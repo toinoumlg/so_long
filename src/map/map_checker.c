@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/30 00:12:18 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:06:28 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ int	what_is_on_path(t_map *map, int x, int y)
 
 int	finder(t_map *map)
 {
-	t_coords	coords;
+	t_vector2	coords;
 
-	coords.x = 1;
-	coords.y = 1;
+	coords = set_vector2(1, 1);
 	while (coords.y < map->actual.y - 1 && coords.x < map->actual.x - 1)
 	{
 		if (!what_is_on_path(map, coords.x, coords.y))

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:21:17 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 15:41:24 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:06:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 unsigned int	get_pixel_color(t_image *image, t_vector2 i)
 {
 	return (*(unsigned int *)(image->addr + (i.y * image->size_l + i.x
-				* (image->bpp / 8))));
+			* (image->bpp / 8))));
 }
 
 void	put_pixel(t_image *image, t_vector2 i, unsigned int color)
