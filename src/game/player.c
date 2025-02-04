@@ -6,13 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:23:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/01 10:11:39 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:28:46 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-
 
 void	move_player(int key_stroked, t_data *data)
 {
@@ -22,7 +20,7 @@ void	move_player(int key_stroked, t_data *data)
 	itoa = ft_itoa(data->game.player.moves);
 	str = ft_strjoin("player move: ", itoa);
 	free(itoa);
-	mlx_string_put(data->mlx, data->window.ptr, 50, 50, 0xffd700, str);
+	// mlx_string_put(data->mlx, data->window.ptr, 50, 50, 0xffd700, str);
 	if (key_stroked == 119)
 		data->window.move = data->game.moves.up;
 	if (key_stroked == 97)
@@ -32,7 +30,7 @@ void	move_player(int key_stroked, t_data *data)
 	if (key_stroked == 100)
 		data->window.move = data->game.moves.right;
 	if (data->window.screen[data->window.actual.y
-			+ data->window.move.y][data->window.actual.x
+		+ data->window.move.y][data->window.actual.x
 		+ data->window.move.x] != '1')
 		update_screen_array(data);
 	else

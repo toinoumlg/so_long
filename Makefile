@@ -14,7 +14,6 @@ SRCS = main.c									\
 	game/collectibles.c							\
 	game/window/screen_array.c					\
 	game/window/init_window.c					\
-	game/window/utils_window.c					\
 	game/textures/set_textures.c				\
 	game/textures/print_image.c					\
 	game/textures/combine_image.c				\
@@ -41,7 +40,7 @@ all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
 norminette:
 	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
-$(NAME): $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) 
+$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) 
 	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)
 
 $(MLX_LIB):

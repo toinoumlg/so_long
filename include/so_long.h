@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/01 10:13:12 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:33:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 #  include <math.h>
 #  include <stdio.h>
 #  include <stdlib.h>
+#  include <time.h>
 # endif
 
 # ifndef VARS
 #  define PIXEL_PADDING 32
-#  define SCREEN_HEIGHT 2560
-#  define SCREEN_WIDTH 1440
+#  define SCREEN_HEIGHT 2160
+#  define SCREEN_WIDTH 3840
 #  define MAX_COLLECTIBLES 200
 # endif
 
@@ -198,6 +199,13 @@ typedef struct s_game
 
 }							t_game;
 
+typedef struct s_timer
+{
+	clock_t					start;
+	clock_t					end;
+	double					time;
+}							t_timer;
+
 typedef struct s_data
 {
 	int						frames;
@@ -206,6 +214,7 @@ typedef struct s_data
 	t_window				window;
 	t_game					game;
 	t_map					*map;
+	t_timer					timer;
 }							t_data;
 
 // main
