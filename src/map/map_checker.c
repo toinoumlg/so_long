@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/01 10:06:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:25:53 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,19 @@ int	check_if_rectangular(t_map *map)
 
 int	check_border(t_map *map)
 {
-	int	x;
-	int	y;
+	t_vector2	coords;
 
-	x = 0;
-	y = 0;
-	while (map->array[y])
+	coords = set_vector2(0, 0);
+	while (map->array[coords.y])
 	{
-		if (map->array[y][x] != '1')
+		if (map->array[coords.y][coords.x] != '1')
 			return (-1);
-		if (x == map->actual.x - 1)
-		{
-			y++;
-			x = 0;
-		}
-		else if (y == 0 || y == map->actual.y - 1)
-			x++;
+		if (coords.x == map->actual.x - 1)
+			coords = set_vector2(coords.y + 1, 0);
+		else if (coords.y == 0 || coords.y == map->actual.y - 1)
+			coords.x++;
 		else
-			x += map->actual.x - 1;
+			coords.x += map->actual.x - 1;
 	}
 	return (0);
 }
@@ -65,24 +60,23 @@ int	what_is_on_path(t_map *map, int x, int y)
 	else if (map->array[y][x] == 'E')
 	{
 		if (!map->exit.x)
-		{
-			map->exit.x = x;
-			map->exit.y = y;
-		}
+			map->exit = set_vector2(y, x);
 		else
 			return (-1);
 	}
 	else if (map->array[y][x] == 'P')
 	{
 		if (!map->player_start.x)
-		{
-			map->player_start.x = x;
-			map->player_start.y = y;
-		}
+			map->player_start = set_vector2(y, x);
 		else
 			return (-1);
 	}
-	return (0);
+	if (map->array[y][x] == 'C' || map->array[y][x] == '1'
+		|| map->array[y][x] == '0' || map->array[y][x] == 'E'
+		|| map->array[y][x] == 'P')
+		return (0);
+	else
+		return (-1);
 }
 
 int	finder(t_map *map)
@@ -97,10 +91,7 @@ int	finder(t_map *map)
 		else
 			return (-1);
 		if (coords.x == map->actual.x - 1)
-		{
-			coords.x = 0;
-			coords.y++;
-		}
+			coords = set_vector2(coords.y + 1, 1);
 	}
 	if (!map->collectibles || !map->exit.x || !map->player_start.x)
 		return (-1);

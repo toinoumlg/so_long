@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 20:20:00 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:52:07 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	a_star_neighbor_direction(t_a_star_struct *a_star, t_map *map,
 	else if (a_star->closed_list[new.parent.y][new.parent.x] == -1
 		&& is_blocked(map->array, new.parent))
 		find_new_f(new, actual, a_star);
+	if (a_star->closed_list[new.parent.y][new.parent.x] == 0)
+		return ;
 }
 
 int	a_star_neighbor(t_a_star_struct *a_star, t_map *map)
@@ -30,8 +32,6 @@ int	a_star_neighbor(t_a_star_struct *a_star, t_map *map)
 	t_vector2	actual;
 
 	actual = a_star->first->coords;
-	if (a_star->closed_list[actual.y][actual.x] == 0)
-		return (1);
 	a_star->closed_list[actual.y][actual.x] = 0;
 	free(a_star->first);
 	a_star_neighbor_direction(a_star, map, map->direction.up, actual);
@@ -52,6 +52,8 @@ void	a_star_loop(t_a_star_struct *a_star, t_map *map)
 			return ;
 		if (a_star->found_end)
 			break ;
+		if (!a_star->open_list)
+			return ;
 		a_star->open_list = move_lowest_f_to_front(&a_star->open_list);
 	}
 }
