@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 17:33:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/04 20:28:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@
 
 # ifndef VARS
 #  define PIXEL_PADDING 32
-#  define SCREEN_HEIGHT 2160
-#  define SCREEN_WIDTH 3840
-#  define MAX_COLLECTIBLES 200
+#  define SCREEN_HEIGHT 2560
+#  define SCREEN_WIDTH 1440
 # endif
 
 # ifndef FT_PRINTF_COLORS

@@ -40,6 +40,9 @@ all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
 norminette:
 	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
+gdb: $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB)
+	gcc $(C_FLAGS) -o gdb.out $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB) -g 
+
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) 
 	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)
 
@@ -49,8 +52,9 @@ $(MLX_LIB):
 $(LIBFTPRINTF_LIB):
 	make -C $(LIBFTPRINTF_DIR)
 
+# REMOVE -g
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(C_FLAGS) -c -o $@ $< $(INCLUDES)
+	$(CC) $(C_FLAGS) -g -c -o $@ $< $(INCLUDES)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

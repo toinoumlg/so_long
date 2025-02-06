@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 17:24:42 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/04 20:20:00 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ void	a_star_neighbor_direction(t_a_star_struct *a_star, t_map *map,
 		find_new_f(new, actual, a_star);
 }
 
-void	a_star_neighbor(t_a_star_struct *a_star, t_map *map)
+int	a_star_neighbor(t_a_star_struct *a_star, t_map *map)
 {
 	t_vector2	actual;
 
 	actual = a_star->first->coords;
+	if (a_star->closed_list[actual.y][actual.x] == 0)
+		return (1);
 	a_star->closed_list[actual.y][actual.x] = 0;
 	free(a_star->first);
 	a_star_neighbor_direction(a_star, map, map->direction.up, actual);
 	a_star_neighbor_direction(a_star, map, map->direction.down, actual);
 	a_star_neighbor_direction(a_star, map, map->direction.left, actual);
 	a_star_neighbor_direction(a_star, map, map->direction.right, actual);
+	return (0);
 }
 
 void	a_star_loop(t_a_star_struct *a_star, t_map *map)
@@ -45,7 +48,8 @@ void	a_star_loop(t_a_star_struct *a_star, t_map *map)
 	{
 		a_star->first = a_star->open_list;
 		a_star->open_list = a_star->open_list->next;
-		a_star_neighbor(a_star, map);
+		if (a_star_neighbor(a_star, map))
+			return ;
 		if (a_star->found_end)
 			break ;
 		a_star->open_list = move_lowest_f_to_front(&a_star->open_list);
@@ -59,7 +63,8 @@ int	a_star_search(t_vector2 start, t_vector2 end, t_map *map)
 	init_a_star(map, start, end, &a_star);
 	a_star_loop(&a_star, map);
 	if (trace_path(a_star.cell_details, end, a_star.found_end))
-		return (free_a_star_search(a_star, map->actual.y), -1);
+		return (free_collectibles(map->collectibles), free_a_star_search(a_star,
+				map->actual.y), -1);
 	else
 		return (free_a_star_search(a_star, map->actual.y), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/03 12:37:51 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/05 09:46:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	init_map(t_map *map)
 
 	file_path = ft_strjoin(PATH, map->file_name);
 	ft_printf("%s", file_path);
-	fd = open(file_path, O_RDWR);
+	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		return (ft_printf(RED "Error\nWrong map name" RESET), free(file_path),
 			close(fd), -1);
@@ -49,7 +49,7 @@ int	init_map(t_map *map)
 	map->max = set_vector2((map->actual.y + 4) * PIXEL_PADDING, (map->actual.x
 				+ 4) * PIXEL_PADDING);
 	map->min = set_vector2(5, 5);
-	if (map->max.y / 32 > SCREEN_HEIGHT || map->max.x / 32> SCREEN_WIDTH
+	if (map->max.y / 32 > SCREEN_HEIGHT || map->max.x / 32 > SCREEN_WIDTH
 		|| map->min.x > map->actual.x || map->min.y > map->actual.y)
 		return (ft_printf(RED "Error\nMap is too big or too small" RESET), -1);
 	return (0);
