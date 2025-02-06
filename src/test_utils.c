@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 20:55:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/07 00:29:22 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@ void	test_print_final_path(t_cell **cell_details, t_vector2 end)
 	}
 	ft_printf("[%d][%d]\n", final_path[i].y, final_path[i].x);
 	free(final_path);
-}
-
-int	trace_path(t_cell **cell_details, t_vector2 end, char found)
-{
-	if (!found)
-		return (-1);
-	else
-		test_print_final_path(cell_details, end);
-	return (0);
 }
 
 void	print_list(t_collectible *list)

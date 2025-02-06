@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:12:16 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/07 00:29:30 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,8 +342,6 @@ void						free_collectibles(t_collectible *collectibles);
 // test utils
 void						print_array(char **array);
 void						print_actual_arrays(t_data *data);
-int							trace_path(t_cell **cell_details, t_vector2 end,
-								char found);
 void						print_list(t_collectible *list);
 
 #endif
