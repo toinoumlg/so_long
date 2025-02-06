@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 14:25:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:02:07 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	update_collectibles(t_data *data)
 {
-	t_collectibles	*tmp;
+	t_collectible	*tmp;
 
 	tmp = data->game.collectibles;
 	while (tmp)
@@ -29,10 +29,10 @@ void	update_collectibles(t_data *data)
 
 void	add_new_collectible(t_map *map, int x, int y)
 {
-	t_collectibles	*new_collectible;
-	t_collectibles	*tmp;
+	t_collectible	*new_collectible;
+	t_collectible	*tmp;
 
-	new_collectible = ft_calloc(sizeof(t_collectibles), 1);
+	new_collectible = ft_calloc(sizeof(t_collectible), 1);
 	new_collectible->coords.x = x;
 	new_collectible->coords.y = y;
 	new_collectible->i_image = rand() % 13;
@@ -49,10 +49,10 @@ void	add_new_collectible(t_map *map, int x, int y)
 	return ;
 }
 
-void	destroy_collectible(t_collectibles **collectibles, t_vector2 coords)
+void	destroy_collectible(t_collectible **collectibles, t_vector2 coords)
 {
-	t_collectibles	*previous;
-	t_collectibles	*tmp;
+	t_collectible	*previous;
+	t_collectible	*tmp;
 	int				i;
 
 	i = 0;
@@ -74,9 +74,9 @@ void	destroy_collectible(t_collectibles **collectibles, t_vector2 coords)
 	free(tmp);
 }
 
-void	update_collectible_coords(t_collectibles *collectibles, t_vector2 min)
+void	update_collectible_coords(t_collectible *collectibles, t_vector2 min)
 {
-	t_collectibles	*tmp;
+	t_collectible	*tmp;
 
 	tmp = collectibles;
 	while (tmp)

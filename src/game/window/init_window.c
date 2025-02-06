@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_window.c                                     :+:      :+:    :+:   */
+/*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 17:33:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 22:01:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	wich_texture_to_print(t_window *window, t_textures textures, void *mlx)
 	if (c == 'C')
 		combine_image(textures.coins_r[0], textures.ground[rand() % 2], mlx,
 			*window);
+	if (c == '2')
+		combine_image(textures.ennemies[0], textures.ground[0], mlx, *window);
 	window->actual.x++;
 }
 
@@ -105,5 +107,5 @@ void	init_window(t_map *map, t_window *window, void *mlx,
 			+ window->min.x);
 	window->actual = set_vector2(map->player_start.y + window->min.y,
 			map->player_start.x + window->min.x);
-	free_memory_map(map);
+	free_map(map);
 }

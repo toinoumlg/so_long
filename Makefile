@@ -12,13 +12,15 @@ SRCS = main.c									\
 	game/game.c									\
 	game/player.c								\
 	game/collectibles.c							\
+	game/ennemy/ennemy.c						\
+	game/ennemy/ennemy_logic.c					\
 	game/window/screen_array.c					\
 	game/window/init_window.c					\
 	game/textures/set_textures.c				\
 	game/textures/print_image.c					\
 	game/textures/combine_image.c				\
 	game/textures/combine_image_utils.c			\
-	game/textures/set_textures_wallls_coins.c	\
+	game/textures/set_walls_coins_ennemies.c	\
 	free_memory.c								\
 	test_utils.c
 
@@ -53,7 +55,7 @@ $(LIBFTPRINTF_LIB):
 	make -C $(LIBFTPRINTF_DIR)
 
 # REMOVE -g
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(HEADER)
 	$(CC) $(C_FLAGS) -g -c -o $@ $< $(INCLUDES)
 
 $(OBJ_DIR):
@@ -63,6 +65,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)/game
 	mkdir -p $(OBJ_DIR)/game/textures
 	mkdir -p $(OBJ_DIR)/game/window
+	mkdir -p $(OBJ_DIR)/game/ennemy
 
 clean:
 	@rm -fr $(OBJ_DIR)
@@ -72,3 +75,4 @@ fclean:
 	@rm -fr $(OBJ_DIR) $(NAME)
 	@make fclean --no-print-directory -C $(LIBFTPRINTF_DIR)
 
+re: fclean all

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 10:46:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/07 00:12:16 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #  include <math.h>
 #  include <stdio.h>
 #  include <stdlib.h>
-#  include <time.h>
+#  include <sys/time.h>
 # endif
 
 # ifndef VARS
@@ -80,6 +80,27 @@
 #  define COIN_R11 "textures/coins/coin_rotate11.xpm"
 #  define COIN_R12 "textures/coins/coin_rotate12.xpm"
 #  define COIN_R13 "textures/coins/coin_rotate13.xpm"
+#  define ENNEMY1 "textures/ennemies/ennemies1.xpm"
+#  define ENNEMY2 "textures/ennemies/ennemies2.xpm"
+#  define ENNEMY3 "textures/ennemies/ennemies3.xpm"
+#  define ENNEMY4 "textures/ennemies/ennemies4.xpm"
+#  define ENNEMY5 "textures/ennemies/ennemies5.xpm"
+#  define ENNEMY6 "textures/ennemies/ennemies6.xpm"
+#  define ENNEMY7 "textures/ennemies/ennemies7.xpm"
+#  define ENNEMY8 "textures/ennemies/ennemies8.xpm"
+#  define ENNEMY9 "textures/ennemies/ennemies9.xpm"
+#  define ENNEMY10 "textures/ennemies/ennemies10.xpm"
+#  define ENNEMY11 "textures/ennemies/ennemies11.xpm"
+#  define ENNEMY12 "textures/ennemies/ennemies12.xpm"
+#  define ENNEMY13 "textures/ennemies/ennemies13.xpm"
+#  define ENNEMY14 "textures/ennemies/ennemies14.xpm"
+#  define ENNEMY15 "textures/ennemies/ennemies15.xpm"
+#  define ENNEMY16 "textures/ennemies/ennemies16.xpm"
+#  define ENNEMY17 "textures/ennemies/ennemies17.xpm"
+#  define ENNEMY18 "textures/ennemies/ennemies18.xpm"
+#  define ENNEMY19 "textures/ennemies/ennemies19.xpm"
+#  define ENNEMY20 "textures/ennemies/ennemies20.xpm"
+#  define ENNEMY21 "textures/ennemies/ennemies21.xpm"
 # endif
 
 typedef struct s_vector2
@@ -103,12 +124,12 @@ typedef struct cell
 	t_vector2				parent;
 }							t_cell;
 
-typedef struct s_collectibles
+typedef struct s_collectible
 {
 	t_vector2				coords;
 	int						i_image;
-	struct s_collectibles	*next_collectible;
-}							t_collectibles;
+	struct s_collectible	*next_collectible;
+}							t_collectible;
 
 typedef struct s_possible_directions
 {
@@ -118,6 +139,14 @@ typedef struct s_possible_directions
 	t_vector2				right;
 	t_vector2				zero;
 }							t_possible_directions;
+
+typedef struct s_ennemy
+{
+	t_vector2				coords;
+	t_vector2				next_coords;
+	int						i_image;
+	struct s_ennemy			*next_ennemy;
+}							t_ennemy;
 
 typedef struct s_map
 {
@@ -129,7 +158,8 @@ typedef struct s_map
 	t_possible_directions	direction;
 	t_vector2				player_start;
 	t_vector2				exit;
-	t_collectibles			*collectibles;
+	t_collectible			*collectibles;
+	t_ennemy				*ennemies;
 }							t_map;
 
 typedef struct s_new_values
@@ -181,17 +211,20 @@ typedef struct s_textures
 	t_image					*player;
 	t_image					*coins_r;
 	t_image					*exit;
+	t_image					*ennemies;
 }							t_textures;
 
 typedef struct s_player
 {
 	int						is_moving;
 	int						moves;
+	int						move_buffer;
 }							t_player;
 
 typedef struct s_game
 {
-	t_collectibles			*collectibles;
+	t_collectible			*collectibles;
+	t_ennemy				*ennemies;
 	t_possible_directions	moves;
 	t_player				player;
 	int						game_finished;
@@ -200,9 +233,9 @@ typedef struct s_game
 
 typedef struct s_timer
 {
-	clock_t					start;
-	clock_t					end;
+	struct timeval			last_frame;
 	double					time;
+	double					delta_time;
 }							t_timer;
 
 typedef struct s_data
@@ -224,8 +257,12 @@ void						game(t_data data);
 // a_star
 void						init_a_star(t_map *map, t_vector2 start,
 								t_vector2 end, t_a_star_struct *a_star);
-t_cell						**init_and_set_cell_details(t_vector2 start,
+int							a_star_search(t_vector2 start, t_vector2 end,
 								t_map *map);
+t_cell						**init_and_set_cell_details(t_vector2 start,
+								t_vector2 max);
+void						a_star_loop(t_a_star_struct *a_star, char **array,
+								t_possible_directions direction);
 t_cell						set_cell_details(t_new_values new,
 								t_vector2 coords);
 void						init_possible_directions(t_map *map);
@@ -233,7 +270,7 @@ t_a_star_list				*init_list(float f, int x, int y);
 t_a_star_list				*add_to_list(t_a_star_list *open_list, float f,
 								int y, int x);
 t_a_star_list				*move_lowest_f_to_front(t_a_star_list **open_list);
-signed char					**init_closed_list(t_map *map);
+signed char					**init_closed_list(t_vector2 max);
 t_vector2					set_vector2(int y, int x);
 int							is_destination(t_vector2 actual, t_vector2 end);
 int							is_blocked(char **array, t_vector2 coords);
@@ -254,6 +291,7 @@ void						set_textures(t_data *data);
 void						init_window(t_map *map, t_window *window, void *mlx,
 								t_textures textures);
 // ==> textures
+void						set_textures_ennemies(t_image *ennemies, void *mlx);
 void						set_textures_coins(t_image *coins, void *mlx);
 void						set_textures_walls(t_image *walls, void *mlx);
 void						combine_image(t_image front, t_image background,
@@ -264,8 +302,10 @@ void						set_front_color_offset(t_image *front,
 								t_image *combined);
 void						set_front_color(t_image *front, t_image *combined);
 void						print_player(t_data *data);
+void						print_ennemies(t_data *data, t_ennemy *tmp);
+void						print_ennemies_move(t_data *data, t_ennemy *tmp);
 void						print_collectibles(t_data *data,
-								t_collectibles *tmp);
+								t_collectible *tmp);
 unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
 								unsigned int color);
@@ -279,25 +319,31 @@ void						print_screen_array(char **screen,
 								void *mlx);
 void						update_screen_array(t_data *data);
 void						move_player(int key_stroked, t_data *data);
-// ==> collectibles
+// ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
-void						update_collectible_coords(t_collectibles *collectibles,
+void						update_collectible_coords(t_collectible *collectibles,
 								t_vector2 min);
-void						destroy_collectible(t_collectibles **collectibles,
+void						destroy_collectible(t_collectible **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);
+// ==> ennemy
+void						add_new_ennemy(t_map *map, int x, int y);
+void						update_ennemies_coords(t_ennemy *ennemies,
+								t_vector2 coords);
+void						update_ennemies(t_data *data);
+void						update_logic(t_data *data);
 // free
-void						free_memory_map(t_map *map);
+void						free_map(t_map *map);
 void						free_a_star_search(t_a_star_struct a_star,
 								int map_height);
 void						free_game(t_data data);
 void						free_open_list(t_a_star_list *open_list);
-void						free_collectibles(t_collectibles *collectibles);
+void						free_collectibles(t_collectible *collectibles);
 // test utils
 void						print_array(char **array);
 void						print_actual_arrays(t_data *data);
 int							trace_path(t_cell **cell_details, t_vector2 end,
 								char found);
-void						print_list(t_collectibles *list);
+void						print_list(t_collectible *list);
 
 #endif

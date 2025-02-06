@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/01 10:06:37 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:55:29 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	set_textures_player(t_image *player, void *mlx)
 void	set_textures(t_data *data)
 {
 	data->game.collectibles = data->map->collectibles;
+	data->game.ennemies = data->map->ennemies;
 	data->textures.walls = ft_calloc(sizeof(t_image), 7);
 	data->textures.ground = ft_calloc(sizeof(t_image), 2);
 	data->textures.water = ft_calloc(sizeof(t_image), 2);
@@ -83,8 +84,10 @@ void	set_textures(t_data *data)
 	data->textures.player = ft_calloc(sizeof(t_image), 1);
 	data->textures.coins_r = ft_calloc(sizeof(t_image), 13);
 	data->textures.exit = ft_calloc(sizeof(t_image), 1);
+	data->textures.ennemies = ft_calloc(sizeof(t_image), 21);
 	set_textures_border(data->textures.borders, data->mlx);
 	set_textures_walls(data->textures.walls, data->mlx);
+	set_textures_ennemies(data->textures.ennemies, data->mlx);
 	set_textures_wgw(&data->textures, data->mlx);
 	set_textures_player(data->textures.player, data->mlx);
 	set_textures_coins(data->textures.coins_r, data->mlx);

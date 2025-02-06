@@ -1,16 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_textures_wallls_coins.c                        :+:      :+:    :+:   */
+/*   set_walls_coins_ennemies.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:56:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/01 09:56:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 22:00:21 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+void	set_textures_ennemies(t_image *ennemies, void *mlx)
+{
+	char	*ennemy_file[21];
+	int		i;
+
+	ennemy_file[0] = ENNEMY1;
+	ennemy_file[1] = ENNEMY2;
+	ennemy_file[2] = ENNEMY3;
+	ennemy_file[3] = ENNEMY4;
+	ennemy_file[4] = ENNEMY5;
+	ennemy_file[5] = ENNEMY6;
+	ennemy_file[6] = ENNEMY7;
+	ennemy_file[7] = ENNEMY8;
+	ennemy_file[8] = ENNEMY9;
+	ennemy_file[9] = ENNEMY10;
+	ennemy_file[10] = ENNEMY11;
+	ennemy_file[11] = ENNEMY12;
+	ennemy_file[12] = ENNEMY13;
+	ennemy_file[13] = ENNEMY14;
+	ennemy_file[14] = ENNEMY15;
+	ennemy_file[15] = ENNEMY1;
+	ennemy_file[16] = ENNEMY17;
+	ennemy_file[17] = ENNEMY18;
+	ennemy_file[18] = ENNEMY19;
+	ennemy_file[19] = ENNEMY20;
+	ennemy_file[20] = ENNEMY21;
+	i = 0;
+	while (i < 21)
+	{
+		ennemies[i].image = mlx_xpm_file_to_image(mlx, ennemy_file[i],
+				&ennemies[i].wh.x, &ennemies[i].wh.y);
+		ennemies[i].addr = mlx_get_data_addr(ennemies[i].image,
+				&ennemies[i].bpp, &ennemies[i].size_l, &ennemies[i].endian);
+		i++;
+	}
+}
 
 void	set_textures_coins(t_image *coins, void *mlx)
 {

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 20:28:54 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 23:11:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,17 @@ t_a_star_list	*init_list(float f, int x, int y)
 	return (list);
 }
 
-signed char	**init_closed_list(t_map *map)
+signed char	**init_closed_list(t_vector2 max)
 {
 	int			i;
 	signed char	**closed_list;
 
 	i = 0;
-	closed_list = ft_calloc(sizeof(signed char *), map->actual.y);
-	while (i < map->actual.y)
+	closed_list = ft_calloc(sizeof(signed char *), max.y);
+	while (i < max.y)
 	{
-		closed_list[i] = ft_calloc(sizeof(signed char), map->actual.x);
-		ft_memset(closed_list[i], -1, map->actual.x);
+		closed_list[i] = ft_calloc(sizeof(signed char), max.x);
+		ft_memset(closed_list[i], -1, max.x);
 		i++;
 	}
 	return (closed_list);

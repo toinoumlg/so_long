@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 10:32:11 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:42:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ int	set_map(t_map *map)
 		return (free(map), -2);
 	error = check_map(map);
 	if (error == -1)
-		return (free_memory_map(map),
+		return (free_map(map),
 			ft_printf(RED "Error\nMap is not Rectangular\n" RESET), -1);
 	if (error == -2)
-		return (free_memory_map(map),
+		return (free_map(map),
 			ft_printf(RED "Error\nBorder arent correct\n" RESET), -1);
 	if (error == -3)
-		return (free_collectibles(map->collectibles), free_memory_map(map),
+		return (free_collectibles(map->collectibles), free_map(map),
 			ft_printf(RED "Error\nMissing either collectibles,exit or start\n"),
 			ft_printf("Can also be a wrong character in map\n" RESET), -1);
 	if (error == -4)
-		return (free_memory_map(map),
+		return (free_collectibles(map->collectibles),free_map(map),
 			ft_printf(RED "Error\nNo available path for "),
 			ft_printf("taking collectibles and exiting\n" RESET), -1);
 	return (0);

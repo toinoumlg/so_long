@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/01 10:07:42 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 23:44:53 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	update_screen_array(t_data *data)
 	data->window.screen[new_coords.y][new_coords.x] = 'P';
 	data->game.player.is_moving = 1;
 	data->game.player.moves++;
-	ft_printf("player move:%d\n", data->game.player.moves);
 }
 
 int	is_in_map(t_vector2 screen, t_window *window)
@@ -49,8 +48,7 @@ void	set_screen_array_c(t_vector2 *map_coords, t_vector2 *screen_coords,
 {
 	if (is_in_map(*screen_coords, window))
 	{
-		window->screen[screen_coords->y][screen_coords->x]
-			= map->array[map_coords->y][map_coords->x];
+		window->screen[screen_coords->y][screen_coords->x] = map->array[map_coords->y][map_coords->x];
 		map_coords->x++;
 	}
 	else

@@ -6,15 +6,15 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 20:18:31 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 22:07:32 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	free_collectibles(t_collectibles *collectibles)
+void	free_collectibles(t_collectible *collectibles)
 {
-	t_collectibles	*tmp;
+	t_collectible	*tmp;
 
 	tmp = collectibles;
 	if (!tmp)
@@ -27,7 +27,22 @@ void	free_collectibles(t_collectibles *collectibles)
 	}
 }
 
-void	free_game(t_data data)
+void	free_ennemies(t_ennemy *ennemies)
+{
+	t_ennemy	*tmp;
+
+	tmp = ennemies;
+	if (!tmp)
+		return ;
+	while (tmp)
+	{
+		tmp = ennemies->next_ennemy;
+		free(ennemies);
+		ennemies = tmp;
+	}
+}
+
+void	free_images(t_data data)
 {
 	int	i;
 
@@ -49,14 +64,26 @@ void	free_game(t_data data)
 	i = -1;
 	while (i++ < 12)
 		mlx_destroy_image(data.mlx, data.textures.coins_r[i].image);
+	i = -1;
+	while (i++ < 20)
+		mlx_destroy_image(data.mlx, data.textures.ennemies[i].image);
 	mlx_destroy_image(data.mlx, data.textures.exit[0].image);
+}
+
+void	free_game(t_data data)
+{
+	int	i;
+
 	i = 0;
 	while (data.window.screen[i])
 	{
 		free(data.window.screen[i]);
 		i++;
 	}
+	free_ennemies(data.game.ennemies);
+	free_images(data);
 	free(data.window.screen);
+	free(data.textures.ennemies);
 	free(data.textures.ground);
 	free(data.textures.walls);
 	free(data.textures.water);
@@ -69,7 +96,7 @@ void	free_game(t_data data)
 	free(data.mlx);
 }
 
-void	free_memory_map(t_map *map)
+void	free_map(t_map *map)
 {
 	int	i;
 

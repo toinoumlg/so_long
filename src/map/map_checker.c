@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 10:25:53 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:09:37 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	what_is_on_path(t_map *map, int x, int y)
 {
 	if (map->array[y][x] == 'C')
 		add_new_collectible(map, x, y);
+	else if (map->array[y][x] == '2')
+		add_new_ennemy(map, x, y);
 	else if (map->array[y][x] == 'E')
 	{
 		if (!map->exit.x)
@@ -73,7 +75,7 @@ int	what_is_on_path(t_map *map, int x, int y)
 	}
 	if (map->array[y][x] == 'C' || map->array[y][x] == '1'
 		|| map->array[y][x] == '0' || map->array[y][x] == 'E'
-		|| map->array[y][x] == 'P')
+		|| map->array[y][x] == 'P' || map->array[y][x] == '2')
 		return (0);
 	else
 		return (-1);

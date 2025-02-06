@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/04 17:15:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 20:55:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,14 @@ int	trace_path(t_cell **cell_details, t_vector2 end, char found)
 	return (0);
 }
 
-void	print_list(t_collectibles *list)
+void	print_list(t_collectible *list)
 {
 	while (list)
 	{
 		printf("[%d][%d]\n", list->coords.y, list->coords.x);
 		list = list->next_collectible;
 	}
+	
 }
 
 void	print_array(char **array)

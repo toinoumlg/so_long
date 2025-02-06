@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:45:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 14:05:05 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/06 23:16:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ t_cell	set_cells_detail_init(float fhg, int y, int x)
 	return (cell_details);
 }
 
-t_cell	**init_and_set_cell_details(t_vector2 start, t_map *map)
+t_cell	**init_and_set_cell_details(t_vector2 start, t_vector2 max)
 {
 	t_vector2	coords;
 	t_cell		**cell_details;
 
 	coords.y = 0;
-	cell_details = ft_calloc(sizeof(t_cell *), map->actual.y);
-	while (coords.y < map->actual.y)
-		cell_details[coords.y++] = ft_calloc(sizeof(t_cell), map->actual.x);
+	cell_details = ft_calloc(sizeof(t_cell *), max.y);
+	while (coords.y < max.y)
+		cell_details[coords.y++] = ft_calloc(sizeof(t_cell), max.x);
 	coords.y = 0;
-	while (coords.y < map->actual.y)
+	while (coords.y < max.y)
 	{
 		coords.x = 0;
-		while (coords.x < map->actual.x)
+		while (coords.x < max.x)
 			cell_details[coords.y][coords.x++] = set_cells_detail_init(100000,
 					-1, -1);
 		coords.y++;
