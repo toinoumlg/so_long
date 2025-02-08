@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 21:02:07 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:53:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	add_new_collectible(t_map *map, int x, int y)
 	t_collectible	*tmp;
 
 	new_collectible = ft_calloc(sizeof(t_collectible), 1);
-	new_collectible->coords.x = x;
-	new_collectible->coords.y = y;
+	new_collectible->coords = set_vector2(y,x);
 	new_collectible->i_image = rand() % 13;
 	new_collectible->next_collectible = NULL;
 	if (!map->collectibles)
@@ -53,9 +52,7 @@ void	destroy_collectible(t_collectible **collectibles, t_vector2 coords)
 {
 	t_collectible	*previous;
 	t_collectible	*tmp;
-	int				i;
 
-	i = 0;
 	tmp = *collectibles;
 	if (tmp->coords.x == coords.x && tmp->coords.y == coords.y)
 	{
@@ -66,7 +63,6 @@ void	destroy_collectible(t_collectible **collectibles, t_vector2 coords)
 	while (tmp != NULL && (tmp->coords.x != coords.x
 			|| tmp->coords.y != coords.y))
 	{
-		i++;
 		previous = tmp;
 		tmp = tmp->next_collectible;
 	}

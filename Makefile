@@ -11,6 +11,7 @@ SRCS = main.c									\
 	a_star/a_star_free_memory.c					\
 	game/game.c									\
 	game/player.c								\
+	game/sword.c								\
 	game/collectibles.c							\
 	game/ennemy/ennemy.c						\
 	game/ennemy/ennemy_logic.c					\
@@ -55,7 +56,7 @@ $(LIBFTPRINTF_LIB):
 	make -C $(LIBFTPRINTF_DIR)
 
 # REMOVE -g
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(HEADER)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
 	$(CC) $(C_FLAGS) -g -c -o $@ $< $(INCLUDES)
 
 $(OBJ_DIR):

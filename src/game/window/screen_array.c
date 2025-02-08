@@ -6,11 +6,13 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 23:44:53 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:36:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+
 
 void	update_screen_array(t_data *data)
 {
@@ -30,8 +32,7 @@ void	update_screen_array(t_data *data)
 		&& data->game.game_finished == 2)
 		data->game.game_finished = 3;
 	data->window.screen[new_coords.y][new_coords.x] = 'P';
-	data->game.player.is_moving = 1;
-	data->game.player.moves++;
+	data->game.player.status = 1;
 }
 
 int	is_in_map(t_vector2 screen, t_window *window)

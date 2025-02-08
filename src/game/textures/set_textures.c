@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 21:55:29 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:08:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,38 @@ void	set_textures_wgw(t_textures *textures, void *mlx)
 				&textures->ground[i].endian);
 }
 
-void	set_textures_player(t_image *player, void *mlx)
+void	set_textures_player(t_image *player, t_image *player_axe, void *mlx)
 {
-	player[0].image = mlx_xpm_file_to_image(mlx, PLAYER_IDLE1, &player[0].wh.x,
-			&player[0].wh.y);
-	player[0].addr = mlx_get_data_addr(player[0].image, &player[0].bpp,
-			&player[0].size_l, &player[0].endian);
+	char	*player_files[5];
+	char	*player_axe_files[4];
+	int		i;
+
+	player_files[0] = PLAYER_IDLE1;
+	player_files[1] = PLAYER_IDLE2;
+	player_files[2] = PLAYER_IDLE3;
+	player_files[3] = PLAYER_IDLE4;
+	player_files[4] = PLAYER_IDLE5;
+	player_axe_files[0] = PLAYER_AXE1;
+	player_axe_files[1] = PLAYER_AXE2;
+	player_axe_files[2] = PLAYER_AXE3;
+	player_axe_files[3] = PLAYER_AXE4;
+	i = -1;
+	while (i++ < 4)
+	{
+		player[i].image = mlx_xpm_file_to_image(mlx, player_files[i],
+				&player[i].wh.x, &player[i].wh.y);
+		player[i].addr = mlx_get_data_addr(player[i].image, &player[i].bpp,
+				&player[i].size_l, &player[i].endian);
+	}
+	i = -1;
+	while (i++ < 3)
+	{
+		player_axe[i].image = mlx_xpm_file_to_image(mlx, player_axe_files[i],
+				&player_axe[i].wh.x, &player_axe[i].wh.y);
+		player_axe[i].addr = mlx_get_data_addr(player_axe[i].image,
+				&player_axe[i].bpp, &player_axe[i].size_l,
+				&player_axe[i].endian);
+	}
 }
 
 void	set_textures(t_data *data)
@@ -81,7 +107,8 @@ void	set_textures(t_data *data)
 	data->textures.ground = ft_calloc(sizeof(t_image), 2);
 	data->textures.water = ft_calloc(sizeof(t_image), 2);
 	data->textures.borders = ft_calloc(sizeof(t_image), 8);
-	data->textures.player = ft_calloc(sizeof(t_image), 1);
+	data->textures.player = ft_calloc(sizeof(t_image), 5);
+	data->textures.player_axe = ft_calloc(sizeof(t_image), 4);
 	data->textures.coins_r = ft_calloc(sizeof(t_image), 13);
 	data->textures.exit = ft_calloc(sizeof(t_image), 1);
 	data->textures.ennemies = ft_calloc(sizeof(t_image), 21);
@@ -89,6 +116,6 @@ void	set_textures(t_data *data)
 	set_textures_walls(data->textures.walls, data->mlx);
 	set_textures_ennemies(data->textures.ennemies, data->mlx);
 	set_textures_wgw(&data->textures, data->mlx);
-	set_textures_player(data->textures.player, data->mlx);
+	set_textures_player(data->textures.player,data->textures.player_axe, data->mlx);
 	set_textures_coins(data->textures.coins_r, data->mlx);
 }

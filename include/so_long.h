@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:29:30 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:31:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,15 @@
 #  define WALL5 "textures/world/walls/wall5.xpm"
 #  define WALL6 "textures/world/walls/wall6.xpm"
 #  define WALL7 "textures/world/walls/wall7.xpm"
-#  define PLAYER_IDLE1 "textures/player_idle1.xpm"
+#  define PLAYER_IDLE1 "textures/player/idle/player_idle1.xpm"
+#  define PLAYER_IDLE2 "textures/player/idle/player_idle2.xpm"
+#  define PLAYER_IDLE3 "textures/player/idle/player_idle3.xpm"
+#  define PLAYER_IDLE4 "textures/player/idle/player_idle4.xpm"
+#  define PLAYER_IDLE5 "textures/player/idle/player_idle5.xpm"
+#  define PLAYER_AXE1 "textures/player/axe/player_axe1.xpm"
+#  define PLAYER_AXE2 "textures/player/axe/player_axe2.xpm"
+#  define PLAYER_AXE3 "textures/player/axe/player_axe3.xpm"
+#  define PLAYER_AXE4 "textures/player/axe/player_axe4.xpm"
 #  define COIN_R1 "textures/coins/coin_rotate1.xpm"
 #  define COIN_R2 "textures/coins/coin_rotate2.xpm"
 #  define COIN_R3 "textures/coins/coin_rotate3.xpm"
@@ -145,6 +153,7 @@ typedef struct s_ennemy
 	t_vector2				coords;
 	t_vector2				next_coords;
 	int						i_image;
+	int						health;
 	struct s_ennemy			*next_ennemy;
 }							t_ennemy;
 
@@ -209,16 +218,30 @@ typedef struct s_textures
 	t_image					*walls;
 	t_image					*borders;
 	t_image					*player;
+	t_image					*player_axe;
 	t_image					*coins_r;
 	t_image					*exit;
 	t_image					*ennemies;
 }							t_textures;
 
+typedef struct s_sword
+{
+	t_vector2				coords;
+	t_vector2				direction;
+	int						index;
+	struct s_sword			*next_sword;
+}							t_sword;
+
+// status 0 idle 1 move;
 typedef struct s_player
 {
-	int						is_moving;
+	int						health;
+	int						status;
+	int						idle_index;
+	int						idle_frames;
 	int						moves;
 	int						move_buffer;
+	t_sword					*swords;
 }							t_player;
 
 typedef struct s_game
@@ -227,6 +250,7 @@ typedef struct s_game
 	t_ennemy				*ennemies;
 	t_possible_directions	moves;
 	t_player				player;
+	int						actual_axes;
 	int						game_finished;
 
 }							t_game;
@@ -301,11 +325,15 @@ void						set_background_color(t_image *background,
 void						set_front_color_offset(t_image *front,
 								t_image *combined);
 void						set_front_color(t_image *front, t_image *combined);
-void						print_player(t_data *data);
+void						print_player_moving(t_data *data);
+void						print_player_idle(t_data *data);
 void						print_ennemies(t_data *data, t_ennemy *tmp);
 void						print_ennemies_move(t_data *data, t_ennemy *tmp);
 void						print_collectibles(t_data *data,
 								t_collectible *tmp);
+void						print_move_string(t_data *data);
+void						print_seconds(t_data *data);
+
 unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
 								unsigned int color);
@@ -318,7 +346,10 @@ void						print_screen_array(char **screen,
 								t_textures textures, t_window *window,
 								void *mlx);
 void						update_screen_array(t_data *data);
-void						move_player(int key_stroked, t_data *data);
+void						player_move(int key_stroked, t_data *data);
+// ==> player
+void						update_swords(t_data *data);
+void						spawn_sword(t_data *data, t_vector2 direction);
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
 void						update_collectible_coords(t_collectible *collectibles,
@@ -332,6 +363,8 @@ void						update_ennemies_coords(t_ennemy *ennemies,
 								t_vector2 coords);
 void						update_ennemies(t_data *data);
 void						update_logic(t_data *data);
+void						destroy_ennemy(t_ennemy **ennemies,
+								t_vector2 coords, t_data *data);
 // free
 void						free_map(t_map *map);
 void						free_a_star_search(t_a_star_struct a_star,

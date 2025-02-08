@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:16:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/08 14:30:14 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,63 @@ t_vector2	get_next_coords(t_vector2 start, t_vector2 end, t_data *data)
 	return (tmp);
 }
 
+void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
+{
+	t_ennemy	*previous;
+	t_ennemy	*tmp;
+
+	tmp = *ennemies;
+	if (tmp->coords.x == coords.x && tmp->coords.y == coords.y)
+	{
+		*ennemies = tmp->next_ennemy;
+		mlx_put_image_to_window(data->mlx, data->window.ptr,
+			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+			* PIXEL_PADDING);
+		free(tmp);
+		return ;
+	}
+	while (tmp != NULL && (tmp->coords.x != coords.x
+			|| tmp->coords.y != coords.y))
+	{
+		previous = tmp;
+		tmp = tmp->next_ennemy;
+	}
+	previous->next_ennemy = tmp->next_ennemy;
+	mlx_put_image_to_window(data->mlx, data->window.ptr,
+			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+			* PIXEL_PADDING);
+	free(tmp);
+}
+
 void	update_logic(t_data *data)
 {
 	t_ennemy *tmp;
+	t_ennemy *next_ennemy;
 	t_vector2 coords;
 
 	tmp = data->game.ennemies;
 	while (tmp)
 	{
+		next_ennemy = tmp->next_ennemy;
 		coords = tmp->coords;
 		tmp->next_coords = get_next_coords(data->window.actual, coords, data);
-		// update_logic_array(data->window.screen, coords, tmp->next_coords);
-		tmp = tmp->next_ennemy;
+		if (tmp->next_coords.y == data->window.actual.y
+			&& tmp->next_coords.x == data->window.actual.x)
+		{
+			tmp->next_coords = set_vector2(0, 0);
+			data->game.player.health--;
+			ft_printf("curent health:%d\n", data->game.player.health);
+			if (data->game.player.health == 0)
+			{
+				free_collectibles(data->game.collectibles);
+				data->game.game_finished = 3;
+				return ;
+			}
+			// destroy_ennemy(&data->game.ennemies, coords);
+			// mlx_put_image_to_window(data->mlx, data->window.ptr,
+			// 	data->textures.ground[0].image, coords.x * PIXEL_PADDING,
+			// 	coords.y * PIXEL_PADDING);
+		}
+		tmp = next_ennemy;
 	}
 }

@@ -6,11 +6,37 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:08:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:13:27 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/07 21:01:16 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+void	print_move_string(t_data *data)
+{
+	char	*str;
+	char	*itoa;
+	char	*tmp;
+	int		i;
+
+	i = -1;
+	itoa = ft_itoa(data->game.player.moves);
+	str = ft_strjoin("player move: ", itoa);
+	free(itoa);
+	str = ft_strjoin((tmp = str), ";  ");
+	free(tmp);
+	itoa = ft_itoa((int)data->timer.time);
+	str = ft_strjoin((tmp = str), itoa);
+	free(tmp);
+	free(itoa);
+	str = ft_strjoin((tmp = str), "s");
+	free(tmp);
+	while (i++ < 6)
+		mlx_put_image_to_window(data->mlx, data->window.ptr,
+			data->textures.water[0].image, i * PIXEL_PADDING, 0);
+	mlx_string_put(data->mlx, data->window.ptr, 10, 20, 0xffd700, str);
+	free(str);
+}
 
 void	spawn_exit(t_data *data)
 {
