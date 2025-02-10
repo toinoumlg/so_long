@@ -6,41 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:48:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:39:08 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:43:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-void	update_ennemies(t_data *data)
-{
-	t_ennemy	*tmp;
-	t_ennemy	*next;
-
-	tmp = data->game.ennemies;
-	while (tmp)
-	{
-		next = tmp->next_ennemy;
-		if (tmp->health)
-		{
-			if (tmp->next_coords.x)
-				print_ennemies_move(data, tmp);
-			else
-				print_ennemies(data, tmp);
-			tmp->i_image++;
-			if (tmp->i_image > 10)
-				tmp->i_image = 0;
-		}
-		else
-		{
-			print_ennemies(data, tmp);
-			tmp->i_image++;
-			if (tmp->i_image == 21)
-				destroy_ennemy(&data->game.ennemies, tmp->coords, data);
-		}
-		tmp = next;
-	}
-}
 
 void	add_new_ennemy(t_map *map, int x, int y)
 {

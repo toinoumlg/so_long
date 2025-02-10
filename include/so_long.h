@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/09 17:23:38 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:21:00 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@
 #  define ENNEMY19 "textures/ennemies/ennemies19.xpm"
 #  define ENNEMY20 "textures/ennemies/ennemies20.xpm"
 #  define ENNEMY21 "textures/ennemies/ennemies21.xpm"
+#  define HUD1 "textures/hud/hud1.xpm"
+#  define HUD2 "textures/hud/hud2.xpm"
+#  define HUD3 "textures/hud/hud3.xpm"
+#  define HEART1 "textures/hud/heart1.xpm"
 # endif
 
 typedef struct s_vector2
@@ -224,11 +228,14 @@ typedef struct s_textures
 	t_image					*coins_r;
 	t_image					*exit;
 	t_image					*ennemies;
+	t_image					*hud;
+	t_image					*heart;
 }							t_textures;
 
 typedef struct s_sword
 {
 	t_vector2				coords;
+	t_vector2				next_coords;
 	t_vector2				direction;
 	int						is_printed;
 	int						index;
@@ -357,7 +364,7 @@ void						player_move(int key_stroked, t_data *data);
 // ==> player
 void						update_swords(t_data *data);
 void						spawn_sword(t_data *data, t_vector2 direction);
-void						sword_next_pos(t_data *data, t_sword *sword);
+t_vector2					sword_next_pos(t_sword *sword);
 void						print_sword(t_data *data, t_sword *sword);
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
@@ -371,7 +378,6 @@ void						add_new_ennemy(t_map *map, int x, int y);
 void						update_ennemies_coords(t_ennemy *ennemies,
 								t_vector2 coords);
 void						update_ennemies(t_data *data);
-void						update_logic(t_data *data);
 void						destroy_ennemy(t_ennemy **ennemies,
 								t_vector2 coords, t_data *data);
 // free

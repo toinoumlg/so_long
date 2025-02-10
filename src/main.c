@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:27:16 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:56:37 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ int	main(int ac, char **av)
 		data.map->file_name = av[1];
 	if (set_map(data.map))
 		return (-1);
-	// print_array(data.map->array);
 	game(data);
 }

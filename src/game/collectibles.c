@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/09 17:28:43 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:46:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ void	collectible_and_sword_print(t_data *data, t_collectible *collectible,
 {
 	t_image	combined;
 
+	if (sword->next_coords.x || sword->next_coords.y)
+	{
+		print_collectibles(data, collectible);
+		sword->coords = sword->next_coords;
+		sword->next_coords = set_vector2(0, 0);
+		print_sword(data, sword);
+		return ;
+	}
 	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
 	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
 			&combined.size_l, &combined.endian);
@@ -32,6 +40,8 @@ void	collectible_and_sword_print(t_data *data, t_collectible *collectible,
 		collectible->coords.x * PIXEL_PADDING, collectible->coords.y
 		* PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);
+	sword->is_printed = 1;
+	collectible->is_printed = 1;
 }
 
 void	collectible_and_ennemy_print(t_data *data, t_collectible *collectible,
@@ -39,6 +49,14 @@ void	collectible_and_ennemy_print(t_data *data, t_collectible *collectible,
 {
 	t_image	combined;
 
+	if (ennemy->next_coords.x || ennemy->next_coords.y)
+	{
+		print_collectibles(data, collectible);
+		ennemy->coords = ennemy->next_coords;
+		ennemy->next_coords = set_vector2(0, 0);
+		print_ennemies(data, ennemy);
+		return ;
+	}
 	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
 	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
 			&combined.size_l, &combined.endian);
@@ -46,8 +64,7 @@ void	collectible_and_ennemy_print(t_data *data, t_collectible *collectible,
 	set_background_color(&data->textures.ground[0], &combined);
 	set_front_color_offset(&data->textures.coins_r[collectible->i_image],
 		&combined);
-	set_front_color_offset(&data->textures.ennemies[ennemy->i_image],
-		&combined);
+	set_front_color(&data->textures.ennemies[ennemy->i_image], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		collectible->coords.x * PIXEL_PADDING, collectible->coords.y
 		* PIXEL_PADDING);

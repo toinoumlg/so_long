@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/09 17:34:32 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:39:46 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	player_attack(int key_stroked, t_data *data)
 {
-	data->game.actual_axes++;
 	if (key_stroked == 65362)
 		spawn_sword(data, data->game.moves.up);
 	if (key_stroked == 65364)
@@ -82,28 +81,114 @@ void	collectible_and_ennemy_move_print(t_data *data,
 	ennemy->is_printed = 1;
 }
 
+void	reset_print(t_data *data)
+{
+	t_collectible	*collectible;
+	t_ennemy		*ennemy;
+	t_sword			*sword;
+
+	collectible = data->game.collectibles;
+	while (collectible)
+	{
+		collectible->is_printed = 0;
+		collectible = collectible->next_collectible;
+	}
+	sword = data->game.player.swords;
+	while (sword)
+	{
+		sword->is_printed = 0;
+		sword = sword->next_sword;
+	}
+	ennemy = data->game.ennemies;
+	while (ennemy)
+	{
+		ennemy->is_printed = 0;
+		ennemy = ennemy->next_ennemy;
+	}
+}
+
+void	collectible_and_sword_move_print(t_data *data,
+		t_collectible *collectible, t_sword *sword)
+{
+	t_image	combined;
+
+	mlx_put_image_to_window(data->mlx, data->window.ptr,
+		data->textures.ground[0].image, sword->coords.x * PIXEL_PADDING,
+		sword->coords.y * PIXEL_PADDING);
+	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
+	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
+			&combined.size_l, &combined.endian);
+	combined.wh = data->textures.ground[0].wh;
+	set_background_color(&data->textures.ground[0], &combined);
+	set_front_color_offset(&data->textures.coins_r[collectible->i_image],
+		&combined);
+	set_front_color(&data->textures.player_axe[sword->index], &combined);
+	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
+		sword->next_coords.x * PIXEL_PADDING, sword->next_coords.y
+		* PIXEL_PADDING);
+	mlx_destroy_image(data->mlx, combined.image);
+	sword->coords = sword->next_coords;
+	sword->next_coords = set_vector2(0, 0);
+	collectible->is_printed = 1;
+	sword->is_printed = 1;
+}
+
+void	print_sword_move(t_data *data, t_sword *tmp)
+{
+	t_image	combined;
+
+	mlx_put_image_to_window(data->mlx, data->window.ptr,
+		data->textures.ground[0].image, tmp->coords.x * PIXEL_PADDING,
+		tmp->coords.y * PIXEL_PADDING);
+	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
+	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
+			&combined.size_l, &combined.endian);
+	combined.wh = data->textures.ground[0].wh;
+	set_background_color(&data->textures.ground[0], &combined);
+	set_front_color(&data->textures.player_axe[tmp->index], &combined);
+	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
+		tmp->next_coords.x * PIXEL_PADDING, tmp->next_coords.y * PIXEL_PADDING);
+	mlx_destroy_image(data->mlx, combined.image);
+	tmp->coords = tmp->next_coords;
+	tmp->next_coords = set_vector2(0, 0);
+	tmp->is_printed = 1;
+}
+
 void	print_object_on_map(t_data *data)
 {
 	t_collectible	*collectible;
 	t_ennemy		*ennemy;
+	t_sword			*sword;
+	t_ennemy		*ennemy_next;
+	t_sword			*sword_next;
 
-	// t_ennemy		*ennemy_next;
-	// t_sword			*sword;
-	// t_sword			*sword_next;
 	collectible = data->game.collectibles;
-	// sword = data->game.player.swords;
+	reset_print(data);
 	while (collectible)
 	{
 		ennemy = data->game.ennemies;
 		while (ennemy)
 		{
-			if (ennemy->coords.y == collectible->coords.y
-				&& ennemy->coords.x == collectible->coords.x)
-				collectible_and_ennemy_print(data, collectible, ennemy);
+			ennemy_next = ennemy->next_ennemy;
 			if (ennemy->next_coords.y == collectible->coords.y
 				&& ennemy->next_coords.x == collectible->coords.x)
 				collectible_and_ennemy_move_print(data, collectible, ennemy);
-			ennemy = ennemy->next_ennemy;
+			if (ennemy->coords.y == collectible->coords.y
+				&& ennemy->coords.x == collectible->coords.x)
+				collectible_and_ennemy_print(data, collectible, ennemy);
+			ennemy = ennemy_next;
+		}
+		sword = data->game.player.swords;
+		while (sword)
+		{
+			sword_next = sword->next_sword;
+			if (sword->next_coords.y == collectible->coords.y
+				&& sword->next_coords.x == collectible->coords.x)
+				collectible_and_sword_move_print(data, collectible, sword);
+			if (sword->coords.y == collectible->coords.y
+				&& sword->coords.x == collectible->coords.x)
+				collectible_and_sword_print(data, collectible, sword);
+			sword = sword_next;
 		}
 		if (!collectible->is_printed)
 			print_collectibles(data, collectible);
@@ -112,14 +197,28 @@ void	print_object_on_map(t_data *data)
 	ennemy = data->game.ennemies;
 	while (ennemy)
 	{
+		ennemy_next = ennemy->next_ennemy;
 		if (!ennemy->is_printed)
 		{
-			if (ennemy->next_coords.y && ennemy->next_coords.x)
-				print_ennemies(data, ennemy);
+			if (ennemy->next_coords.y || ennemy->next_coords.x)
+				print_ennemies_move(data, ennemy);
 			else
 				print_ennemies(data, ennemy);
 		}
-		ennemy = ennemy->next_ennemy;
+		ennemy = ennemy_next;
+	}
+	sword = data->game.player.swords;
+	while (sword)
+	{
+		sword_next = sword->next_sword;
+		if (!sword->is_printed)
+		{
+			if (sword->next_coords.y || sword->next_coords.x)
+				print_sword_move(data, sword);
+			else
+				print_sword(data, sword);
+		}
+		sword = sword_next;
 	}
 	if (data->game.player.status == 1)
 		print_player_moving(data);
@@ -130,15 +229,45 @@ void	print_object_on_map(t_data *data)
 void	update_image_index(t_data *data)
 {
 	t_collectible	*collectible;
+	t_ennemy		*ennemy;
+	t_ennemy		*ennemy_next;
+	t_sword			*sword;
 
 	collectible = data->game.collectibles;
 	while (collectible)
 	{
-		collectible->i_image++;
-		if (collectible->i_image > 12)
+		if (collectible->i_image == 12)
 			collectible->i_image = 0;
+		collectible->i_image++;
 		collectible = collectible->next_collectible;
 	}
+	ennemy = data->game.ennemies;
+	while (ennemy)
+	{
+		ennemy_next = ennemy->next_ennemy;
+		if (ennemy->i_image == 10)
+			ennemy->i_image = 0;
+		ennemy->i_image++;
+		if (ennemy->i_image == 21)
+			destroy_ennemy(&data->game.ennemies, ennemy->coords, data);
+		ennemy = ennemy_next;
+	}
+	sword = data->game.player.swords;
+	while (sword)
+	{
+		if (sword->index == 3)
+			sword->index = 0;
+		sword->index++;
+		sword = sword->next_sword;
+	}
+}
+
+void	update_entities(t_data *data)
+{
+	if (data->frames % 6 == 0)
+		update_swords(data);
+	if (data->frames % 18 == 0)
+		update_ennemies(data);
 }
 
 int	update(t_data *data)
@@ -158,10 +287,8 @@ int	update(t_data *data)
 		data->timer.time += data->timer.delta_time;
 		print_object_on_map(data);
 		update_image_index(data);
-		if (data->game.ennemies && data->frames % 18 == 0)
-			update_logic(data);
-		if (data->frames % 12 == 0)
-			print_move_string(data);
+		update_entities(data);
+		print_move_string(data);
 		if (data->game.game_finished == 1)
 			spawn_exit(data);
 		if (data->game.game_finished == 3)

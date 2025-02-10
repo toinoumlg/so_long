@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:55:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/09 17:21:56 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:35:25 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	print_sword(t_data *data, t_sword *sword)
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		sword->coords.x * PIXEL_PADDING, sword->coords.y * PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);
+	sword->is_printed = 1;
 }
 
 void	destroy_sword(t_sword **swords, t_vector2 coords, t_data *data)
@@ -55,60 +56,53 @@ void	destroy_sword(t_sword **swords, t_vector2 coords, t_data *data)
 	free(tmp);
 }
 
-void	sword_next_pos(t_data *data, t_sword *sword)
+t_vector2	sword_next_pos(t_sword *sword)
 {
 	t_vector2	next_pos;
-	t_ennemy	*tmp;
 
 	next_pos.y = sword->coords.y + sword->direction.y;
 	next_pos.x = sword->coords.x + sword->direction.x;
-	tmp = data->game.ennemies;
-	while (tmp)
-	{
-		if (next_pos.y == tmp->coords.y && next_pos.x == tmp->coords.x)
-		{
-			tmp->health = 0;
-			tmp->i_image = 14;
-			destroy_sword(&data->game.player.swords, sword->coords, data);
-			data->game.actual_axes--;
-			return ;
-		}
-		tmp = tmp->next_ennemy;
-	}
-	if (!is_blocked(data->window.screen, next_pos))
-	{
-		destroy_sword(&data->game.player.swords, sword->coords, data);
-		data->game.actual_axes--;
-		return ;
-	}
-	mlx_put_image_to_window(data->mlx, data->window.ptr,
-		data->textures.ground[0].image, sword->coords.x * PIXEL_PADDING,
-		sword->coords.y * PIXEL_PADDING);
-	sword->coords.y = next_pos.y;
-	sword->coords.x = next_pos.x;
+	return (next_pos);
 }
 
 void	update_swords(t_data *data)
 {
-	t_sword	*tmp;
-	t_sword	*next;
+	t_sword		*tmp;
+	t_sword		*next;
+	t_ennemy	*ennemy;
+	t_ennemy	*ennemy_next;
 
+	ennemy = data->game.ennemies;
 	tmp = data->game.player.swords;
-	if (data->frames % 2 == 0)
+	while (tmp)
 	{
-		while (tmp)
+		next = tmp->next_sword;
+		tmp->next_coords = sword_next_pos(tmp);
+		while (ennemy)
 		{
-			next = tmp->next_sword;
-			if (data->frames % 6 == 0)
+			ennemy_next = ennemy->next_ennemy;
+			if (tmp->next_coords.y == ennemy->coords.y
+				&& tmp->next_coords.x == ennemy->coords.x)
 			{
-				sword_next_pos(data, tmp);
+				ennemy->health = 0;
+				ennemy->i_image = 14;
+				destroy_sword(&data->game.player.swords, tmp->coords, data);
+				data->game.actual_axes--;
 			}
-			// print_sword(data, tmp);
-			tmp->index++;
-			if (tmp->index > 3)
-				tmp->index = 0;
-			tmp = next;
+			ennemy = ennemy_next;
 		}
+		tmp = next;
+	}
+	tmp = data->game.player.swords;
+	while (tmp)
+	{
+		next = tmp->next_sword;
+		if (!is_blocked(data->window.screen, tmp->next_coords))
+		{
+			destroy_sword(&data->game.player.swords, tmp->coords, data);
+			data->game.actual_axes--;
+		}
+		tmp = next;
 	}
 }
 
@@ -117,11 +111,13 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 	t_sword	*new_sword;
 	t_sword	*tmp;
 
+	data->game.actual_axes++;
 	new_sword = ft_calloc(sizeof(t_sword), 1);
 	if (!new_sword)
 		return ;
 	new_sword->coords = set_vector2(axe_pos.y, axe_pos.x);
 	new_sword->direction = set_vector2(direction.y, direction.x);
+	new_sword->next_coords = set_vector2(0, 0);
 	new_sword->is_printed = 0;
 	if (direction.y == 1)
 		new_sword->index = 1;
@@ -147,7 +143,6 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 void	spawn_sword(t_data *data, t_vector2 direction)
 {
 	t_vector2 axe_pos;
-
 	axe_pos.y = data->window.actual.y + direction.y;
 	axe_pos.x = data->window.actual.x + direction.x;
 	if (is_blocked(data->window.screen, axe_pos))

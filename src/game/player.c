@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:23:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 22:42:34 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:40:37 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	print_player_moving(t_data *data)
 	data->game.player.status = 0;
 	data->game.player.moves++;
 	data->game.player.idle_frames = 0;
-	print_move_string(data);
 	data->window.move = data->game.moves.zero;
 	mlx_destroy_image(data->mlx, combined.image);
 }

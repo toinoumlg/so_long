@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/09 17:36:32 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:45:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,30 +62,34 @@ void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 	free(tmp);
 }
 
-void	update_logic(t_data *data)
+void	update_ennemies(t_data *data)
 {
 	t_ennemy *tmp;
 	t_ennemy *next_ennemy;
 	t_vector2 coords;
 
 	tmp = data->game.ennemies;
+	// ft_printf("window %d %d\n", data->window.actual.y,data->window.actual.x);
 	while (tmp)
 	{
 		next_ennemy = tmp->next_ennemy;
-		coords = tmp->coords;
-		tmp->next_coords = get_next_coords(data->window.actual, coords, data);
-		ft_printf("%d %d\n", tmp->next_coords.y, tmp->next_coords.x);
-		if (tmp->next_coords.y == data->window.actual.y
-			&& tmp->next_coords.x == data->window.actual.x)
+		ft_printf("%d\n", tmp->health);
+		if (tmp->health)
 		{
-			tmp->next_coords = set_vector2(0, 0);
-			data->game.player.health--;
-			ft_printf("curent health:%d\n", data->game.player.health);
-			if (data->game.player.health == 0)
+			coords = tmp->coords;
+			tmp->next_coords = get_next_coords(data->window.actual, coords,
+					data);
+			if (tmp->next_coords.y == data->window.actual.y
+				&& tmp->next_coords.x == data->window.actual.x)
 			{
-				free_collectibles(data->game.collectibles);
-				data->game.game_finished = 3;
-				return ;
+				tmp->next_coords = set_vector2(0, 0);
+				data->game.player.health--;
+				if (data->game.player.health == 0)
+				{
+					free_collectibles(data->game.collectibles);
+					data->game.game_finished = 3;
+					return ;
+				}
 			}
 		}
 		tmp = next_ennemy;

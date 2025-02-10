@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/08 11:08:54 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:24:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,40 @@ void	set_textures_player(t_image *player, t_image *player_axe, void *mlx)
 	}
 }
 
+void	set_textures_hud(t_image *hud, void *mlx)
+{
+	char	*hud_files[3];
+	int		i;
+
+	hud_files[0] = HUD1;
+	hud_files[1] = HUD2;
+	hud_files[2] = HUD3;
+	i = -1;
+	while (i++ < 2)
+	{
+		hud[i].image = mlx_xpm_file_to_image(mlx, hud_files[i], &hud[i].wh.x,
+				&hud[i].wh.y);
+		hud[i].addr = mlx_get_data_addr(hud[i].image, &hud[i].bpp,
+				&hud[i].size_l, &hud[i].endian);
+	}
+}
+
+void	set_textures_heart(t_image *heart, void *mlx)
+{
+	char	*heart_files[1];
+	int		i;
+
+	heart_files[0] = HEART1;
+	i = -1;
+	while (i++ < 0)
+	{
+		heart[i].image = mlx_xpm_file_to_image(mlx, heart_files[i],
+				&heart[i].wh.x, &heart[i].wh.y);
+		heart[i].addr = mlx_get_data_addr(heart[i].image, &heart[i].bpp,
+				&heart[i].size_l, &heart[i].endian);
+	}
+}
+
 void	set_textures(t_data *data)
 {
 	data->game.collectibles = data->map->collectibles;
@@ -112,10 +146,15 @@ void	set_textures(t_data *data)
 	data->textures.coins_r = ft_calloc(sizeof(t_image), 13);
 	data->textures.exit = ft_calloc(sizeof(t_image), 1);
 	data->textures.ennemies = ft_calloc(sizeof(t_image), 21);
+	data->textures.hud = ft_calloc(sizeof(t_image), 3);
+	data->textures.heart = ft_calloc(sizeof(t_image), 1);
+	set_textures_hud(data->textures.hud, data->mlx);
+	set_textures_heart(data->textures.heart, data->mlx);
 	set_textures_border(data->textures.borders, data->mlx);
 	set_textures_walls(data->textures.walls, data->mlx);
 	set_textures_ennemies(data->textures.ennemies, data->mlx);
 	set_textures_wgw(&data->textures, data->mlx);
-	set_textures_player(data->textures.player,data->textures.player_axe, data->mlx);
+	set_textures_player(data->textures.player, data->textures.player_axe,
+		data->mlx);
 	set_textures_coins(data->textures.coins_r, data->mlx);
 }
