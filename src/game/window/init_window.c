@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 22:01:51 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:55:00 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	print_screen_array(char **screen, t_textures textures, t_window *window,
 void	init_window(t_map *map, t_window *window, void *mlx,
 		t_textures textures)
 {
+	window->move = set_vector2(0, 0);
 	window->screen = ft_calloc(sizeof(char *), (map->actual.y + 4) + 1);
 	window->min = set_vector2(2, 2);
 	window->max = set_vector2(map->actual.y + 2, map->actual.x + 2);

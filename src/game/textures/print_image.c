@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:08:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:37:24 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:57:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_move_string(t_data *data)
 	int		j;
 	int		s;
 
-	s = 2 - data->game.actual_axes;
+	s = 2 - data->game.actual_sword;
 	j = data->game.player.health;
 	i = -1;
 	itoa = ft_itoa(data->game.player.moves);

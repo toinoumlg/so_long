@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:21:00 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:57:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ typedef struct s_game
 	t_ennemy				*ennemies;
 	t_possible_directions	moves;
 	t_player				player;
-	int						actual_axes;
+	int						actual_sword;
 	int						game_finished;
 
 }							t_game;
@@ -269,6 +269,7 @@ typedef struct s_timer
 {
 	struct timeval			last_frame;
 	double					time;
+	double					frame_target;
 	double					delta_time;
 }							t_timer;
 

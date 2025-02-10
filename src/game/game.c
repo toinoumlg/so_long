@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:39:46 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:57:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	handle_keys(int key_stroked, t_data *data)
 		player_move(key_stroked, data);
 	if ((key_stroked == 65362 || key_stroked == 65364 || key_stroked == 65361
 			|| key_stroked == 65363) && data->game.player.status == 0
-		&& data->game.actual_axes < 2)
+		&& data->game.actual_sword < 2)
 		player_attack(key_stroked, data);
 	if (key_stroked == 65307)
 		return (free_collectibles(data->game.collectibles),
@@ -273,14 +273,12 @@ void	update_entities(t_data *data)
 int	update(t_data *data)
 {
 	struct timeval	current_time;
-	const double	target_fps = 12.0;
-	const double	frame_target = 1.0 / target_fps;
 
 	gettimeofday(&current_time, NULL);
 	data->timer.delta_time = (current_time.tv_sec
 			- data->timer.last_frame.tv_sec) + (current_time.tv_usec
 			- data->timer.last_frame.tv_usec) / 1000000.0;
-	if (data->timer.delta_time >= frame_target)
+	if (data->timer.delta_time >= data->timer.frame_target)
 	{
 		data->frames++;
 		data->game.player.idle_frames++;
@@ -298,22 +296,35 @@ int	update(t_data *data)
 	return (0);
 }
 
-void	init_game(t_data *data)
+void	set_timer(t_data *data)
 {
+	double	target_fps;
+
+	target_fps = 12.0;
+	data->timer.frame_target = 1.0 / target_fps;
 	data->timer.time = 0.0;
 	gettimeofday(&data->timer.last_frame, NULL);
-	data->game.player.moves = 0;
-	data->game.actual_axes = 0;
+}
+
+void	init_player(t_data *data)
+{
 	data->game.player.health = 3;
 	data->game.player.idle_frames = 0;
 	data->game.player.idle_index = 0;
-	data->frames = 0;
-	data->window.move = set_vector2(0, 0);
-	data->game.game_finished = 0;
 	data->game.player.status = 0;
 	data->game.player.swords = NULL;
+	data->game.player.moves = 0;
+}
+
+void	init_game(t_data *data)
+{
+	data->game.actual_sword = 0;
+	data->frames = 0;
+	data->game.game_finished = 0;
 	data->game.moves = set_move();
 	data->mlx = mlx_init();
+	init_player(data);
+	set_timer(data);
 	set_textures(data);
 	init_window(data->map, &data->window, data->mlx, data->textures);
 	update_collectible_coords(data->game.collectibles, data->window.min);

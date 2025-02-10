@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:55:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:35:25 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:57:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	update_swords(t_data *data)
 				ennemy->health = 0;
 				ennemy->i_image = 14;
 				destroy_sword(&data->game.player.swords, tmp->coords, data);
-				data->game.actual_axes--;
+				data->game.actual_sword--;
 			}
 			ennemy = ennemy_next;
 		}
@@ -100,7 +100,7 @@ void	update_swords(t_data *data)
 		if (!is_blocked(data->window.screen, tmp->next_coords))
 		{
 			destroy_sword(&data->game.player.swords, tmp->coords, data);
-			data->game.actual_axes--;
+			data->game.actual_sword--;
 		}
 		tmp = next;
 	}
@@ -111,7 +111,7 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 	t_sword	*new_sword;
 	t_sword	*tmp;
 
-	data->game.actual_axes++;
+	data->game.actual_sword++;
 	new_sword = ft_calloc(sizeof(t_sword), 1);
 	if (!new_sword)
 		return ;
