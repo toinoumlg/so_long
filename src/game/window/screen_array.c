@@ -6,13 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 21:36:39 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:27:26 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-
 
 void	update_screen_array(t_data *data)
 {

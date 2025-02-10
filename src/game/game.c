@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/08 12:55:23 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:34:32 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,91 @@ int	on_destroy(t_data *data)
 		0);
 }
 
+void	collectible_and_ennemy_move_print(t_data *data,
+		t_collectible *collectible, t_ennemy *ennemy)
+{
+	t_image	combined;
+
+	mlx_put_image_to_window(data->mlx, data->window.ptr,
+		data->textures.ground[0].image, ennemy->coords.x * PIXEL_PADDING,
+		ennemy->coords.y * PIXEL_PADDING);
+	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
+	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
+			&combined.size_l, &combined.endian);
+	combined.wh = data->textures.ground[0].wh;
+	set_background_color(&data->textures.ground[0], &combined);
+	set_front_color_offset(&data->textures.coins_r[collectible->i_image],
+		&combined);
+	set_front_color(&data->textures.ennemies[ennemy->i_image], &combined);
+	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
+		ennemy->next_coords.x * PIXEL_PADDING, ennemy->next_coords.y
+		* PIXEL_PADDING);
+	mlx_destroy_image(data->mlx, combined.image);
+	ennemy->coords = ennemy->next_coords;
+	ennemy->next_coords = set_vector2(0, 0);
+	collectible->is_printed = 1;
+	ennemy->is_printed = 1;
+}
+
+void	print_object_on_map(t_data *data)
+{
+	t_collectible	*collectible;
+	t_ennemy		*ennemy;
+
+	// t_ennemy		*ennemy_next;
+	// t_sword			*sword;
+	// t_sword			*sword_next;
+	collectible = data->game.collectibles;
+	// sword = data->game.player.swords;
+	while (collectible)
+	{
+		ennemy = data->game.ennemies;
+		while (ennemy)
+		{
+			if (ennemy->coords.y == collectible->coords.y
+				&& ennemy->coords.x == collectible->coords.x)
+				collectible_and_ennemy_print(data, collectible, ennemy);
+			if (ennemy->next_coords.y == collectible->coords.y
+				&& ennemy->next_coords.x == collectible->coords.x)
+				collectible_and_ennemy_move_print(data, collectible, ennemy);
+			ennemy = ennemy->next_ennemy;
+		}
+		if (!collectible->is_printed)
+			print_collectibles(data, collectible);
+		collectible = collectible->next_collectible;
+	}
+	ennemy = data->game.ennemies;
+	while (ennemy)
+	{
+		if (!ennemy->is_printed)
+		{
+			if (ennemy->next_coords.y && ennemy->next_coords.x)
+				print_ennemies(data, ennemy);
+			else
+				print_ennemies(data, ennemy);
+		}
+		ennemy = ennemy->next_ennemy;
+	}
+	if (data->game.player.status == 1)
+		print_player_moving(data);
+	if (data->game.player.status == 0 && data->frames % 2 == 0)
+		print_player_idle(data);
+}
+
+void	update_image_index(t_data *data)
+{
+	t_collectible	*collectible;
+
+	collectible = data->game.collectibles;
+	while (collectible)
+	{
+		collectible->i_image++;
+		if (collectible->i_image > 12)
+			collectible->i_image = 0;
+		collectible = collectible->next_collectible;
+	}
+}
+
 int	update(t_data *data)
 {
 	struct timeval	current_time;
@@ -71,16 +156,8 @@ int	update(t_data *data)
 		data->frames++;
 		data->game.player.idle_frames++;
 		data->timer.time += data->timer.delta_time;
-		if (data->game.player.status == 1)
-			print_player_moving(data);
-		if (data->game.player.status == 0 && data->frames % 2 == 0)
-			print_player_idle(data);
-		if (data->game.collectibles)
-			update_collectibles(data);
-		if (data->game.player.swords)
-			update_swords(data);
-		if (data->game.ennemies && data->frames % 4 == 0)
-			update_ennemies(data);
+		print_object_on_map(data);
+		update_image_index(data);
 		if (data->game.ennemies && data->frames % 18 == 0)
 			update_logic(data);
 		if (data->frames % 12 == 0)

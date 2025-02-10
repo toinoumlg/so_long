@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:30:14 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:36:32 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 	}
 	previous->next_ennemy = tmp->next_ennemy;
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
-			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
-			* PIXEL_PADDING);
+		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+		* PIXEL_PADDING);
 	free(tmp);
 }
 
@@ -74,6 +74,7 @@ void	update_logic(t_data *data)
 		next_ennemy = tmp->next_ennemy;
 		coords = tmp->coords;
 		tmp->next_coords = get_next_coords(data->window.actual, coords, data);
+		ft_printf("%d %d\n", tmp->next_coords.y, tmp->next_coords.x);
 		if (tmp->next_coords.y == data->window.actual.y
 			&& tmp->next_coords.x == data->window.actual.x)
 		{
@@ -86,10 +87,6 @@ void	update_logic(t_data *data)
 				data->game.game_finished = 3;
 				return ;
 			}
-			// destroy_ennemy(&data->game.ennemies, coords);
-			// mlx_put_image_to_window(data->mlx, data->window.ptr,
-			// 	data->textures.ground[0].image, coords.x * PIXEL_PADDING,
-			// 	coords.y * PIXEL_PADDING);
 		}
 		tmp = next_ennemy;
 	}

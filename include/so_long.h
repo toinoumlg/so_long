@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:31:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:23:38 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct s_collectible
 {
 	t_vector2				coords;
 	int						i_image;
+	int						is_printed;
 	struct s_collectible	*next_collectible;
 }							t_collectible;
 
@@ -152,6 +153,7 @@ typedef struct s_ennemy
 {
 	t_vector2				coords;
 	t_vector2				next_coords;
+	int						is_printed;
 	int						i_image;
 	int						health;
 	struct s_ennemy			*next_ennemy;
@@ -228,6 +230,7 @@ typedef struct s_sword
 {
 	t_vector2				coords;
 	t_vector2				direction;
+	int						is_printed;
 	int						index;
 	struct s_sword			*next_sword;
 }							t_sword;
@@ -333,6 +336,10 @@ void						print_collectibles(t_data *data,
 								t_collectible *tmp);
 void						print_move_string(t_data *data);
 void						print_seconds(t_data *data);
+void						collectible_and_ennemy_print(t_data *data,
+								t_collectible *collectible, t_ennemy *ennemy);
+void						collectible_and_sword_print(t_data *data,
+								t_collectible *collectible, t_sword *sword);
 
 unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
@@ -350,6 +357,8 @@ void						player_move(int key_stroked, t_data *data);
 // ==> player
 void						update_swords(t_data *data);
 void						spawn_sword(t_data *data, t_vector2 direction);
+void						sword_next_pos(t_data *data, t_sword *sword);
+void						print_sword(t_data *data, t_sword *sword);
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
 void						update_collectible_coords(t_collectible *collectibles,

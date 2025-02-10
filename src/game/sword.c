@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:55:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/08 14:36:13 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/09 17:21:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	update_swords(t_data *data)
 			{
 				sword_next_pos(data, tmp);
 			}
-			print_sword(data, tmp);
+			// print_sword(data, tmp);
 			tmp->index++;
 			if (tmp->index > 3)
 				tmp->index = 0;
@@ -122,6 +122,7 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 		return ;
 	new_sword->coords = set_vector2(axe_pos.y, axe_pos.x);
 	new_sword->direction = set_vector2(direction.y, direction.x);
+	new_sword->is_printed = 0;
 	if (direction.y == 1)
 		new_sword->index = 1;
 	if (direction.y == -1)
