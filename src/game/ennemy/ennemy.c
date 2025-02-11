@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:48:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 17:43:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:13:17 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_new_ennemy(t_map *map, int x, int y)
 	new_ennemy->coords = set_vector2(y, x);
 	new_ennemy->next_coords = set_vector2(0, 0);
 	new_ennemy->i_image = 0;
-	new_ennemy->health = 1;
+	new_ennemy->got_hit = 0;
 	new_ennemy->next_ennemy = NULL;
 	if (!map->ennemies)
 	{

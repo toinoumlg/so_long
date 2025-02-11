@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:57:42 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:47:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ typedef struct s_ennemy
 	t_vector2				next_coords;
 	int						is_printed;
 	int						i_image;
-	int						health;
+	int						got_hit;
 	struct s_ennemy			*next_ennemy;
 }							t_ennemy;
 
@@ -237,20 +237,23 @@ typedef struct s_sword
 	t_vector2				coords;
 	t_vector2				next_coords;
 	t_vector2				direction;
+	int						to_destroy;
+	int						sword_timer;
 	int						is_printed;
 	int						index;
 	struct s_sword			*next_sword;
 }							t_sword;
 
-// status 0 idle 1 move;
+// status 0 idle 1;
 typedef struct s_player
 {
+	t_vector2				move_dir;
 	int						health;
 	int						status;
-	int						idle_index;
-	int						idle_frames;
-	int						moves;
+	int						index;
+	int						attack_cd;
 	int						move_buffer;
+	int						moves;
 	t_sword					*swords;
 }							t_player;
 
@@ -268,6 +271,7 @@ typedef struct s_game
 typedef struct s_timer
 {
 	struct timeval			last_frame;
+	struct timeval			current_time;
 	double					time;
 	double					frame_target;
 	double					delta_time;
@@ -336,19 +340,29 @@ void						set_background_color(t_image *background,
 void						set_front_color_offset(t_image *front,
 								t_image *combined);
 void						set_front_color(t_image *front, t_image *combined);
-void						print_player_moving(t_data *data);
-void						print_player_idle(t_data *data);
+void						print_player(t_data *data);
 void						print_ennemies(t_data *data, t_ennemy *tmp);
 void						print_ennemies_move(t_data *data, t_ennemy *tmp);
 void						print_collectibles(t_data *data,
 								t_collectible *tmp);
 void						print_move_string(t_data *data);
 void						print_seconds(t_data *data);
+void						is_sword_printed(t_data *data);
+void						is_ennemy_printed(t_data *data);
+void						is_ennemy_on_collectible(t_data *data,
+								t_collectible *collectible);
+void						is_sword_on_collectible(t_data *data,
+								t_collectible *collectible);
+void						collectible_and_ennemy_move_print(t_data *data,
+								t_collectible *collectible, t_ennemy *ennemy);
+void						is_collectible_printed(t_data *data);
+void						player_attack(int key_stroked, t_data *data);
 void						collectible_and_ennemy_print(t_data *data,
 								t_collectible *collectible, t_ennemy *ennemy);
 void						collectible_and_sword_print(t_data *data,
 								t_collectible *collectible, t_sword *sword);
-
+void						collectible_and_sword_move_print(t_data *data,
+								t_collectible *collectible, t_sword *sword);
 unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
 								unsigned int color);
@@ -367,6 +381,9 @@ void						update_swords(t_data *data);
 void						spawn_sword(t_data *data, t_vector2 direction);
 t_vector2					sword_next_pos(t_sword *sword);
 void						print_sword(t_data *data, t_sword *sword);
+void						destroy_sword(t_sword **swords, t_vector2 coords,
+								t_data *data);
+
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
 void						update_collectible_coords(t_collectible *collectibles,

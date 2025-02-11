@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 17:45:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:17:40 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,73 +25,86 @@ void	init_logic(t_vector2 start, t_vector2 end, t_a_star_struct *logic,
 t_vector2	get_next_coords(t_vector2 start, t_vector2 end, t_data *data)
 {
 	t_a_star_struct	logic;
-	t_vector2		tmp;
+	t_vector2		coords;
 
 	init_logic(start, end, &logic, data);
 	a_star_loop(&logic, data->window.screen, data->game.moves);
-	tmp = logic.cell_details[end.y][end.x].parent;
+	coords = logic.cell_details[end.y][end.x].parent;
 	free_a_star_search(logic, data->window.max.y);
-	return (tmp);
+	return (coords);
 }
 
 void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 {
 	t_ennemy	*previous;
-	t_ennemy	*tmp;
+	t_ennemy	*ennemy;
 
-	tmp = *ennemies;
-	if (tmp->coords.x == coords.x && tmp->coords.y == coords.y)
+	ennemy = *ennemies;
+	if (ennemy->coords.x == coords.x && ennemy->coords.y == coords.y)
 	{
-		*ennemies = tmp->next_ennemy;
+		*ennemies = ennemy->next_ennemy;
 		mlx_put_image_to_window(data->mlx, data->window.ptr,
 			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
 			* PIXEL_PADDING);
-		free(tmp);
+		free(ennemy);
 		return ;
 	}
-	while (tmp != NULL && (tmp->coords.x != coords.x
-			|| tmp->coords.y != coords.y))
+	while (ennemy != NULL && (ennemy->coords.x != coords.x
+			|| ennemy->coords.y != coords.y))
 	{
-		previous = tmp;
-		tmp = tmp->next_ennemy;
+		previous = ennemy;
+		ennemy = ennemy->next_ennemy;
 	}
-	previous->next_ennemy = tmp->next_ennemy;
+	previous->next_ennemy = ennemy->next_ennemy;
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
 		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
 		* PIXEL_PADDING);
-	free(tmp);
+	free(ennemy);
+}
+
+void	is_ennemy_on_next(t_data *data, t_ennemy *ennemy)
+{
+	t_ennemy	*ennemy_list;
+
+	ennemy_list = data->game.ennemies;
+	while (ennemy_list)
+	{
+		if (ennemy_list->coords.y == ennemy->next_coords.y
+			&& ennemy_list->coords.x == ennemy->next_coords.x)
+		{
+			ennemy->next_coords = set_vector2(0, 0);
+			return ;
+		}
+		ennemy_list = ennemy_list->next_ennemy;
+	}
 }
 
 void	update_ennemies(t_data *data)
 {
-	t_ennemy *tmp;
-	t_ennemy *next_ennemy;
-	t_vector2 coords;
+	t_ennemy *ennemy;
 
-	tmp = data->game.ennemies;
-	// ft_printf("window %d %d\n", data->window.actual.y,data->window.actual.x);
-	while (tmp)
+	ennemy = data->game.ennemies;
+	while (ennemy)
 	{
-		next_ennemy = tmp->next_ennemy;
-		ft_printf("%d\n", tmp->health);
-		if (tmp->health)
+		if (data->frames % 18 == 0 && !ennemy->got_hit)
 		{
-			coords = tmp->coords;
-			tmp->next_coords = get_next_coords(data->window.actual, coords,
-					data);
-			if (tmp->next_coords.y == data->window.actual.y
-				&& tmp->next_coords.x == data->window.actual.x)
+			ennemy->next_coords = get_next_coords(data->window.actual,
+					ennemy->coords, data);
+			is_ennemy_on_next(data, ennemy);
+			if (ennemy->next_coords.y == data->window.actual.y
+				&& ennemy->next_coords.x == data->window.actual.x)
 			{
-				tmp->next_coords = set_vector2(0, 0);
+				ennemy->next_coords = set_vector2(0, 0);
 				data->game.player.health--;
 				if (data->game.player.health == 0)
 				{
-					free_collectibles(data->game.collectibles);
 					data->game.game_finished = 3;
+					if (data->game.collectibles)
+						free_collectibles(data->game.collectibles);
 					return ;
 				}
 			}
 		}
-		tmp = next_ennemy;
+		ennemy = ennemy->next_ennemy;
 	}
 }

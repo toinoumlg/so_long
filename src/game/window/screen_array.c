@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/09 17:27:26 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:11:36 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	update_screen_array(t_data *data)
 {
 	t_vector2	new_coords;
 
-	new_coords = set_vector2(data->window.actual.y + data->window.move.y,
-			data->window.actual.x + data->window.move.x);
+	new_coords = set_vector2(data->window.actual.y
+			+ data->game.player.move_dir.y, data->window.actual.x
+			+ data->game.player.move_dir.x);
 	data->window.screen[data->window.actual.y][data->window.actual.x] = '0';
 	if (data->window.screen[new_coords.y][new_coords.x] == 'C')
 	{

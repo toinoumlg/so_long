@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   player_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 11:23:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:40:37 by amalangu         ###   ########.fr       */
+/*   Created: 2025/02/11 13:17:10 by amalangu          #+#    #+#             */
+/*   Updated: 2025/02/11 13:51:05 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
-void	player_move(int key_stroked, t_data *data)
-{
-	if (key_stroked == 119)
-		data->window.move = data->game.moves.up;
-	if (key_stroked == 97)
-		data->window.move = data->game.moves.left;
-	if (key_stroked == 115)
-		data->window.move = data->game.moves.down;
-	if (key_stroked == 100)
-		data->window.move = data->game.moves.right;
-	if (data->window.screen[data->window.actual.y
-		+ data->window.move.y][data->window.actual.x
-		+ data->window.move.x] != '1')
-		update_screen_array(data);
-	else
-		data->window.move = data->game.moves.zero;
-}
 
 void	print_player_idle(t_data *data)
 {
@@ -39,11 +21,8 @@ void	print_player_idle(t_data *data)
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color(&data->textures.player[data->game.player.idle_index],
+	set_front_color(&data->textures.player[data->game.player.index],
 		&combined);
-	data->game.player.idle_index++;
-	if (data->game.player.idle_index > 4)
-		data->game.player.idle_index = 0;
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		data->window.actual.x * PIXEL_PADDING, data->window.actual.y
 		* PIXEL_PADDING);
@@ -63,14 +42,22 @@ void	print_player_moving(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
 		data->textures.ground[0].image, data->window.actual.x * PIXEL_PADDING,
 		data->window.actual.y * PIXEL_PADDING);
-	data->window.actual.y += data->window.move.y;
-	data->window.actual.x += data->window.move.x;
+	data->window.actual.y += data->game.player.move_dir.y;
+	data->window.actual.x += data->game.player.move_dir.x;
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		data->window.actual.x * PIXEL_PADDING, data->window.actual.y
 		* PIXEL_PADDING);
 	data->game.player.status = 0;
 	data->game.player.moves++;
-	data->game.player.idle_frames = 0;
-	data->window.move = data->game.moves.zero;
+	data->game.player.move_buffer = 3;
+	data->game.player.move_dir = data->game.moves.zero;
 	mlx_destroy_image(data->mlx, combined.image);
+}
+
+void	print_player(t_data *data)
+{
+	if (data->game.player.status == 1)
+		print_player_moving(data);
+	if (data->game.player.status == 0 && data->frames % 2 == 0)
+		print_player_idle(data);
 }

@@ -10,11 +10,17 @@ SRCS = main.c									\
 	a_star/a_star_struct.c						\
 	a_star/a_star_free_memory.c					\
 	game/game.c									\
-	game/player.c								\
-	game/sword.c								\
-	game/collectibles.c							\
+	game/game_init.c							\
+	game/player/player.c						\
+	game/player/player_print.c					\
+	game/collectible/collectibles.c				\
+	game/collectible/collectible_print.c		\
+	game/sword/sword_update.c					\
+	game/sword/sword_list.c						\
+	game/sword/sword_print.c					\
 	game/ennemy/ennemy.c						\
 	game/ennemy/ennemy_logic.c					\
+	game/ennemy/ennemy_print.c					\
 	game/window/screen_array.c					\
 	game/window/init_window.c					\
 	game/textures/set_textures.c				\
@@ -67,6 +73,9 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)/game/textures
 	mkdir -p $(OBJ_DIR)/game/window
 	mkdir -p $(OBJ_DIR)/game/ennemy
+	mkdir -p $(OBJ_DIR)/game/sword
+	mkdir -p $(OBJ_DIR)/game/collectible
+	mkdir -p $(OBJ_DIR)/game/player
 
 clean:
 	@rm -fr $(OBJ_DIR)
