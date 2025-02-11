@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:17:40 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:31:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,28 @@ void	is_ennemy_on_next(t_data *data, t_ennemy *ennemy)
 	}
 }
 
+void	did_get_hit(t_data *data, t_ennemy *ennemy)
+{
+	t_sword	*sword;
+	t_sword	*next_sword;
+
+	sword = data->game.player.swords;
+	while (sword)
+	{
+		next_sword = sword->next_sword;
+		if ((sword->coords.x == ennemy->coords.x
+				&& sword->coords.y == ennemy->coords.y)
+			|| (sword->coords.y == ennemy->next_coords.y
+				&& sword->coords.x == ennemy->next_coords.x))
+		{
+			destroy_sword(&data->game.player.swords, sword->coords, data);
+			data->game.actual_sword--;
+			ennemy->got_hit = 1;
+		}
+		sword = next_sword;
+	}
+}
+
 void	update_ennemies(t_data *data)
 {
 	t_ennemy *ennemy;
@@ -90,6 +112,7 @@ void	update_ennemies(t_data *data)
 		{
 			ennemy->next_coords = get_next_coords(data->window.actual,
 					ennemy->coords, data);
+			did_get_hit(data, ennemy);
 			is_ennemy_on_next(data, ennemy);
 			if (ennemy->next_coords.y == data->window.actual.y
 				&& ennemy->next_coords.x == data->window.actual.x)

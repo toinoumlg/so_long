@@ -10,6 +10,7 @@ SRCS = main.c									\
 	a_star/a_star_struct.c						\
 	a_star/a_star_free_memory.c					\
 	game/game.c									\
+	game/update_index.c							\
 	game/game_init.c							\
 	game/player/player.c						\
 	game/player/player_print.c					\

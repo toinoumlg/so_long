@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/10 22:24:05 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:50:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,34 @@ void	set_textures_border(t_image *borders, void *mlx)
 	}
 }
 
-void	set_textures_wgw(t_textures *textures, void *mlx)
+void	set_textures_water_ground(t_textures *textures, void *mlx)
 {
-	int	i;
+	int		i;
+	char	*ground_files[2];
+	char	*water_files[2];
 
-	textures->ground[0].image = mlx_xpm_file_to_image(mlx, GROUND1,
-			&textures->ground[0].wh.x, &textures->ground[0].wh.y);
-	textures->ground[1].image = mlx_xpm_file_to_image(mlx, GROUND2,
-			&textures->ground[1].wh.x, &textures->ground[1].wh.y);
-	textures->water[0].image = mlx_xpm_file_to_image(mlx, WATER1,
-			&textures->water[0].wh.x, &textures->water[0].wh.y);
-	textures->water[1].image = mlx_xpm_file_to_image(mlx, WATER2,
-			&textures->water[1].wh.x, &textures->water[1].wh.y);
-	textures->exit[0].image = mlx_xpm_file_to_image(mlx, EXIT1,
-			&textures->exit->wh.x, &textures->exit->wh.y);
-	textures->exit[0].addr = mlx_get_data_addr(textures->exit[0].image,
-			&textures->exit[0].bpp, &textures->exit[0].size_l,
-			&textures->exit[0].endian);
+	ground_files[0] = GROUND1;
+	ground_files[1] = GROUND2;
+	water_files[0] = WATER1;
+	water_files[1] = WATER2;
 	i = -1;
 	while (i++ < 1)
-		textures->water[i].addr = mlx_get_data_addr(textures->water[i].image,
-				&textures->water[i].bpp, &textures->water[i].size_l,
-				&textures->water[i].endian);
-	i = -1;
-	while (i++ < 1)
+	{
+		textures->ground[i].image = mlx_xpm_file_to_image(mlx, ground_files[i],
+				&textures->ground[i].wh.x, &textures->ground[i].wh.y);
 		textures->ground[i].addr = mlx_get_data_addr(textures->ground[i].image,
 				&textures->ground[i].bpp, &textures->ground[i].size_l,
 				&textures->ground[i].endian);
+	}
+	i = -1;
+	while (i++ < 1)
+	{
+		textures->water[i].image = mlx_xpm_file_to_image(mlx, water_files[i],
+				&textures->water[i].wh.x, &textures->water[i].wh.y);
+		textures->water[i].addr = mlx_get_data_addr(textures->water[i].image,
+				&textures->water[i].bpp, &textures->water[i].size_l,
+				&textures->water[i].endian);
+	}
 }
 
 void	set_textures_player(t_image *player, t_image *player_axe, void *mlx)
@@ -133,10 +134,8 @@ void	set_textures_heart(t_image *heart, void *mlx)
 	}
 }
 
-void	set_textures(t_data *data)
+void	set_calloc_textures(t_data *data)
 {
-	data->game.collectibles = data->map->collectibles;
-	data->game.ennemies = data->map->ennemies;
 	data->textures.walls = ft_calloc(sizeof(t_image), 7);
 	data->textures.ground = ft_calloc(sizeof(t_image), 2);
 	data->textures.water = ft_calloc(sizeof(t_image), 2);
@@ -148,12 +147,19 @@ void	set_textures(t_data *data)
 	data->textures.ennemies = ft_calloc(sizeof(t_image), 21);
 	data->textures.hud = ft_calloc(sizeof(t_image), 3);
 	data->textures.heart = ft_calloc(sizeof(t_image), 1);
+}
+
+void	set_textures(t_data *data)
+{
+	data->game.collectibles = data->map->collectibles;
+	data->game.ennemies = data->map->ennemies;
+	set_calloc_textures(data);
 	set_textures_hud(data->textures.hud, data->mlx);
 	set_textures_heart(data->textures.heart, data->mlx);
 	set_textures_border(data->textures.borders, data->mlx);
 	set_textures_walls(data->textures.walls, data->mlx);
 	set_textures_ennemies(data->textures.ennemies, data->mlx);
-	set_textures_wgw(&data->textures, data->mlx);
+	set_textures_water_ground(&data->textures, data->mlx);
 	set_textures_player(data->textures.player, data->textures.player_axe,
 		data->mlx);
 	set_textures_coins(data->textures.coins_r, data->mlx);

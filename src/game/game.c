@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:18:42 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:47:16 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	can_player_move(int key_stroked, t_data *data)
 {
 	if ((key_stroked == 119 || key_stroked == 97 || key_stroked == 115
 			|| key_stroked == 100) && data->game.player.status == 0
-		&& data->game.player.move_buffer == 0)
+		&& data->game.player.move_buffer == 0
+		&& data->game.player.attack_cd == 0)
 		return (1);
 	else
 		return (0);
@@ -94,73 +95,6 @@ void	print_object_on_map(t_data *data)
 	print_player(data);
 }
 
-void	update_index_collectibles(t_data *data)
-{
-	t_collectible	*collectible;
-
-	collectible = data->game.collectibles;
-	while (collectible)
-	{
-		if (collectible->i_image == 12)
-			collectible->i_image = 0;
-		collectible->i_image++;
-		collectible = collectible->next_collectible;
-	}
-}
-
-void	update_index_ennemies(t_data *data)
-{
-	t_ennemy	*ennemy;
-	t_ennemy	*ennemy_next;
-
-	ennemy = data->game.ennemies;
-	while (ennemy)
-	{
-		ennemy_next = ennemy->next_ennemy;
-		if (ennemy->got_hit && data->frames % 2 == 0)
-		{
-			if (ennemy->i_image++ < 15)
-				ennemy->i_image = 15;
-		}
-		else if (!ennemy->got_hit && data->frames % 2 == 0)
-		{
-			if (ennemy->i_image++ == 4)
-				ennemy->i_image = 0;
-		}
-		if (ennemy->i_image == 20)
-			destroy_ennemy(&data->game.ennemies, ennemy->coords, data);
-		ennemy = ennemy_next;
-	}
-}
-
-void	update_index_swords(t_data *data)
-{
-	t_sword	*sword;
-
-	sword = data->game.player.swords;
-	while (sword)
-	{
-		if (sword->index == 3)
-			sword->index = 0;
-		sword->index++;
-		sword = sword->next_sword;
-	}
-}
-
-void	update_index_player(t_data *data)
-{
-	data->game.player.index++;
-	if (data->game.player.index > 4)
-		data->game.player.index = 0;
-}
-
-void	update_image_index(t_data *data)
-{
-	update_index_collectibles(data);
-	update_index_ennemies(data);
-	update_index_swords(data);
-	update_index_player(data);
-}
 
 void	update_entities(t_data *data)
 {

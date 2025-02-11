@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 15:47:11 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:46:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ typedef struct s_sword
 typedef struct s_player
 {
 	t_vector2				move_dir;
+	t_vector2				coords;
 	int						health;
 	int						status;
 	int						index;
@@ -367,6 +368,7 @@ unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
 								unsigned int color);
 void						spawn_exit(t_data *data);
+void						update_image_index(t_data *data);
 // ==> window
 void						get_map_coords_in_screen(t_window *window,
 								t_map *map);
