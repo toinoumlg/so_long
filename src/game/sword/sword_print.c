@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:39:27 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 13:22:15 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:44:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	print_sword_move(t_data *data, t_sword *tmp)
 
 void	is_sword_printed(t_data *data)
 {
-	t_sword *sword;
-	t_sword *sword_next;
+	t_sword	*sword;
+	t_sword	*sword_next;
 
 	sword = data->game.player.swords;
 	while (sword)

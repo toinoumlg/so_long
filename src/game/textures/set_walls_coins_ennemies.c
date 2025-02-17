@@ -6,17 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:56:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 22:00:21 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:49:19 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	set_textures_ennemies(t_image *ennemies, void *mlx)
+void	set_textures_ennemy_file(char **ennemy_file)
 {
-	char	*ennemy_file[21];
-	int		i;
-
 	ennemy_file[0] = ENNEMY1;
 	ennemy_file[1] = ENNEMY2;
 	ennemy_file[2] = ENNEMY3;
@@ -38,6 +35,14 @@ void	set_textures_ennemies(t_image *ennemies, void *mlx)
 	ennemy_file[18] = ENNEMY19;
 	ennemy_file[19] = ENNEMY20;
 	ennemy_file[20] = ENNEMY21;
+}
+
+void	set_textures_ennemies(t_image *ennemies, void *mlx)
+{
+	char	*ennemy_file[21];
+	int		i;
+
+	set_textures_ennemy_file(ennemy_file);
 	i = 0;
 	while (i < 21)
 	{

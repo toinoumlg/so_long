@@ -6,12 +6,11 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 13:38:16 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:40:00 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
 
 void	add_new_collectible(t_map *map, int x, int y)
 {

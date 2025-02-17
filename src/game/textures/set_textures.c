@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:50:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:06:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ void	set_textures_border(t_image *borders, void *mlx)
 		borders[i].addr = mlx_get_data_addr(borders[i].image, &borders[i].bpp,
 				&borders[i].size_l, &borders[i].endian);
 		i++;
+	}
+}
+
+void	set_textures_exit(t_image *exit, void *mlx)
+{
+	char	*exit_files[1];
+	int		i;
+
+	exit_files[0] = EXIT1;
+	i = -1;
+	while (i++ < 0)
+	{
+		exit[i].image = mlx_xpm_file_to_image(mlx, exit_files[i], &exit[i].wh.x,
+				&exit[i].wh.y);
+		exit[i].addr = mlx_get_data_addr(exit[i].image, &exit[i].bpp,
+				&exit[i].size_l, &exit[i].endian);
 	}
 }
 
@@ -159,6 +175,7 @@ void	set_textures(t_data *data)
 	set_textures_border(data->textures.borders, data->mlx);
 	set_textures_walls(data->textures.walls, data->mlx);
 	set_textures_ennemies(data->textures.ennemies, data->mlx);
+	set_textures_exit(data->textures.exit, data->mlx);
 	set_textures_water_ground(&data->textures, data->mlx);
 	set_textures_player(data->textures.player, data->textures.player_axe,
 		data->mlx);

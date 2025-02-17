@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ennemy.c                                           :+:      :+:    :+:   */
+/*   ennemy_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:48:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 11:13:17 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:31:34 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+
+void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
+{
+	t_ennemy	*previous;
+	t_ennemy	*ennemy;
+
+	ennemy = *ennemies;
+	if (ennemy->coords.x == coords.x && ennemy->coords.y == coords.y)
+	{
+		*ennemies = ennemy->next_ennemy;
+		mlx_put_image_to_window(data->mlx, data->window.ptr,
+			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+			* PIXEL_PADDING);
+		free(ennemy);
+		return ;
+	}
+	while (ennemy != NULL && (ennemy->coords.x != coords.x
+			|| ennemy->coords.y != coords.y))
+	{
+		previous = ennemy;
+		ennemy = ennemy->next_ennemy;
+	}
+	previous->next_ennemy = ennemy->next_ennemy;
+	mlx_put_image_to_window(data->mlx, data->window.ptr,
+		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+		* PIXEL_PADDING);
+	free(ennemy);
+}
 
 void	add_new_ennemy(t_map *map, int x, int y)
 {

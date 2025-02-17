@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:55:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:25:39 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:45:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,43 +39,6 @@ void	did_sword_hit_ennemy(t_data *data, t_sword *sword)
 			data->game.actual_sword--;
 		}
 		ennemy = ennemy->next_ennemy;
-	}
-}
-
-void	is_sword_on_collectible(t_data *data, t_collectible *collectible)
-{
-	t_sword	*sword;
-	t_sword	*sword_next;
-
-	sword = data->game.player.swords;
-	while (sword)
-	{
-		sword_next = sword->next_sword;
-		if (sword->next_coords.y == collectible->coords.y
-			&& sword->next_coords.x == collectible->coords.x)
-			collectible_and_sword_move_print(data, collectible, sword);
-		if (sword->coords.y == collectible->coords.y
-			&& sword->coords.x == collectible->coords.x)
-			collectible_and_sword_print(data, collectible, sword);
-		sword = sword_next;
-	}
-}
-
-void	is_sword_blocked(t_data *data, t_sword *sword)
-{
-	if (!is_blocked(data->window.screen, sword->next_coords))
-	{
-		sword->to_destroy = 1;
-		data->game.actual_sword--;
-	}
-}
-
-void	is_sword_ended(t_data *data, t_sword *sword)
-{
-	if (sword->sword_timer == 30)
-	{
-		sword->to_destroy = 1;
-		data->game.actual_sword--;
 	}
 }
 

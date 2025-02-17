@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:29:22 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:24:55 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	print_list(t_collectible *list)
 		printf("[%d][%d]\n", list->coords.y, list->coords.x);
 		list = list->next_collectible;
 	}
-	
 }
 
 void	print_array(char **array)

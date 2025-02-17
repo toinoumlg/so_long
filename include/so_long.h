@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:46:01 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:15:02 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,14 @@ void						init_game(t_data *data);
 void						set_textures(t_data *data);
 void						init_window(t_map *map, t_window *window, void *mlx,
 								t_textures textures);
+// ==> update
+int							update(t_data *data);
+int							can_player_attack(int key_stroked, t_data *data);
+int							can_player_move(int key_stroked, t_data *data);
+void						get_current_time(t_data *data);
+void						print_object_on_map(t_data *data);
+void						update_entities(t_data *data);
+void						update_frames(t_data *data);
 // ==> textures
 void						set_textures_ennemies(t_image *ennemies, void *mlx);
 void						set_textures_coins(t_image *coins, void *mlx);
@@ -368,7 +376,7 @@ unsigned int				get_pixel_color(t_image *image, t_vector2 i);
 void						put_pixel(t_image *image, t_vector2 i,
 								unsigned int color);
 void						spawn_exit(t_data *data);
-void						update_image_index(t_data *data);
+void						update_index(t_data *data);
 // ==> window
 void						get_map_coords_in_screen(t_window *window,
 								t_map *map);
@@ -385,7 +393,16 @@ t_vector2					sword_next_pos(t_sword *sword);
 void						print_sword(t_data *data, t_sword *sword);
 void						destroy_sword(t_sword **swords, t_vector2 coords,
 								t_data *data);
-
+void						set_player_direction(int key_stroked, t_data *data);
+int							is_next_coords_blocked(t_data *data);
+int							is_ennemy_on_next_coords(t_data *data,
+								t_ennemy *ennemy);
+// ==> sword
+void						is_sword_ended(t_data *data, t_sword *sword);
+void						is_sword_blocked(t_data *data, t_sword *sword);
+int							set_sword_index(t_vector2 direction);
+int							check_sword_on_collectible(t_sword *sword,
+								t_collectible *collectible);
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
 void						update_collectible_coords(t_collectible *collectibles,
@@ -407,6 +424,9 @@ void						free_a_star_search(t_a_star_struct a_star,
 void						free_game(t_data data);
 void						free_open_list(t_a_star_list *open_list);
 void						free_collectibles(t_collectible *collectibles);
+void						free_images_start(t_data data);
+void						free_images_end(t_data data);
+void						free_textures(t_textures textures);
 // test utils
 void						print_array(char **array);
 void						print_actual_arrays(t_data *data);

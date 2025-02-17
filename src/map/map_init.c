@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 21:42:11 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:47:28 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	init_map(t_map *map)
 	map->min = set_vector2(5, 5);
 	if (map->max.y / 32 > SCREEN_HEIGHT || map->max.x / 32 > SCREEN_WIDTH
 		|| map->min.x > map->actual.x || map->min.y > map->actual.y)
-		return (ft_printf(RED "Error\nMap is too big or too small\n" RESET), -1);
+		return (ft_printf(RED "Error\nMap is too big or too small\n" RESET)
+			, -1);
 	return (0);
 }
 
@@ -71,7 +72,7 @@ int	set_map(t_map *map)
 			ft_printf(RED "Error\nMissing either collectibles,exit or start\n"),
 			ft_printf("Can also be a wrong character in map\n" RESET), -1);
 	if (error == -4)
-		return (free_collectibles(map->collectibles),free_map(map),
+		return (free_collectibles(map->collectibles), free_map(map),
 			ft_printf(RED "Error\nNo available path for "),
 			ft_printf("taking collectibles and exiting\n" RESET), -1);
 	return (0);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   index.c                                            :+:      :+:    :+:   */
+/*   update_index.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:45:22 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:47:22 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:27:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	update_index_player(t_data *data)
 		data->game.player.index = 0;
 }
 
-void	update_image_index(t_data *data)
+void	update_index(t_data *data)
 {
 	update_index_collectibles(data);
 	update_index_ennemies(data);

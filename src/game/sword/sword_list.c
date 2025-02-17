@@ -6,73 +6,48 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:38:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 15:35:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:46:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	destroy_sword(t_sword **swords, t_vector2 coords, t_data *data)
+void	destroy_sword_first(t_sword **swords, t_vector2 coords, t_data *data,
+		t_sword *sword)
 {
-	t_sword			*previous;
-	t_sword			*tmp;
-	t_collectible	*collectible;
-
-	tmp = *swords;
-	collectible = data->game.collectibles;
-	if (tmp->coords.x == coords.x && tmp->coords.y == coords.y)
-	{
-		*swords = tmp->next_sword;
-		while (collectible)
-		{
-			if (tmp->coords.y == collectible->coords.y
-				&& tmp->coords.x == collectible->coords.x)
-			{
-				free(tmp);
-				return ;
-			}
-			collectible = collectible->next_collectible;
-		}
-		mlx_put_image_to_window(data->mlx, data->window.ptr,
-			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
-			* PIXEL_PADDING);
-		free(tmp);
+	*swords = sword->next_sword;
+	if (check_sword_on_collectible(sword, data->game.collectibles))
 		return ;
-	}
-	while (tmp != NULL && (tmp->coords.x != coords.x
-			|| tmp->coords.y != coords.y))
-	{
-		previous = tmp;
-		tmp = tmp->next_sword;
-	}
-	previous->next_sword = tmp->next_sword;
-	while (collectible)
-	{
-		if (tmp->coords.y == collectible->coords.y
-			&& tmp->coords.x == collectible->coords.x)
-		{
-			free(tmp);
-			return ;
-		}
-		collectible = collectible->next_collectible;
-	}
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
 		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
 		* PIXEL_PADDING);
-	free(tmp);
+	free(sword);
 }
 
-int	set_sword_index(t_vector2 direction)
+void	destroy_sword(t_sword **swords, t_vector2 coords, t_data *data)
 {
-	if (direction.y == 1)
-		return (1);
-	if (direction.y == -1)
-		return (3);
-	if (direction.x == 1)
-		return (0);
-	if (direction.x == -1)
-		return (2);
-	return (0);
+	t_sword	*previous;
+	t_sword	*sword;
+
+	sword = *swords;
+	if (sword->coords.x == coords.x && sword->coords.y == coords.y)
+	{
+		destroy_sword_first(swords, coords, data, sword);
+		return ;
+	}
+	while (sword != NULL && (sword->coords.x != coords.x
+			|| sword->coords.y != coords.y))
+	{
+		previous = sword;
+		sword = sword->next_sword;
+	}
+	previous->next_sword = sword->next_sword;
+	if (check_sword_on_collectible(sword, data->game.collectibles))
+		return ;
+	mlx_put_image_to_window(data->mlx, data->window.ptr,
+		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+		* PIXEL_PADDING);
+	free(sword);
 }
 
 t_sword	*set_new_sword(t_vector2 axe_pos, t_vector2 direction)
@@ -114,10 +89,11 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 
 void	spawn_sword(t_data *data, t_vector2 direction)
 {
-	t_ennemy *ennemy;
-	t_vector2 axe_pos;
-	axe_pos.y = data->window.actual.y + direction.y;
-	axe_pos.x = data->window.actual.x + direction.x;
+	t_ennemy	*ennemy;
+	t_vector2	axe_pos;
+
+	axe_pos = set_vector2(data->window.actual.y + direction.y,
+			data->window.actual.x + direction.x);
 	ennemy = data->game.ennemies;
 	data->game.player.attack_cd = 6;
 	while (ennemy)

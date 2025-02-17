@@ -10,17 +10,22 @@ SRCS = main.c									\
 	a_star/a_star_struct.c						\
 	a_star/a_star_free_memory.c					\
 	game/game.c									\
-	game/update_index.c							\
 	game/game_init.c							\
+	game/hud/hud.c								\
+	game/update/update_index.c					\
+	game/update/update.c						\
 	game/player/player.c						\
 	game/player/player_print.c					\
+	game/player/player_utils.c					\
 	game/collectible/collectibles.c				\
 	game/collectible/collectible_print.c		\
+	game/collectible/collectible_print_move.c	\
 	game/sword/sword_update.c					\
 	game/sword/sword_list.c						\
 	game/sword/sword_print.c					\
-	game/ennemy/ennemy.c						\
-	game/ennemy/ennemy_logic.c					\
+	game/sword/sword_utils.c					\
+	game/ennemy/ennemy_list.c					\
+	game/ennemy/ennemy_update.c					\
 	game/ennemy/ennemy_print.c					\
 	game/window/screen_array.c					\
 	game/window/init_window.c					\
@@ -30,6 +35,7 @@ SRCS = main.c									\
 	game/textures/combine_image_utils.c			\
 	game/textures/set_walls_coins_ennemies.c	\
 	free_memory.c								\
+	free_textures.c								\
 	test_utils.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -48,6 +54,7 @@ CHECK_SYSTEM = config.txt
 all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
 
 norminette:
+	clear
 	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
 gdb: $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB)
@@ -77,6 +84,8 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)/game/sword
 	mkdir -p $(OBJ_DIR)/game/collectible
 	mkdir -p $(OBJ_DIR)/game/player
+	mkdir -p $(OBJ_DIR)/game/update
+	mkdir -p $(OBJ_DIR)/game/hud
 
 clean:
 	@rm -fr $(OBJ_DIR)
