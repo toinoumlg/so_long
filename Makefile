@@ -30,6 +30,7 @@ SRCS = main.c									\
 	game/ennemy/ennemy_list.c					\
 	game/ennemy/ennemy_update.c					\
 	game/ennemy/ennemy_print.c					\
+	game/ennemy/ennemy_print_move.c				\
 	game/window/screen_array.c					\
 	game/window/init_window.c					\
 	game/textures/set_textures.c				\

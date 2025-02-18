@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:54:56 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:09:32 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	set_map_array(int fd, t_map *map)
 	int	i;
 
 	map->array = ft_calloc(sizeof(char *), SCREEN_HEIGHT / PIXEL_PADDING);
+	if (!map->array)
+		return ;
 	i = 0;
 	while (i < SCREEN_HEIGHT / PIXEL_PADDING)
 	{
@@ -37,7 +39,9 @@ int	init_map(t_map *map)
 	int		fd;
 	char	*file_path;
 
-	file_path = ft_strjoin(PATH, map->file_name);
+	file_path = ft_strjoin("maps/", map->file_name);
+	if (!file_path)
+		return (ft_printf(RED "Error\nFailed malloc\n" RESET), -1);
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		return (ft_printf(RED "Error\nWrong map name\n" RESET), free(file_path),
@@ -49,8 +53,8 @@ int	init_map(t_map *map)
 	map->min = set_vector2(5, 5);
 	if (map->max.y / 32 > SCREEN_HEIGHT || map->max.x / 32 > SCREEN_WIDTH
 		|| map->min.x > map->actual.x || map->min.y > map->actual.y)
-		return (ft_printf(RED "Error\nMap is too big or too small\n" RESET)
-			, -1);
+		return (ft_printf(RED "Error\nMap is too big or too small\n" RESET),
+			-1);
 	return (0);
 }
 

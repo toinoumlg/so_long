@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 10:13:12 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:27:13 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:38:01 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ void	print_object_on_map(t_data *data)
 	reset_print(data);
 	is_collectible_printed(data);
 	is_ennemy_printed(data);
+	if (data->game.is_exit_printed == 0 && (data->game.game_finished == 1
+			|| data->game.game_finished == 2))
+		spawn_exit(data);
 	is_sword_printed(data);
 	print_player(data);
+	data->game.is_exit_printed = 0;
 }

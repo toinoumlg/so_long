@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 17:02:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:34:18 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ typedef struct s_game
 	t_player				player;
 	int						actual_sword;
 	int						game_finished;
+	int						is_exit_printed;
 
 }							t_game;
 
@@ -296,7 +297,7 @@ int							a_star(t_map *map);
 void						game(t_data data);
 
 // a_star
-void						init_a_star(t_map *map, t_vector2 start,
+int							init_a_star(t_map *map, t_vector2 start,
 								t_vector2 end, t_a_star_struct *a_star);
 int							a_star_search(t_vector2 start, t_vector2 end,
 								t_map *map);
@@ -359,7 +360,7 @@ void						set_front_color_offset(t_image *front,
 void						set_front_color(t_image *front, t_image *combined);
 void						print_player(t_data *data);
 void						print_ennemies(t_data *data, t_ennemy *tmp);
-void						print_ennemies_move(t_data *data, t_ennemy *tmp);
+void						print_ennemy_move(t_data *data, t_ennemy *ennemy);
 void						print_collectibles(t_data *data,
 								t_collectible *tmp);
 void						print_hud(t_data *data);
@@ -421,8 +422,8 @@ int							check_sword_on_collectible(t_sword *sword,
 								t_collectible *collectible);
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
-void						update_collectible_coords(
-								t_collectible *collectibles, t_vector2 min);
+void						update_collectible_coords(t_collectible *collectibles,
+								t_vector2 min);
 void						destroy_collectible(t_collectible **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);
@@ -440,6 +441,7 @@ void						free_a_star_search(t_a_star_struct a_star,
 void						free_game(t_data data);
 void						free_open_list(t_a_star_list *open_list);
 void						free_collectibles(t_collectible *collectibles);
+void						free_ennemies(t_ennemy *ennemies);
 void						free_images_start(t_data data);
 void						free_images_end(t_data data);
 void						free_textures(t_textures textures);

@@ -6,20 +6,27 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 23:16:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:31:43 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	init_a_star(t_map *map, t_vector2 start, t_vector2 end,
+int	init_a_star(t_map *map, t_vector2 start, t_vector2 end,
 		t_a_star_struct *a_star)
 {
 	a_star->start = start;
 	a_star->end = end;
 	a_star->closed_list = init_closed_list(map->actual);
+	if (!a_star->closed_list)
+		return (-1);
 	a_star->cell_details = init_and_set_cell_details(start, map->actual);
+	if (!a_star->cell_details)
+		return (-1);
 	a_star->open_list = init_list(0, start.x, start.y);
+	if (!a_star->open_list)
+		return (-1);
+	return (0);
 }
 
 void	find_new_f(t_new_values new, t_vector2 actual, t_a_star_struct *a_star)

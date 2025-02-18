@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:24:10 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:50:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	update(t_data *data)
 		print_object_on_map(data);
 		if (data->frames % 12 == 0)
 			print_hud_time(data);
-		if (data->game.game_finished == 1)
-			spawn_exit(data);
 		data->timer.last_frame = data->timer.current_time;
 	}
 	return (0);

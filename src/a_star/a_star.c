@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/07 00:27:58 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:54:26 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ int	a_star_search(t_vector2 start, t_vector2 end, t_map *map)
 {
 	t_a_star_struct	a_star;
 
-	init_a_star(map, start, end, &a_star);
+	if (init_a_star(map, start, end, &a_star))
+		return (free_ennemies(map->ennemies), -1);
 	a_star_loop(&a_star, map->array, map->direction);
 	if (!a_star.found_end)
-		return (free_collectibles(map->collectibles), free_a_star_search(a_star,
-				map->actual.y), -1);
+		return (free_a_star_search(a_star, map->actual.y),
+			free_ennemies(map->ennemies), -1);
 	else
 		return (free_a_star_search(a_star, map->actual.y), 0);
 }

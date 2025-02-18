@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:48:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:31:34 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:14:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	add_new_ennemy(t_map *map, int x, int y)
 	t_ennemy	*tmp;
 
 	new_ennemy = ft_calloc(sizeof(t_ennemy), 1);
+	if (!new_ennemy)
+		return ;
 	new_ennemy->coords = set_vector2(y, x);
 	new_ennemy->next_coords = set_vector2(0, 0);
 	new_ennemy->i_image = 0;

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 23:11:58 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:52:59 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ t_a_star_list	*add_to_list(t_a_star_list *open_list, float f, int y, int x)
 	t_a_star_list	*new_list;
 
 	new_list = ft_calloc(sizeof(t_a_star_list), 1);
+	if (!new_list)
+		return (NULL);
 	new_list->coords = set_vector2(y, x);
 	new_list->f = f;
 	new_list->next = NULL;
@@ -62,6 +64,8 @@ t_a_star_list	*init_list(float f, int x, int y)
 	t_a_star_list	*list;
 
 	list = ft_calloc(sizeof(t_a_star_list), 1);
+	if (!list)
+		return (NULL);
 	list->coords = set_vector2(y, x);
 	list->f = f;
 	list->next = NULL;
@@ -75,9 +79,13 @@ signed char	**init_closed_list(t_vector2 max)
 
 	i = 0;
 	closed_list = ft_calloc(sizeof(signed char *), max.y);
+	if (!closed_list)
+		return (NULL);
 	while (i < max.y)
 	{
 		closed_list[i] = ft_calloc(sizeof(signed char), max.x);
+		if (!closed_list[i])
+			return (NULL);
 		ft_memset(closed_list[i], -1, max.x);
 		i++;
 	}

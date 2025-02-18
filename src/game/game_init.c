@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:13:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:51:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:31:29 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_player(t_data *data)
 	data->game.actual_sword = 0;
 	data->frames = 0;
 	data->game.game_finished = 0;
+	data->game.is_exit_printed = 0;
 	data->game.moves = set_move();
 }
 

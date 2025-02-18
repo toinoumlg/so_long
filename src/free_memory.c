@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:23:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:06:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ void	free_map(t_map *map)
 	int	i;
 
 	i = 0;
-	while (map->array[i])
-		free(map->array[i++]);
+	if (map->array)
+	{
+		while (map->array[i])
+			free(map->array[i++]);
+	}
 	if (map->array)
 		free(map->array);
 	free(map);
