@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:13:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 12:27:52 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:51:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	init_game(t_data *data)
 	init_window(data->map, &data->window, data->mlx, data->textures);
 	update_collectible_coords(data->game.collectibles, data->window.min);
 	update_ennemies_coords(data->game.ennemies, data->window.min);
-	mlx_set_font(data->mlx, data->window.ptr,
-		"-urw-urw gothic l-demibold-r-normal--0-0-0-0-p-0-iso8859-15");
-	// print_move_string(data);
+	print_hud(data);
+	print_hud_time(data);
+	print_hud_move(data);
+	print_hud_health(data);
+	print_hud_swords(data);
 }

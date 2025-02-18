@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 10:23:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:24:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	handle_keys(int key_stroked, t_data *data)
 {
+	if (key_stroked == 65307)
+		return (free_collectibles(data->game.collectibles),
+			mlx_loop_end(data->mlx), 0);
 	if (can_player_move(key_stroked, data))
 		player_move(key_stroked, data);
 	if (can_player_attack(key_stroked, data))
 		player_attack(key_stroked, data);
-	if (key_stroked == 65307)
-		return (free_collectibles(data->game.collectibles),
-			mlx_loop_end(data->mlx), 0);
 	return (0);
 }
 
@@ -41,8 +41,8 @@ int	update(t_data *data)
 		if (data->game.game_finished == 3)
 			return (mlx_loop_end(data->mlx), 0);
 		print_object_on_map(data);
-		if (data->frames % 4 == 0)
-			print_move_string(data);
+		if (data->frames % 12 == 0)
+			print_hud_time(data);
 		if (data->game.game_finished == 1)
 			spawn_exit(data);
 		data->timer.last_frame = data->timer.current_time;

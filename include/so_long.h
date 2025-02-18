@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 12:15:02 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:02:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@
 #  define PLAYER_IDLE3 "textures/player/idle/player_idle3.xpm"
 #  define PLAYER_IDLE4 "textures/player/idle/player_idle4.xpm"
 #  define PLAYER_IDLE5 "textures/player/idle/player_idle5.xpm"
-#  define PLAYER_AXE1 "textures/player/axe/player_axe1.xpm"
-#  define PLAYER_AXE2 "textures/player/axe/player_axe2.xpm"
-#  define PLAYER_AXE3 "textures/player/axe/player_axe3.xpm"
-#  define PLAYER_AXE4 "textures/player/axe/player_axe4.xpm"
+#  define SWORD1 "textures/player/axe/sword1.xpm"
+#  define SWORD2 "textures/player/axe/sword2.xpm"
+#  define SWORD3 "textures/player/axe/sword3.xpm"
+#  define SWORD4 "textures/player/axe/sword4.xpm"
 #  define COIN_R1 "textures/coins/coin_rotate1.xpm"
 #  define COIN_R2 "textures/coins/coin_rotate2.xpm"
 #  define COIN_R3 "textures/coins/coin_rotate3.xpm"
@@ -112,7 +112,8 @@
 #  define HUD1 "textures/hud/hud1.xpm"
 #  define HUD2 "textures/hud/hud2.xpm"
 #  define HUD3 "textures/hud/hud3.xpm"
-#  define HEART1 "textures/hud/heart1.xpm"
+#  define HUD4 "textures/hud/heart.xpm"
+#  define HUD5 "textures/hud/sword.xpm"
 # endif
 
 typedef struct s_vector2
@@ -224,8 +225,8 @@ typedef struct s_textures
 	t_image					*walls;
 	t_image					*borders;
 	t_image					*player;
-	t_image					*player_axe;
-	t_image					*coins_r;
+	t_image					*sword;
+	t_image					*coins;
 	t_image					*exit;
 	t_image					*ennemies;
 	t_image					*hud;
@@ -341,6 +342,13 @@ void						update_frames(t_data *data);
 // ==> textures
 void						set_textures_ennemies(t_image *ennemies, void *mlx);
 void						set_textures_coins(t_image *coins, void *mlx);
+void						set_textures_player(t_image *player, t_image *sword,
+								void *mlx);
+void						set_textures_border(t_image *borders, void *mlx);
+void						set_textures_exit(t_image *exit, void *mlx);
+void						set_textures_water(t_image *water, void *mlx);
+void						set_textures_ground(t_image *ground, void *mlx);
+void						set_textures_hud(t_image *hud, void *mlx);
 void						set_textures_walls(t_image *walls, void *mlx);
 void						combine_image(t_image front, t_image background,
 								void *mlx, t_window window);
@@ -354,7 +362,15 @@ void						print_ennemies(t_data *data, t_ennemy *tmp);
 void						print_ennemies_move(t_data *data, t_ennemy *tmp);
 void						print_collectibles(t_data *data,
 								t_collectible *tmp);
-void						print_move_string(t_data *data);
+void						print_hud(t_data *data);
+void						print_hud_empty(t_data *data, int i);
+void						print_hud_right_corner(t_data *data, int i);
+void						print_hud_left_corner(t_data *data, int i);
+char						*string_hud(t_data *data);
+void						print_hud_time(t_data *data);
+void						print_hud_move(t_data *data);
+void						print_hud_health(t_data *data);
+void						print_hud_swords(t_data *data);
 void						print_seconds(t_data *data);
 void						is_sword_printed(t_data *data);
 void						is_ennemy_printed(t_data *data);
@@ -405,8 +421,8 @@ int							check_sword_on_collectible(t_sword *sword,
 								t_collectible *collectible);
 // ==> collectible
 void						add_new_collectible(t_map *map, int x, int y);
-void						update_collectible_coords(t_collectible *collectibles,
-								t_vector2 min);
+void						update_collectible_coords(
+								t_collectible *collectibles, t_vector2 min);
 void						destroy_collectible(t_collectible **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);

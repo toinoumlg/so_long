@@ -1,5 +1,5 @@
 /* XPM */
-static const char *player_axe0[] = {
+static const char *sword0[] = {
 /* columns rows colors chars-per-pixel */
 "20 20 7 1 ",
 "  c #33323D",

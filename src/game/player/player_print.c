@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:17:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 13:51:05 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:09:24 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	print_player_moving(t_data *data)
 		* PIXEL_PADDING);
 	data->game.player.status = 0;
 	data->game.player.moves++;
+	print_hud_move(data);
 	data->game.player.move_buffer = 3;
 	data->game.player.move_dir = data->game.moves.zero;
 	mlx_destroy_image(data->mlx, combined.image);

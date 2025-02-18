@@ -12,6 +12,9 @@ SRCS = main.c									\
 	game/game.c									\
 	game/game_init.c							\
 	game/hud/hud.c								\
+	game/hud/hud_swords.c						\
+	game/hud/hud_health.c						\
+	game/hud/hud_utils.c						\
 	game/update/update_index.c					\
 	game/update/update.c						\
 	game/player/player.c						\
@@ -34,6 +37,8 @@ SRCS = main.c									\
 	game/textures/combine_image.c				\
 	game/textures/combine_image_utils.c			\
 	game/textures/set_walls_coins_ennemies.c	\
+	game/textures/set_textures_others.c			\
+	game/textures/set_textures_player.c			\
 	free_memory.c								\
 	free_textures.c								\
 	test_utils.c

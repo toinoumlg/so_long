@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:25:25 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:26:56 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:53:49 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,22 @@ void	free_images_start(t_data data)
 		mlx_destroy_image(data.mlx, data.textures.player[i].image);
 	i = -1;
 	while (i++ < 3)
-		mlx_destroy_image(data.mlx, data.textures.player_axe[i].image);
+		mlx_destroy_image(data.mlx, data.textures.sword[i].image);
 }
 
 void	free_images_end(t_data data)
 {
 	int	i;
 
-	i = 0;
-	while (i < 13)
-	{
-		mlx_destroy_image(data.mlx, data.textures.coins_r[i].image);
-		i++;
-	}
-	i = 0;
-	while (i < 21)
-	{
-		mlx_destroy_image(data.mlx, data.textures.ennemies[i].image);
-		i++;
-	}
 	i = -1;
-	while (i++ < 2)
+	while (i++ < 12)
+		mlx_destroy_image(data.mlx, data.textures.coins[i].image);
+	i = -1;
+	while (i++ < 20)
+		mlx_destroy_image(data.mlx, data.textures.ennemies[i].image);
+	i = -1;
+	while (i++ < 4)
 		mlx_destroy_image(data.mlx, data.textures.hud[i].image);
-	mlx_destroy_image(data.mlx, data.textures.heart[0].image);
 	mlx_destroy_image(data.mlx, data.textures.exit[0].image);
 }
 
@@ -67,9 +60,8 @@ void	free_textures(t_textures textures)
 	free(textures.water);
 	free(textures.borders);
 	free(textures.player);
-	free(textures.player_axe);
+	free(textures.sword);
 	free(textures.hud);
-	free(textures.heart);
 	free(textures.exit);
-	free(textures.coins_r);
+	free(textures.coins);
 }

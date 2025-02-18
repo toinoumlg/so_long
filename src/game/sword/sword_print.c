@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:39:27 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:44:03 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:53:49 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_sword(t_data *data, t_sword *sword)
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color_offset(&data->textures.player_axe[sword->index], &combined);
+	set_front_color_offset(&data->textures.sword[sword->index], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		sword->coords.x * PIXEL_PADDING, sword->coords.y * PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);
@@ -40,7 +40,7 @@ void	print_sword_move(t_data *data, t_sword *tmp)
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color(&data->textures.player_axe[tmp->index], &combined);
+	set_front_color(&data->textures.sword[tmp->index], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		tmp->next_coords.x * PIXEL_PADDING, tmp->next_coords.y * PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:47:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:54:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	set_map(t_map *map)
 	int	error;
 
 	if (init_map(map))
-		return (free(map), -2);
+		return (free_map(map), -2);
 	error = check_map(map);
 	if (error == -1)
 		return (free_map(map),

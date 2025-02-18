@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/11 16:36:27 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:44:27 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	wich_texture_to_print(t_window *window, t_textures textures, void *mlx)
 			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
 			* PIXEL_PADDING);
 	if (c == 'C')
-		combine_image(textures.coins_r[0], textures.ground[rand() % 2], mlx,
+		combine_image(textures.coins[0], textures.ground[rand() % 2], mlx,
 			*window);
 	if (c == '2')
 		combine_image(textures.ennemies[0], textures.ground[0], mlx, *window);

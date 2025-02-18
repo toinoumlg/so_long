@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:38:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:46:33 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:58:43 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,11 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 	t_sword	*new_sword;
 	t_sword	*tmp;
 
-	data->game.actual_sword++;
 	new_sword = set_new_sword(axe_pos, direction);
 	if (!new_sword)
 		return ;
+	data->game.actual_sword++;
+	print_hud_swords(data);
 	if (!data->game.player.swords)
 	{
 		data->game.player.swords = new_sword;

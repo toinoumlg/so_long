@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:14:22 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:39:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:53:49 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	collectible_and_sword_print(t_data *data, t_collectible *collectible,
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color_offset(&data->textures.coins_r[collectible->i_image],
+	set_front_color_offset(&data->textures.coins[collectible->i_image],
 		&combined);
-	set_front_color_offset(&data->textures.player_axe[sword->index], &combined);
+	set_front_color_offset(&data->textures.sword[sword->index], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		collectible->coords.x * PIXEL_PADDING, collectible->coords.y
 		* PIXEL_PADDING);
@@ -59,7 +59,7 @@ void	collectible_and_ennemy_print(t_data *data, t_collectible *collectible,
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color_offset(&data->textures.coins_r[collectible->i_image],
+	set_front_color_offset(&data->textures.coins[collectible->i_image],
 		&combined);
 	set_front_color(&data->textures.ennemies[ennemy->i_image], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
@@ -79,7 +79,7 @@ void	print_collectibles(t_data *data, t_collectible *tmp)
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color_offset(&data->textures.coins_r[tmp->i_image], &combined);
+	set_front_color_offset(&data->textures.coins[tmp->i_image], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		tmp->coords.x * PIXEL_PADDING, tmp->coords.y * PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);

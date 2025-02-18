@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 12:55:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:45:39 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:51:02 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	did_sword_hit_ennemy(t_data *data, t_sword *sword)
 			ennemy->got_hit = 1;
 			sword->to_destroy = 1;
 			data->game.actual_sword--;
+			print_hud_swords(data);
 		}
 		ennemy = ennemy->next_ennemy;
 	}

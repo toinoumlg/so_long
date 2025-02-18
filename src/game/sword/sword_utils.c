@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:42:46 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:46:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:51:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	is_sword_blocked(t_data *data, t_sword *sword)
 	{
 		sword->to_destroy = 1;
 		data->game.actual_sword--;
+		print_hud_swords(data);
 	}
 }
 
@@ -46,6 +47,7 @@ void	is_sword_ended(t_data *data, t_sword *sword)
 	{
 		sword->to_destroy = 1;
 		data->game.actual_sword--;
+		print_hud_swords(data);
 	}
 }
 
