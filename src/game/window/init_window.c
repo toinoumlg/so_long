@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 14:44:27 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:35:59 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,25 @@ void	print_screen_array(char **screen, t_textures textures, t_window *window,
 	}
 }
 
-void	init_window(t_map *map, t_window *window, void *mlx,
-		t_textures textures)
+int	init_window(t_map *map, t_window *window, void *mlx, t_textures textures)
 {
 	window->move = set_vector2(0, 0);
 	window->screen = ft_calloc(sizeof(char *), (map->actual.y + 4) + 1);
+	if (!window->screen)
+		return (-1);
 	window->min = set_vector2(2, 2);
 	window->max = set_vector2(map->actual.y + 2, map->actual.x + 2);
-	init_screen_array(map, window);
+	if (init_screen_array(map, window))
+		return (-1);
 	window->ptr = mlx_new_window(mlx, (map->actual.x + 4) * PIXEL_PADDING,
 			(map->actual.y + 4) * PIXEL_PADDING, "so_long");
+	if (!window->ptr)
+		return (-1);
 	print_screen_array(window->screen, textures, window, mlx);
 	window->exit = set_vector2(map->exit.y + window->min.y, map->exit.x
 			+ window->min.x);
 	window->actual = set_vector2(map->player_start.y + window->min.y,
 			map->player_start.x + window->min.x);
 	free_map(map);
+	return (0);
 }

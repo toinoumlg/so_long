@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 18:34:18 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:36:13 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,8 +299,12 @@ void						game(t_data data);
 // a_star
 int							init_a_star(t_map *map, t_vector2 start,
 								t_vector2 end, t_a_star_struct *a_star);
+void						free_closed_list(signed char **closed_list,
+								int map_height);
 int							a_star_search(t_vector2 start, t_vector2 end,
 								t_map *map);
+void						free_cell_details(t_cell **cell_details,
+								int map_height);
 t_cell						**init_and_set_cell_details(t_vector2 start,
 								t_vector2 max);
 void						a_star_loop(t_a_star_struct *a_star, char **array,
@@ -328,9 +332,9 @@ t_possible_directions		set_move(void);
 
 // game
 // ==> start
-void						init_game(t_data *data);
-void						set_textures(t_data *data);
-void						init_window(t_map *map, t_window *window, void *mlx,
+int							init_game(t_data *data);
+int							set_textures(t_data *data);
+int							init_window(t_map *map, t_window *window, void *mlx,
 								t_textures textures);
 // ==> update
 int							update(t_data *data);
@@ -397,7 +401,7 @@ void						update_index(t_data *data);
 // ==> window
 void						get_map_coords_in_screen(t_window *window,
 								t_map *map);
-void						init_screen_array(t_map *map, t_window *window);
+int							init_screen_array(t_map *map, t_window *window);
 void						print_screen_array(char **screen,
 								t_textures textures, t_window *window,
 								void *mlx);
@@ -421,14 +425,14 @@ int							set_sword_index(t_vector2 direction);
 int							check_sword_on_collectible(t_sword *sword,
 								t_collectible *collectible);
 // ==> collectible
-void						add_new_collectible(t_map *map, int x, int y);
+int							add_new_collectible(t_map *map, int x, int y);
 void						update_collectible_coords(t_collectible *collectibles,
 								t_vector2 min);
 void						destroy_collectible(t_collectible **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);
 // ==> ennemy
-void						add_new_ennemy(t_map *map, int x, int y);
+int							add_new_ennemy(t_map *map, int x, int y);
 void						update_ennemies_coords(t_ennemy *ennemies,
 								t_vector2 coords);
 void						update_ennemies(t_data *data);
@@ -445,6 +449,10 @@ void						free_ennemies(t_ennemy *ennemies);
 void						free_images_start(t_data data);
 void						free_images_end(t_data data);
 void						free_textures(t_textures textures);
+void						free_failed_textures_init(t_data data);
+void						free_failed_window_init(t_data data);
+void						free_array(char **array);
+
 // test utils
 void						print_array(char **array);
 void						print_actual_arrays(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 18:06:51 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:25:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,6 @@ void	free_ennemies(t_ennemy *ennemies)
 		free(ennemies);
 		ennemies = tmp;
 	}
-}
-
-void	free_swords(t_sword *swords)
-{
-	t_sword	*tmp;
-
-	tmp = swords;
-	if (!tmp)
-		return ;
-	while (tmp)
-	{
-		tmp = tmp->next_sword;
-		free(swords);
-		swords = tmp;
-	}
-}
-
-void	free_game(t_data data)
-{
-	int	i;
-
-	i = 0;
-	while (data.window.screen[i])
-		free(data.window.screen[i++]);
-	free(data.window.screen);
-	free_ennemies(data.game.ennemies);
-	free_swords(data.game.player.swords);
-	free_images_start(data);
-	free_images_end(data);
-	free_textures(data.textures);
-	mlx_destroy_window(data.mlx, data.window.ptr);
-	mlx_destroy_display(data.mlx);
-	free(data.mlx);
 }
 
 void	free_map(t_map *map)

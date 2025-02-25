@@ -10,6 +10,7 @@ SRCS = main.c									\
 	a_star/a_star_struct.c						\
 	a_star/a_star_free_memory.c					\
 	game/game.c									\
+	game/free_game.c							\
 	game/game_init.c							\
 	game/hud/hud.c								\
 	game/hud/hud_swords.c						\
@@ -40,8 +41,8 @@ SRCS = main.c									\
 	game/textures/set_walls_coins_ennemies.c	\
 	game/textures/set_textures_others.c			\
 	game/textures/set_textures_player.c			\
+	game/textures/free_textures.c				\
 	free_memory.c								\
-	free_textures.c								\
 	test_utils.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)

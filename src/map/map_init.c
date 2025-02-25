@@ -6,19 +6,19 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 18:09:32 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:38:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-void	set_map_array(int fd, t_map *map)
+int	set_map_array(int fd, t_map *map)
 {
 	int	i;
 
 	map->array = ft_calloc(sizeof(char *), SCREEN_HEIGHT / PIXEL_PADDING);
 	if (!map->array)
-		return ;
+		return (-1);
 	i = 0;
 	while (i < SCREEN_HEIGHT / PIXEL_PADDING)
 	{
@@ -31,23 +31,21 @@ void	set_map_array(int fd, t_map *map)
 	}
 	close(fd);
 	map->actual.y = i;
+	return (0);
 }
 
 /* 5*PIXEL_PADDING for min height and width to have a 3x3 playable area */
 int	init_map(t_map *map)
 {
 	int		fd;
-	char	*file_path;
 
-	file_path = ft_strjoin("maps/", map->file_name);
-	if (!file_path)
-		return (ft_printf(RED "Error\nFailed malloc\n" RESET), -1);
-	fd = open(file_path, O_RDONLY);
+	fd = open(map->file_name, O_RDONLY);
 	if (fd < 0)
-		return (ft_printf(RED "Error\nWrong map name\n" RESET), free(file_path),
+		return (ft_printf(RED "Error\nWrong map name\n" RESET),
 			close(fd), -1);
-	free(file_path);
-	set_map_array(fd, map);
+	if (set_map_array(fd, map))
+		return (ft_printf(RED "Error\nFailed calloc for map array\n" RESET),
+			-1);
 	map->max = set_vector2((map->actual.y + 4) * PIXEL_PADDING, (map->actual.x
 				+ 4) * PIXEL_PADDING);
 	map->min = set_vector2(5, 5);

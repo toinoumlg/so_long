@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:51:16 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:15:27 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,7 @@ int	is_ennemy_on_player(t_data *data, t_ennemy *ennemy)
 		data->game.player.health--;
 		print_hud_health(data);
 		if (data->game.player.health == 0)
-		{
-			data->game.game_finished = 3;
-			if (data->game.collectibles)
-				free_collectibles(data->game.collectibles);
-			return (1);
-		}
+			return (data->game.game_finished = 3, 1);
 	}
 	return (0);
 }

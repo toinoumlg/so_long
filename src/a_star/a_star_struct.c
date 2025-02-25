@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 18:31:43 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:28:41 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	init_a_star(t_map *map, t_vector2 start, t_vector2 end,
 		return (-1);
 	a_star->cell_details = init_and_set_cell_details(start, map->actual);
 	if (!a_star->cell_details)
-		return (-1);
+		return (free_closed_list(a_star->closed_list, map->actual.y), -1);
 	a_star->open_list = init_list(0, start.x, start.y);
 	if (!a_star->open_list)
-		return (-1);
+		return (free_closed_list(a_star->closed_list, map->actual.y),
+			free_cell_details(a_star->cell_details, map->actual.y), -1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:34:26 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:39:52 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	set_screen_array_c(t_vector2 *map_coords, t_vector2 *screen_coords,
 	screen_coords->x++;
 }
 
-void	init_screen_array(t_map *map, t_window *window)
+int	init_screen_array(t_map *map, t_window *window)
 {
 	t_vector2	screen_coords;
 	t_vector2	map_coords;
@@ -68,6 +68,8 @@ void	init_screen_array(t_map *map, t_window *window)
 	{
 		window->screen[screen_coords.y] = ft_calloc(sizeof(char),
 				((map->actual.x + 4) + 1));
+		if (!window->screen[screen_coords.y])
+			return (-1);
 		map_coords.x = 0;
 		screen_coords.x = 0;
 		while (screen_coords.x < map->actual.x + 4)
@@ -76,6 +78,7 @@ void	init_screen_array(t_map *map, t_window *window)
 			map_coords.y++;
 		screen_coords.y++;
 	}
+	return (0);
 }
 
 void	print_actual_arrays(t_data *data)

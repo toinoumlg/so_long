@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:45:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/06 23:16:05 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:29:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,14 @@ t_cell	**init_and_set_cell_details(t_vector2 start, t_vector2 max)
 
 	coords.y = 0;
 	cell_details = ft_calloc(sizeof(t_cell *), max.y);
-	while (coords.y < max.y)
-		cell_details[coords.y++] = ft_calloc(sizeof(t_cell), max.x);
-	coords.y = 0;
+	if (!cell_details)
+		return (NULL);
 	while (coords.y < max.y)
 	{
 		coords.x = 0;
+		cell_details[coords.y] = ft_calloc(sizeof(t_cell), max.x);
+		if (!cell_details[coords.y])
+			return (free(cell_details), NULL);
 		while (coords.x < max.x)
 			cell_details[coords.y][coords.x++] = set_cells_detail_init(100000,
 					-1, -1);

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:38:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:58:43 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:33:26 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ void	destroy_sword(t_sword **swords, t_vector2 coords, t_data *data)
 	free(sword);
 }
 
-t_sword	*set_new_sword(t_vector2 axe_pos, t_vector2 direction)
+t_sword	*set_new_sword(t_vector2 sword_pos, t_vector2 direction)
 {
 	t_sword	*new_sword;
 
 	new_sword = ft_calloc(sizeof(t_sword), 1);
-	new_sword->coords = set_vector2(axe_pos.y, axe_pos.x);
+	if (!new_sword)
+		return (NULL);
+	new_sword->coords = set_vector2(sword_pos.y, sword_pos.x);
 	new_sword->direction = set_vector2(direction.y, direction.x);
 	new_sword->next_coords = set_vector2(0, 0);
 	new_sword->index = set_sword_index(direction);
@@ -66,12 +68,12 @@ t_sword	*set_new_sword(t_vector2 axe_pos, t_vector2 direction)
 	return (new_sword);
 }
 
-void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
+void	add_new_sword(t_data *data, t_vector2 sword_pos, t_vector2 direction)
 {
 	t_sword	*new_sword;
 	t_sword	*tmp;
 
-	new_sword = set_new_sword(axe_pos, direction);
+	new_sword = set_new_sword(sword_pos, direction);
 	if (!new_sword)
 		return ;
 	data->game.actual_sword++;
@@ -91,15 +93,15 @@ void	add_new_sword(t_data *data, t_vector2 axe_pos, t_vector2 direction)
 void	spawn_sword(t_data *data, t_vector2 direction)
 {
 	t_ennemy	*ennemy;
-	t_vector2	axe_pos;
+	t_vector2	sword_pos;
 
-	axe_pos = set_vector2(data->window.actual.y + direction.y,
+	sword_pos = set_vector2(data->window.actual.y + direction.y,
 			data->window.actual.x + direction.x);
 	ennemy = data->game.ennemies;
 	data->game.player.attack_cd = 6;
 	while (ennemy)
 	{
-		if (axe_pos.y == ennemy->coords.y && axe_pos.x == ennemy->coords.x)
+		if (sword_pos.y == ennemy->coords.y && sword_pos.x == ennemy->coords.x)
 		{
 			ennemy->got_hit = 1;
 			ennemy->i_image = 16;
@@ -107,6 +109,6 @@ void	spawn_sword(t_data *data, t_vector2 direction)
 		}
 		ennemy = ennemy->next_ennemy;
 	}
-	if (is_blocked(data->window.screen, axe_pos))
-		add_new_sword(data, axe_pos, direction);
+	if (is_blocked(data->window.screen, sword_pos))
+		add_new_sword(data, sword_pos, direction);
 }

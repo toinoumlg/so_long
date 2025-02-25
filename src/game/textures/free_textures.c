@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:25:25 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 14:53:49 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:21:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,24 @@ void	free_images_end(t_data data)
 
 void	free_textures(t_textures textures)
 {
-	free(textures.ennemies);
-	free(textures.ground);
-	free(textures.walls);
-	free(textures.water);
-	free(textures.borders);
-	free(textures.player);
-	free(textures.sword);
-	free(textures.hud);
-	free(textures.exit);
-	free(textures.coins);
+	if (textures.ennemies)
+		free(textures.ennemies);
+	if (textures.ground)
+		free(textures.ground);
+	if (textures.walls)
+		free(textures.walls);
+	if (textures.water)
+		free(textures.water);
+	if (textures.borders)
+		free(textures.borders);
+	if (textures.player)
+		free(textures.player);
+	if (textures.sword)
+		free(textures.sword);
+	if (textures.hud)
+		free(textures.hud);
+	if (textures.exit)
+		free(textures.exit);
+	if (textures.coins)
+		free(textures.coins);
 }

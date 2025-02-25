@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 18:52:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:30:34 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ signed char	**init_closed_list(t_vector2 max)
 	{
 		closed_list[i] = ft_calloc(sizeof(signed char), max.x);
 		if (!closed_list[i])
-			return (NULL);
+			return (free_array((char **)closed_list), NULL);
 		ft_memset(closed_list[i], -1, max.x);
 		i++;
 	}

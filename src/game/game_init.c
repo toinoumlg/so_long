@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:13:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 17:31:29 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:53:58 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,29 @@ void	init_player(t_data *data)
 	data->game.moves = set_move();
 }
 
-void	init_game(t_data *data)
+void	init_hud(t_data *data)
 {
-	data->mlx = mlx_init();
-	init_player(data);
-	set_timer(data);
-	set_textures(data);
-	init_window(data->map, &data->window, data->mlx, data->textures);
-	update_collectible_coords(data->game.collectibles, data->window.min);
-	update_ennemies_coords(data->game.ennemies, data->window.min);
 	print_hud(data);
 	print_hud_time(data);
 	print_hud_move(data);
 	print_hud_health(data);
 	print_hud_swords(data);
+}
+
+int	init_game(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+		return (free_collectibles(data->map->collectibles),
+			free_ennemies(data->map->ennemies), free_map(data->map), -1);
+	if (set_textures(data))
+		return (free_failed_textures_init(*data), -1);
+	set_timer(data);
+	init_player(data);
+	if (init_window(data->map, &data->window, data->mlx, data->textures))
+		return (free_failed_window_init(*data), -1);
+	update_collectible_coords(data->game.collectibles, data->window.min);
+	update_ennemies_coords(data->game.ennemies, data->window.min);
+	init_hud(data);
+	return (0);
 }

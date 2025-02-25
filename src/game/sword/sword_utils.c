@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:42:46 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:51:10 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:22:59 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	is_sword_blocked(t_data *data, t_sword *sword)
 {
 	if (!is_blocked(data->window.screen, sword->next_coords))
 	{
+		if (sword->to_destroy == 1)
+			return ;
 		sword->to_destroy = 1;
 		data->game.actual_sword--;
 		print_hud_swords(data);
@@ -45,6 +47,8 @@ void	is_sword_ended(t_data *data, t_sword *sword)
 {
 	if (sword->sword_timer == 30)
 	{
+		if (sword->to_destroy == 1)
+			return ;
 		sword->to_destroy = 1;
 		data->game.actual_sword--;
 		print_hud_swords(data);
