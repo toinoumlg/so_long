@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 18:36:13 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:59:55 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -426,8 +426,8 @@ int							check_sword_on_collectible(t_sword *sword,
 								t_collectible *collectible);
 // ==> collectible
 int							add_new_collectible(t_map *map, int x, int y);
-void						update_collectible_coords(t_collectible *collectibles,
-								t_vector2 min);
+void						update_collectible_coords(
+								t_collectible *collectibles, t_vector2 min);
 void						destroy_collectible(t_collectible **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);
