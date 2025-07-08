@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 18:59:55 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 11:16:16 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ typedef struct s_collectible
 	t_vector2				coords;
 	int						i_image;
 	int						is_printed;
-	struct s_collectible	*next_collectible;
+	struct s_collectible	*next;
 }							t_collectible;
 
 typedef struct s_possible_directions
@@ -161,13 +161,13 @@ typedef struct s_ennemy
 	int						is_printed;
 	int						i_image;
 	int						got_hit;
-	struct s_ennemy			*next_ennemy;
+	struct s_ennemy			*next;
 }							t_ennemy;
 
 typedef struct s_map
 {
 	char					**array;
-	char					*file_name;
+	char					*file_path;
 	t_vector2				actual;
 	t_vector2				min;
 	t_vector2				max;
@@ -287,14 +287,14 @@ typedef struct s_data
 	t_textures				textures;
 	t_window				window;
 	t_game					game;
-	t_map					*map;
+	t_map					map;
 	t_timer					timer;
 }							t_data;
 
 // main
-int							set_map(t_map *map);
+int							map_parser(t_map *map, char **av, int ac);
 int							a_star(t_map *map);
-void						game(t_data data);
+void						start_game(t_data data);
 
 // a_star
 int							init_a_star(t_map *map, t_vector2 start,
@@ -327,7 +327,7 @@ void						find_new_f(t_new_values new, t_vector2 actual,
 								t_a_star_struct *a_star);
 
 // map
-int							check_map(t_map *map);
+void						check_map(t_map *map);
 t_possible_directions		set_move(void);
 
 // game
@@ -425,14 +425,14 @@ int							set_sword_index(t_vector2 direction);
 int							check_sword_on_collectible(t_sword *sword,
 								t_collectible *collectible);
 // ==> collectible
-int							add_new_collectible(t_map *map, int x, int y);
-void						update_collectible_coords(
-								t_collectible *collectibles, t_vector2 min);
+void						add_collectible(t_map *map, int x, int y);
+void						update_collectible_coords(t_collectible *collectibles,
+								t_vector2 min);
 void						destroy_collectible(t_collectible **collectibles,
 								t_vector2 coords);
 void						update_collectibles(t_data *data);
 // ==> ennemy
-int							add_new_ennemy(t_map *map, int x, int y);
+int							add_ennemy(t_map *map, int x, int y);
 void						update_ennemies_coords(t_ennemy *ennemies,
 								t_vector2 coords);
 void						update_ennemies(t_data *data);

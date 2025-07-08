@@ -1,5 +1,5 @@
-NAME = a.out
-SRC_DIR = src
+NAME = so_long
+SRC_DIR = source
 SRCS = main.c									\
 	map/map_init.c								\
 	map/map_checker.c							\
@@ -43,32 +43,29 @@ SRCS = main.c									\
 	game/textures/set_textures_player.c			\
 	game/textures/free_textures.c				\
 	free_memory.c								\
+	error.c 									\
 	test_utils.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
-OBJ_DIR = $(SRC_DIR)/obj
+OBJ_DIR = build
 C_FLAGS = -Werror -Wextra -Wall
 MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
-INCLUDE_DIR = include
-INCLUDES = -I/usr/include -Imlx -Ilibft/include
+INCLUDES = -I/usr/include -Imlx -Ilibft/include -Iinclude
 MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-HEADER = include/so_long.h
 LIBFTPRINTF_LIB = $(LIBFTPRINTF_DIR)/libftprintf.a
 LIBFTPRINTF_DIR = libftprintf
 CHECK_SYSTEM = config.txt
+DEP = $(OBJ:.o=.d)
 
-all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
+all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(OBJ_DIR) $(NAME)
 
 norminette:
 	clear
 	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
-gdb: $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB)
-	gcc $(C_FLAGS) -o gdb.out $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB) -g 
-
-$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) 
-	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)
+$(NAME): $(OBJS) $(LIBFTPRINTF_LIB)
+	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB) $(INCLUDES)
 
 $(MLX_LIB):
 	make --no-print-directory -C $(MLX_DIR)
@@ -76,23 +73,13 @@ $(MLX_LIB):
 $(LIBFTPRINTF_LIB):
 	make -C $(LIBFTPRINTF_DIR)
 
-# REMOVE -g
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
-	$(CC) $(C_FLAGS) -g -c -o $@ $< $(INCLUDES)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@echo "Compiling $< into $@"
+	@mkdir -p $(dir $@)
+	@$(CC) $(C_FLAGS) $(INCLUDES) -MMD -MP -g -c -o $@ $<
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-	mkdir -p $(OBJ_DIR)/map
-	mkdir -p $(OBJ_DIR)/a_star
-	mkdir -p $(OBJ_DIR)/game
-	mkdir -p $(OBJ_DIR)/game/textures
-	mkdir -p $(OBJ_DIR)/game/window
-	mkdir -p $(OBJ_DIR)/game/ennemy
-	mkdir -p $(OBJ_DIR)/game/sword
-	mkdir -p $(OBJ_DIR)/game/collectible
-	mkdir -p $(OBJ_DIR)/game/player
-	mkdir -p $(OBJ_DIR)/game/update
-	mkdir -p $(OBJ_DIR)/game/hud
+	@mkdir -p $(OBJ_DIR)
 
 clean:
 	@rm -fr $(OBJ_DIR)
@@ -103,3 +90,5 @@ fclean:
 	@make fclean --no-print-directory -C $(LIBFTPRINTF_DIR)
 
 re: fclean all
+
+-include $(DEP)
