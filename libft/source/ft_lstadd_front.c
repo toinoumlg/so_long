@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.h                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 11:01:42 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/09 17:01:10 by amalangu         ###   ########.fr       */
+/*   Created: 2024/11/08 21:34:32 by amalangu          #+#    #+#             */
+/*   Updated: 2025/07/08 17:51:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_ERROR_H
-# define EXIT_ERROR_H
+#include "bonus.h"
 
-# include "so_long.h"
+// Adds the node ’new’ at the beginning of the list.
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	t_list	*c;
 
-int	parsing_error(t_data *data, char *error_string);
-int	pathfinding_error(t_a_star *a_star, t_data *data, char *error_string);
-
-#endif
+	if (!lst || !new)
+		return ;
+	c = *lst;
+	new->next = c;
+	*lst = new;
+}

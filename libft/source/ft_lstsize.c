@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.h                                       :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 11:01:42 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/09 17:01:10 by amalangu         ###   ########.fr       */
+/*   Created: 2024/11/08 23:11:35 by amalangu          #+#    #+#             */
+/*   Updated: 2025/07/08 17:53:34 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_ERROR_H
-# define EXIT_ERROR_H
+#include "bonus.h"
 
-# include "so_long.h"
+// Counts the number of nodes in a list.
+int	ft_lstsize(t_list *lst)
+{
+	int	i;
 
-int	parsing_error(t_data *data, char *error_string);
-int	pathfinding_error(t_a_star *a_star, t_data *data, char *error_string);
-
-#endif
+	if (!lst)
+		return (0);
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}

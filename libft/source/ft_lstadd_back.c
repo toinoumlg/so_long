@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.h                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 11:01:42 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/09 17:01:10 by amalangu         ###   ########.fr       */
+/*   Created: 2024/11/08 23:53:39 by amalangu          #+#    #+#             */
+/*   Updated: 2025/07/08 17:52:06 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_ERROR_H
-# define EXIT_ERROR_H
+#include "bonus.h"
+#include <unistd.h>
 
-# include "so_long.h"
+// Adds the node ’new’ at the end of the list.
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*tmp;
 
-int	parsing_error(t_data *data, char *error_string);
-int	pathfinding_error(t_a_star *a_star, t_data *data, char *error_string);
-
-#endif
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return ;
+}

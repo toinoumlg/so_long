@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.h                                       :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 11:01:42 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/09 17:01:10 by amalangu         ###   ########.fr       */
+/*   Created: 2024/11/09 11:19:10 by amalangu          #+#    #+#             */
+/*   Updated: 2025/07/08 17:52:44 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_ERROR_H
-# define EXIT_ERROR_H
+#include "bonus.h"
 
-# include "so_long.h"
+// Iterates ’lst’ and applies 'f’ on the content of each node.
+void	ft_lstiter(t_list *lst, void (*f)(void *))
+{
+	t_list	*tmp;
 
-int	parsing_error(t_data *data, char *error_string);
-int	pathfinding_error(t_a_star *a_star, t_data *data, char *error_string);
-
-#endif
+	tmp = lst;
+	while (tmp)
+	{
+		f(tmp->content);
+		tmp = tmp->next;
+	}
+}

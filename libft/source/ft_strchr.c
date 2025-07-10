@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.h                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/08 11:01:42 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/09 17:01:10 by amalangu         ###   ########.fr       */
+/*   Created: 2024/10/11 20:36:13 by amalangu          #+#    #+#             */
+/*   Updated: 2025/07/08 17:54:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXIT_ERROR_H
-# define EXIT_ERROR_H
+// Returns a pointer to first occurrence of character c in string s.
+// Return NULL if c is not found.
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
 
-# include "so_long.h"
-
-int	parsing_error(t_data *data, char *error_string);
-int	pathfinding_error(t_a_star *a_star, t_data *data, char *error_string);
-
-#endif
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	if (s[i] == (char)c)
+		return ((char *)s + i);
+	return (0);
+}
