@@ -6,11 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:13:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/07 22:39:49 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:06:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
+#include "print_colors.h"
 
 void	free_array(char **array)
 {
@@ -34,7 +35,7 @@ void	free_failed_window_init(t_data data)
 	free_textures(data.textures);
 	mlx_destroy_display(data.mlx);
 	free(data.mlx);
-	ft_printf(RED "Error\nFailed calloc window init\n" RESET);
+	ft_putstr_fd(RED "Error\nFailed calloc window init\n" RESET, 2);
 }
 
 void	free_failed_textures_init(t_data data)
@@ -44,7 +45,7 @@ void	free_failed_textures_init(t_data data)
 	free_ennemies(data.map.ennemies);
 	mlx_destroy_display(data.mlx);
 	free(data.mlx);
-	ft_printf(RED "Error\nFailed calloc on textures\n" RESET);
+	ft_putstr_fd(RED "Error\nFailed calloc on textures\n" RESET, 2);
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:38:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 10:58:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/10 07:13:43 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_sword	*set_new_sword(t_vector2 sword_pos, t_vector2 direction)
 	return (new_sword);
 }
 
-void	add_new_sword(t_data *data, t_vector2 sword_pos, t_vector2 direction)
+void	add_sword(t_data *data, t_vector2 sword_pos, t_vector2 direction)
 {
 	t_sword	*new_sword;
 	t_sword	*tmp;
@@ -109,6 +109,6 @@ void	spawn_sword(t_data *data, t_vector2 direction)
 		}
 		ennemy = ennemy->next;
 	}
-	if (is_blocked(data->window.screen, sword_pos))
-		add_new_sword(data, sword_pos, direction);
+	if (!is_blocked(data->window.screen, sword_pos))
+		add_sword(data, sword_pos, direction);
 }

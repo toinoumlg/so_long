@@ -6,11 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:06:11 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 15:35:15 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:06:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
+#include "textures_path.h"
 
 void	set_textures_border(t_image *borders, void *mlx)
 {

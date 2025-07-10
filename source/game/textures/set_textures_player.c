@@ -6,11 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:57:39 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 15:08:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:07:02 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
+#include "textures_path.h"
 
 void	set_texture_sword(t_image *sword, void *mlx)
 {

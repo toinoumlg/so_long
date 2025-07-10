@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 10:58:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:57:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,22 @@
 
 t_vector2	get_next_coords(t_vector2 start, t_vector2 end, t_data *data)
 {
-	t_a_star_struct	logic;
-	t_vector2		coords;
+	t_a_star	logic;
+	t_vector2	coords;
 
 	logic.start = start;
 	logic.end = end;
-	logic.closed_list = init_closed_list(data->window.max);
-	logic.cell_details = init_and_set_cell_details(start, data->window.max);
-	logic.open_list = init_list(0, start.x, start.y);
-	a_star_loop(&logic, data->window.screen, data->game.moves);
-	coords = logic.cell_details[end.y][end.x].parent;
-	free_a_star_search(logic, data->window.max.y);
+	init_closed_list(&logic, data);
+	init_and_set_cell_details(&logic, start, data);
+	init_list(&logic, 0, start.x, start.y);
+	while (logic.open_list)
+	{
+		a_star_neighbor(&logic, data);
+		if (logic.found_end)
+			break ;
+	}
+	coords = logic.cell_details[end.y][end.x].coords;
+	free_a_star_search(&logic, data->map.max.y);
 	return (coords);
 }
 

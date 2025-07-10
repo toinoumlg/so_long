@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:42:46 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 10:58:56 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/10 08:31:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	is_sword_on_collectible(t_data *data, t_collectible *collectible)
 
 void	is_sword_blocked(t_data *data, t_sword *sword)
 {
-	if (!is_blocked(data->window.screen, sword->next_coords))
+	if (is_blocked(data->window.screen, sword->next_coords))
 	{
 		if (sword->to_destroy == 1)
 			return ;

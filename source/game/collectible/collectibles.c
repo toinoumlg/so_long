@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 16:33:43 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 11:15:44 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:11:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,43 @@
 #include "exit_error.h"
 #include "so_long.h"
 
-t_collectible	*set_new_collectible(t_map *map)
+t_collectible	*set_new_collectible(t_data *data)
 {
 	t_collectible	*new;
 
-	new = ft_calloc(sizeof(t_collectible), 1);
+	new = malloc(sizeof(t_collectible));
 	if (!new)
-		exit(parsing_error(map, ALLOC_ERROR));
-	memset(new, 0, sizeof(t_collectible));
+		exit(parsing_error(data, ALLOC_ERROR));
+	ft_memset(new, 0, sizeof(t_collectible));
 	return (new);
 }
 
-void	add_collectible(t_map *map, int x, int y)
+void	append_new_collectible(t_collectible **collectibles, t_collectible *new)
 {
-	t_collectible	*new;
 	t_collectible	*tmp;
+	t_collectible	*head;
 
-	new = set_new_collectible(map);
-	new->coords = set_vector2(y, x);
-	new->i_image = rand() % 13;
-	if (!map->collectibles)
-		return (map->collectibles = new, 0);
-	tmp = map->collectibles;
+	tmp = *collectibles;
+	if (!tmp)
+	{
+		*collectibles = new;
+		return ;
+	}
+	head = tmp;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
+	*collectibles = head;
+}
+
+void	add_collectible(t_data *data, int x, int y)
+{
+	t_collectible	*new;
+
+	new = set_new_collectible(data);
+	new->coords = set_vector2(y, x);
+	new->i_image = rand() % 13;
+	append_new_collectible(&data->collectibles, new);
 }
 
 void	destroy_collectible(t_collectible **collectibles, t_vector2 coords)

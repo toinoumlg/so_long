@@ -6,11 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:56:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:49:19 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:06:46 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "so_long.h"
+#include "textures_path.h"
 
 void	set_textures_ennemy_file(char **ennemy_file)
 {

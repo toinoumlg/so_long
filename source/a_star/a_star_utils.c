@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:18:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 14:22:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:42:50 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ int	is_destination(t_vector2 actual, t_vector2 end)
 int	is_blocked(char **array, t_vector2 actual)
 {
 	if (array[actual.y][actual.x] == '1')
-		return (0);
-	else
 		return (1);
+	else
+		return (0);
 }
 
-float	calculate_new_h_value(int y, int x, t_vector2 end)
+float calculate_new_h_value(int y, int x, t_vector2 end)
 {
-	return (sqrtf(powf((y - end.y), 2) + powf((x - end.x), 2)));
+    return (fabsf((float)y - (float)end.y) + fabsf((float)x - (float)end.x));
 }
 
 t_possible_directions	set_move(void)

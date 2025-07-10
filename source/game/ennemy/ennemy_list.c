@@ -6,11 +6,13 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:48:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 10:58:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:08:45 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "error_string.h"
+#include "exit_error.h"
+#include "so_long.h"
 
 void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 {
@@ -40,29 +42,42 @@ void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 	free(ennemy);
 }
 
-int	add_new_ennemy(t_map *map, int x, int y)
+t_ennemy	*set_new_ennemy(t_data *data)
 {
-	t_ennemy	*new_ennemy;
-	t_ennemy	*tmp;
+	t_ennemy	*new;
 
-	new_ennemy = ft_calloc(sizeof(t_ennemy), 1);
-	if (!new_ennemy)
-		return (-1);
-	new_ennemy->coords = set_vector2(y, x);
-	new_ennemy->next_coords = set_vector2(0, 0);
-	new_ennemy->i_image = 0;
-	new_ennemy->got_hit = 0;
-	new_ennemy->next = NULL;
-	if (!map->ennemies)
+	new = malloc(sizeof(t_ennemy));
+	if (!new)
+		exit(parsing_error(data, ALLOC_ERROR));
+	ft_memset(new, 0, sizeof(t_ennemy));
+	return (new);
+}
+
+void	append_new_ennemy(t_ennemy **ennemies, t_ennemy *new)
+{
+	t_ennemy	*tmp;
+	t_ennemy	*head;
+
+	tmp = *ennemies;
+	if (!tmp)
 	{
-		map->ennemies = new_ennemy;
-		return (0);
+		*ennemies = new;
+		return ;
 	}
-	tmp = map->ennemies;
+	head = tmp;
 	while (tmp->next)
 		tmp = tmp->next;
-	tmp->next = new_ennemy;
-	return (0);
+	tmp->next = new;
+	*ennemies = head;
+}
+
+void	add_ennemy(t_data *data, int x, int y)
+{
+	t_ennemy	*new;
+
+	new = set_new_ennemy(data);
+	new->coords = set_vector2(y, x);
+	append_new_ennemy(&data->ennemies, new);
 }
 
 void	update_ennemies_coords(t_ennemy *ennemies, t_vector2 coords)

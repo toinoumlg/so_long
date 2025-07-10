@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:17:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:09:24 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 12:42:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	print_player_idle(t_data *data)
 			&combined.size_l, &combined.endian);
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
-	set_front_color(&data->textures.player[data->game.player.index],
-		&combined);
+	set_front_color(&data->textures.player[data->game.player.index], &combined);
 	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
 		data->window.actual.x * PIXEL_PADDING, data->window.actual.y
 		* PIXEL_PADDING);

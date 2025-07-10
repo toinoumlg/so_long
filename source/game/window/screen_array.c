@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:00:47 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 18:39:52 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:35:31 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	set_screen_array_c(t_vector2 *map_coords, t_vector2 *screen_coords,
 {
 	if (is_in_map(*screen_coords, window))
 	{
-		window->screen[screen_coords->y][screen_coords->x]
-			= map->array[map_coords->y][map_coords->x];
+		window->screen[screen_coords->y][screen_coords->x] = map->array[map_coords->y][map_coords->x];
 		map_coords->x++;
 	}
 	else
@@ -64,15 +63,15 @@ int	init_screen_array(t_map *map, t_window *window)
 
 	screen_coords.y = 0;
 	map_coords.y = 0;
-	while (screen_coords.y < map->actual.y + 4)
+	while (screen_coords.y < map->max.y + 4)
 	{
-		window->screen[screen_coords.y] = ft_calloc(sizeof(char),
-				((map->actual.x + 4) + 1));
+		window->screen[screen_coords.y] = ft_calloc(sizeof(char), ((map->max.x
+						+ 4) + 1));
 		if (!window->screen[screen_coords.y])
 			return (-1);
 		map_coords.x = 0;
 		screen_coords.x = 0;
-		while (screen_coords.x < map->actual.x + 4)
+		while (screen_coords.x < map->max.x + 4)
 			set_screen_array_c(&map_coords, &screen_coords, map, window);
 		if (map_coords.x)
 			map_coords.y++;
@@ -85,12 +84,14 @@ void	print_actual_arrays(t_data *data)
 {
 	int	i;
 
+	(void)data;
 	i = 0;
-	ft_printf("actual %d %d\nscreen:\n", data->window.actual.x,
-		data->window.actual.y);
-	while (data->window.screen[i])
-	{
-		ft_printf("[%d]-%s\n", i, data->window.screen[i]);
-		i++;
-	}
+	(void)i;
+	// ft_printf("actual %d %d\nscreen:\n", data->window.actual.x,
+	// 	data->window.actual.y);
+	// while (data->window.screen[i])
+	// {
+	// 	ft_printf("[%d]-%s\n", i, data->window.screen[i]);
+	// 	i++;
+	// }
 }

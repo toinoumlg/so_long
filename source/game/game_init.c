@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:13:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/07 22:37:06 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:03:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ void	set_timer(t_data *data)
 	data->timer.frame_target = 1.0 / target_fps;
 	data->timer.time = 0.0;
 	gettimeofday(&data->timer.last_frame, NULL);
-}
-
-void	init_player(t_data *data)
-{
-	data->game.player.health = 3;
-	data->game.player.move_buffer = 0;
-	data->game.player.index = 0;
-	data->game.player.status = 0;
-	data->game.player.swords = NULL;
-	data->game.player.moves = 0;
-	data->game.player.attack_cd = 0;
-	data->game.actual_sword = 0;
-	data->frames = 0;
-	data->game.game_finished = 0;
-	data->game.is_exit_printed = 0;
-	data->game.moves = set_move();
 }
 
 void	init_hud(t_data *data)
@@ -56,7 +40,6 @@ int	init_game(t_data *data)
 	if (set_textures(data))
 		return (free_failed_textures_init(*data), -1);
 	set_timer(data);
-	init_player(data);
 	if (init_window(&data->map, &data->window, data->mlx, data->textures))
 		return (free_failed_window_init(*data), -1);
 	update_collectible_coords(data->game.collectibles, data->window.min);
