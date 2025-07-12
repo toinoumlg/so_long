@@ -6,12 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 21:05:53 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:04:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "print_colors.h"
+#include "so_long.h"
 
 int	print_end(t_data data)
 {

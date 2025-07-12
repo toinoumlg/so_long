@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/10 13:49:42 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/12 10:24:50 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,20 @@ void					check_valid_paths(t_data *data);
 void					start_game(t_data data);
 
 // a_star
-int						init_a_star(t_data *data, t_vector2 start,
-							t_vector2 end, t_a_star *a_star);
-void					free_closed_list(signed char **closed_list, int height);
-void					a_star_search(t_vector2 start, t_vector2 end,
-							t_data *data);
-void					free_cell_details(t_a_star_values **cell_details,
-							int height);
-void					init_and_set_cell_details(t_a_star *a_star,
-							t_vector2 start, t_data *data);
-void					a_star_neighbor(t_a_star *a_star, t_data *data);
-t_a_star_values			set_cell_details(t_a_star_values new, t_vector2 coords);
+int						init_a_star(t_a_star *a_star);
+void					free_closed_list(signed char **closed_list);
+void					*a_star_routine(void *args);
+void					free_cell_details(t_a_star_values **cell_details);
+void					init_and_set_cell_details(t_a_star *a_star);
+void					a_star_neighbor(t_a_star *a_star);
+t_a_star_values			set_cell_details(t_a_star_values new,
+							t_vector2 parents);
 void					init_possible_directions(t_map *map);
-void					init_list(t_a_star *a_star, float f, int x, int y);
+void					init_open_list(t_a_star *a_star);
 void					add_to_list(t_open_list **open_list,
 							t_a_star_values values);
-void					sort_open_list(t_open_list **open_list);
-void					init_closed_list(t_a_star *a_star, t_data *data);
+void					swap_lowest_f(t_open_list **open_list);
+void					init_closed_list(t_a_star *a_star);
 t_vector2				set_vector2(int y, int x);
 int						is_destination(t_vector2 actual, t_vector2 end);
 int						is_blocked(char **array, t_vector2 actual);
@@ -175,7 +172,7 @@ void					destroy_ennemy(t_ennemy **ennemies, t_vector2 coords,
 							t_data *data);
 // free
 void					free_map(t_map *map);
-void					free_a_star_search(t_a_star *a_star, int height);
+void					free_a_star_routine(t_a_star *a_star);
 void					free_game(t_data data);
 void					free_open_list(t_open_list *open_list);
 void					free_collectibles(t_collectible *collectibles);

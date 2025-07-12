@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:59:58 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/10 08:26:07 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:02:12 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ typedef struct s_map
 	t_ennemy				*ennemies;
 }							t_map;
 
-
 typedef struct s_a_star
 {
 	t_a_star_values			**cell_details;
@@ -82,7 +81,11 @@ typedef struct s_a_star
 	signed char				**closed_list;
 	t_vector2				start;
 	t_vector2				end;
+	t_vector2				max;
 	char					found_end;
+	char					**map;
+	t_possible_directions	directions;
+	struct s_a_star			*next;
 }							t_a_star;
 
 typedef struct s_window

@@ -6,30 +6,30 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 22:45:56 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/10 11:57:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/12 07:43:18 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-t_vector2	get_next_coords(t_vector2 start, t_vector2 end, t_data *data)
+t_vector2	get_next_coords(t_vector2 start, t_vector2 end)
 {
 	t_a_star	logic;
 	t_vector2	coords;
 
 	logic.start = start;
 	logic.end = end;
-	init_closed_list(&logic, data);
-	init_and_set_cell_details(&logic, start, data);
-	init_list(&logic, 0, start.x, start.y);
+	init_closed_list(&logic);
+	init_and_set_cell_details(&logic);
+	init_open_list(&logic);
 	while (logic.open_list)
 	{
-		a_star_neighbor(&logic, data);
+		a_star_neighbor(&logic);
 		if (logic.found_end)
 			break ;
 	}
 	coords = logic.cell_details[end.y][end.x].coords;
-	free_a_star_search(&logic, data->map.max.y);
+	free_a_star_routine(&logic);
 	return (coords);
 }
 
@@ -97,7 +97,7 @@ void	update_ennemies(t_data *data)
 		if (data->frames % 18 == 0 && !ennemy->got_hit)
 		{
 			ennemy->next_coords = get_next_coords(data->window.actual,
-					ennemy->coords, data);
+					ennemy->coords);
 			did_get_hit(data, ennemy);
 			is_ennemy_on_next(data, ennemy);
 			if (is_ennemy_on_player(data, ennemy))

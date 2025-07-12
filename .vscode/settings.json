@@ -15,6 +15,7 @@
 		"type_traits": "c",
 		"concepts": "c",
 		"mem.h": "c",
-		"pthread.h": "c"
+		"pthread.h": "c",
+		"print_colors.h": "c"
 	}
 }

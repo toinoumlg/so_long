@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 11:22:21 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/09 15:38:32 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/12 10:24:40 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,27 @@
 // 		free_cell_details(a_star->cell_details, height);
 // }
 
-void	free_cell_details(t_a_star_values **cell_details, int map_height)
+void	free_cell_details(t_a_star_values **cell_details)
 {
 	int	y;
 
 	y = 0;
 	if (cell_details)
 	{
-		while (y < map_height)
+		while (cell_details[y])
 			free(cell_details[y++]);
 		free(cell_details);
 	}
 }
 
-void	free_closed_list(signed char **closed_list, int map_height)
+void	free_closed_list(signed char **closed_list)
 {
 	int	y;
 
 	y = 0;
 	if (closed_list)
 	{
-		while (y <= map_height)
+		while (closed_list[y])
 			free(closed_list[y++]);
 		free(closed_list);
 	}
@@ -100,9 +100,17 @@ void	free_open_list(t_open_list *open_list)
 	}
 }
 
-void	free_a_star_search(t_a_star *a_star, int map_height)
+void	free_a_star_routine(t_a_star *a_star)
 {
-	free_open_list(a_star->open_list);
-	free_closed_list(a_star->closed_list, map_height);
-	free_cell_details(a_star->cell_details, map_height);
+	t_a_star	*next;
+
+	while (a_star)
+	{
+		next = a_star->next;
+		free_open_list(a_star->open_list);
+		free_closed_list(a_star->closed_list);
+		free_cell_details(a_star->cell_details);
+		free(a_star);
+		a_star = next;
+	}
 }

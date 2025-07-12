@@ -1,6 +1,6 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -D_REENTRANT
 
 OBJECTS_DIR = build
 INCLUDE_DIR = include
@@ -76,7 +76,7 @@ INCLUDES = -I/usr/include -I./mlx -I./libft/include -I./include
 
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
-LIBS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm $(LIBFT_LIB)
+LIBS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm $(LIBFT_LIB) -lpthread
 
 DEP = $(OBJECTS:.o=.d)
 
@@ -115,7 +115,7 @@ clean:
 	@make clean -C $(MLX_DIR) $(FLUSH_STDOUT)
 
 fclean: clean
-	@rm -r $(NAME)
+	@rm -f $(NAME)
 	@make fclean -C $(LIBFT_DIR) $(FLUSH_STDOUT)
 
 re: fclean all

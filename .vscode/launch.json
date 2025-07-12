@@ -11,7 +11,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "${workspaceFolder}",
-      "program": "${workspaceFolder}/so_long",
+      "program": "${workspaceFolder}/${fileWorkspaceFolderBasename}",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "preLaunchTask": "build"

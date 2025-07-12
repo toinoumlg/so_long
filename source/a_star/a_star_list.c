@@ -6,36 +6,39 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/10 12:50:53 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/12 10:00:46 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error_string.h"
 #include "exit_error.h"
 #include "so_long.h"
+#include <pthread.h>
 
-void	swap(t_open_list *low, t_open_list *high, t_open_list **open_list)
+void	swap(t_open_list *low, t_open_list **open_list)
 {
 	t_open_list	*prev[2];
 	t_open_list	*next[2];
+	t_open_list	*head;
 
+	head = *open_list;
 	prev[0] = low->prev;
-	prev[1] = high->prev;
+	prev[1] = head->prev;
 	next[0] = low->next;
-	next[1] = high->next;
+	next[1] = head->next;
 	low->prev = prev[1];
 	low->next = next[1];
-	high->prev = prev[0];
-	high->next = next[0];
+	head->prev = prev[0];
+	head->next = next[0];
 	if (prev[1])
 		prev[1]->next = low;
 	if (next[1])
 		next[1]->prev = low;
 	if (prev[0])
-		prev[0]->next = high;
+		prev[0]->next = head;
 	if (next[0])
-		next[0]->prev = high;
-	if (high == *open_list)
+		next[0]->prev = head;
+	if (head == *open_list)
 		*open_list = low;
 }
 
@@ -50,38 +53,38 @@ int	open_list_is_sorted(t_open_list *open_list)
 	return (0);
 }
 
-void	swap_adjacent(t_open_list *low, t_open_list *high,
-		t_open_list **open_list)
+void	swap_adjacent(t_open_list *low, t_open_list **open_list)
 {
 	t_open_list	*prev[2];
 	t_open_list	*next[2];
+	t_open_list	*head;
 
+	head = *open_list;
 	prev[0] = low->prev;
-	prev[1] = high->prev;
+	prev[1] = head->prev;
 	next[0] = low->next;
-	next[1] = high->next;
+	next[1] = head->next;
 	low->prev = prev[1];
-	low->next = high;
-	high->prev = low;
-	high->next = next[0];
+	low->next = head;
+	head->prev = low;
+	head->next = next[0];
 	if (prev[1])
 		prev[1]->next = low;
 	if (next[0])
-		next[0]->prev = high;
-	if (high == *open_list)
+		next[0]->prev = head;
+	if (head == *open_list)
 		*open_list = low;
 }
 
-void	swap_open_list(t_open_list *low, t_open_list *high,
-		t_open_list **open_list)
+void	swap_open_list(t_open_list *low, t_open_list **open_list)
 {
-	if (high->next == low)
-		swap_adjacent(low, high, open_list);
+	if (*open_list == low->prev)
+		swap_adjacent(low, open_list);
 	else
-		swap(low, high, open_list);
+		swap(low, open_list);
 }
 
-void	sort_open_list(t_open_list **open_list)
+void	swap_lowest_f(t_open_list **open_list)
 {
 	t_open_list	*current;
 	t_open_list	*candidate;
@@ -89,18 +92,14 @@ void	sort_open_list(t_open_list **open_list)
 	if (!open_list_is_sorted(*open_list))
 		return ;
 	current = *open_list;
+	candidate = current->next;
 	while (current)
 	{
-		candidate = current->next;
-		while (candidate)
-		{
-			if (current->values.f > candidate->values.f)
-				return (swap_open_list(candidate, current, open_list),
-					sort_open_list(open_list));
-			candidate = candidate->next;
-		}
+		if (current->values.f < candidate->values.f)
+			candidate = current;
 		current = current->next;
 	}
+	swap_open_list(candidate, open_list);
 }
 
 t_open_list	*new_open_list(void)
@@ -143,34 +142,46 @@ void	add_to_list(t_open_list **open_list, t_a_star_values values)
 	append_new_open_list(open_list, new);
 }
 
-void	init_list(t_a_star *a_star, float f, int x, int y)
+void	init_open_list(t_a_star *a_star)
 {
 	// to protect
 	a_star->open_list = ft_calloc(sizeof(t_open_list), 1);
 	if (!a_star->open_list)
-		return ;
-	a_star->open_list->values.coords = set_vector2(y, x);
-	a_star->open_list->values.f = f;
+		pthread_exit(a_star);
+	a_star->open_list->values.coords = set_vector2(a_star->start.y,
+			a_star->start.x);
+	a_star->open_list->values.f = 0;
 	a_star->open_list->next = NULL;
 	a_star->open_list->prev = NULL;
 }
 
-void	init_closed_list(t_a_star *a_star, t_data *data)
+void	print_closed_list(signed char **closed_list)
+{
+	int	i;
+
+	i = 0;
+	while (closed_list[i])
+		printf("%s\n", closed_list[i++]);
+}
+
+void	init_closed_list(t_a_star *a_star)
 {
 	int			i;
 	t_vector2	max;
 
-	max = data->map.max;
+	max = a_star->max;
 	i = 0;
 	a_star->closed_list = malloc(sizeof(signed char *) * (max.y + 2));
 	if (!a_star->closed_list)
-		exit(pathfinding_error(a_star, data, ALLOC_ERROR));
-	memset(a_star->closed_list, 0, max.y + 2);
+		pthread_exit(a_star);
+	memset(a_star->closed_list, 0, sizeof(signed char *) * (max.y + 2));
 	while (i <= max.y)
 	{
-		a_star->closed_list[i] = ft_calloc(sizeof(signed char), max.x + 2);
+		a_star->closed_list[i] = malloc(sizeof(signed char) * (max.x + 2));
 		if (!a_star->closed_list[i])
-			exit(pathfinding_error(a_star, data, ALLOC_ERROR));
-		ft_memset(a_star->closed_list[i++], '0', max.x + 1);
+			pthread_exit(a_star);
+		ft_memset(a_star->closed_list[i++], '0', sizeof(signed char) * (max.x
+				+ 1));
 	}
+	// print_closed_list(a_star->closed_list);
 }
