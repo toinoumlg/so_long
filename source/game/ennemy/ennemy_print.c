@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:23:44 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 10:58:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:34:56 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,18 @@ void	is_ennemy_printed(t_data *data)
 	{
 		ennemy_next = ennemy->next;
 		if (!ennemy->is_printed)
-		{
-			if ((ennemy->next_coords.y || ennemy->next_coords.x)
-				&& !ennemy->got_hit)
-				print_ennemy_move(data, ennemy);
-			else if ((ennemy->coords.x == data->window.exit.x
-					&& ennemy->coords.y == data->window.exit.y)
-				&& (data->game.game_finished == 1
-					|| data->game.game_finished == 2))
-				print_ennemy_on_exit(data, ennemy);
-			else
-				print_ennemies(data, ennemy);
-		}
+		// {
+		// 	if ((ennemy->next_coords.y || ennemy->next_coords.x)
+		// 		&& !ennemy->got_hit)
+		// 		print_ennemy_move(data, ennemy);
+		// 	else if ((ennemy->coords.x == data->window.exit.x
+		// 			&& ennemy->coords.y == data->window.exit.y)
+		// 		&& (data->game.game_finished == 1
+		// 			|| data->game.game_finished == 2))
+		// 		print_ennemy_on_exit(data, ennemy);
+		// 	else
+		// 		print_ennemies(data, ennemy);
+		// }
 		ennemy = ennemy_next;
 	}
 }

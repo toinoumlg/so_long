@@ -6,22 +6,21 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:41:28 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/12 11:42:25 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:12:47 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-int	can_player_move(int key_stroked, t_data *data)
-{
-	if ((key_stroked == 119 || key_stroked == 97 || key_stroked == 115
-			|| key_stroked == 100) && data->game.player.status == 0
-		&& data->game.player.move_buffer == 0
-		&& data->game.player.attack_cd == 0)
-		return (1);
-	else
-		return (0);
-}
+// int	can_player_move(int key_stroked, t_data *data)
+// {
+// 	if ( && data->game.player.status == 0
+// 		&& data->game.player.move_buffer == 0
+// 		&& data->game.player.attack_cd == 0)
+// 		return (1);
+// 	else
+// 		return (0);
+// }
 
 int	can_player_attack(int key_stroked, t_data *data)
 {
@@ -35,21 +34,25 @@ int	can_player_attack(int key_stroked, t_data *data)
 
 int	is_ennemy_on_next_coords(t_data *data, t_ennemy *ennemy)
 {
-	if ((ennemy->coords.y == data->window.actual.y
-			+ data->game.player.move_dir.y)
-		&& (ennemy->coords.x == data->window.actual.x
-			+ data->game.player.move_dir.x))
-		return (1);
-	else
+	(void)data;
+	(void)ennemy;
+
+	// if ((ennemy->coords.y == data->window.actual.y
+	// 		+ data->game.player.move_dir.y)
+	// 	&& (ennemy->coords.x == data->window.actual.x
+	// 		+ data->game.player.move_dir.x))
+	// 	return (1);
+	// else
 		return (0);
 }
 
 int	is_next_coords_blocked(t_data *data)
 {
-	if (data->window.screen[data->window.actual.y
-			+ data->game.player.move_dir.y][data->window.actual.x
-		+ data->game.player.move_dir.x] != '1')
-		return (1);
+	// if (data->window.screen[data->window.actual.y
+	// 		+ data->game.player.move_dir.y][data->window.actual.x
+	// 	+ data->game.player.move_dir.x] != '1')
+	// 	return (1);
+	(void)data;
 	return (0);
 }
 

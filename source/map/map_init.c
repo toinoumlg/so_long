@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 22:00:18 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:11:44 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	check_map_file(char *file_path)
 
 void	map_parser(t_data *data, char **av, int ac)
 {
-	(void)ac;
+	if (ac != 2)
+		exit(parsing_error(NULL, WRONG_ARGUMENTS));
 	ft_memset(data, 0, sizeof(t_data));
 	data->map.file_path = av[1];
 	check_map_file(data->map.file_path);

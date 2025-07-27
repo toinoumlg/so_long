@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 17:44:16 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 17:46:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:35:11 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	print_ennemy_on_exit_move(t_data *data, t_ennemy *ennemy)
 
 void	print_ennemy_move(t_data *data, t_ennemy *ennemy)
 {
-	if ((ennemy->next_coords.y == data->window.exit.y
-			&& ennemy->next_coords.x == data->window.exit.x)
-		&& (data->game.game_finished == 1 || data->game.game_finished == 2))
-		print_ennemy_on_exit_move(data, ennemy);
-	else
+	// if ((ennemy->next_coords.y == data->window.exit.y
+	// 		&& ennemy->next_coords.x == data->window.exit.x)
+	// 	&& (data->game.game_finished == 1 || data->game.game_finished == 2))
+	// 	print_ennemy_on_exit_move(data, ennemy);
+	// else
 		print_ennemies_move_empty(data, ennemy);
 }

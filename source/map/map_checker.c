@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 22:06:58 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:13:20 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,4 @@ void	check_map(t_data *data)
 	check_border(data);
 	check_characters(data);
 	check_valid_paths(data);
-	exit(parsing_error(data, "caca"));
 }

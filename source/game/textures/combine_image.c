@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:06:51 by amalangu          #+#    #+#             */
-/*   Updated: 2025/01/31 15:28:18 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:31:13 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ void	combine_image(t_image front, t_image background, void *mlx,
 {
 	t_image	combined;
 
+	(void)window;
 	combined.image = mlx_new_image(mlx, background.wh.x, background.wh.y);
 	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
 			&combined.size_l, &combined.endian);
 	combined.wh = background.wh;
 	set_background_color(&background, &combined);
 	set_front_color(&front, &combined);
-	mlx_put_image_to_window(mlx, window.ptr, combined.image, window.actual.x
-		* PIXEL_PADDING, window.actual.y * PIXEL_PADDING);
+	// mlx_put_image_to_window(mlx, window.ptr, combined.image, window.actual.x
+	// 	* PIXEL_PADDING, window.actual.y * PIXEL_PADDING);
 	mlx_destroy_image(mlx, combined.image);
 }

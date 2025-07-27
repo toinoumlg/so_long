@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/11 11:04:33 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:36:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	print_end(t_data data)
 	return (-1);
 }
 
-int	handle_keys(int key_stroked, t_data *data)
-{
-	if (key_stroked == 65307)
-		return (mlx_loop_end(data->mlx), 0);
-	if (can_player_move(key_stroked, data))
-		player_move(key_stroked, data);
-	if (can_player_attack(key_stroked, data))
-		player_attack(key_stroked, data);
-	return (0);
-}
+// int	handle_keys(int key_stroked, t_data *data)
+// {
+// 	if (key_stroked == 65307)
+// 		return (mlx_loop_end(data->mlx), 0);
+// 	if (can_player_move(key_stroked, data))
+// 		player_move(key_stroked, data);
+// 	if (can_player_attack(key_stroked, data))
+// 		player_attack(key_stroked, data);
+// 	return (0);
+// }
 
 int	on_destroy(t_data *data)
 {
@@ -58,12 +58,12 @@ int	update(t_data *data)
 	return (0);
 }
 
-void	start_game(t_data data)
-{
-	mlx_hook(data.window.ptr, 17, 0, on_destroy, &data);
-	mlx_hook(data.window.ptr, 2, (1L << 0), handle_keys, &data);
-	mlx_loop_hook(data.mlx, update, &data);
-	mlx_loop(data.mlx);
-	print_end(data);
-	free_game(data);
-}
+// void	start_game(t_data data)
+// {
+// 	mlx_hook(data.window.ptr, 17, 0, on_destroy, &data);
+// 	mlx_hook(data.window.ptr, 2, (1L << 0), handle_keys, &data);
+// 	mlx_loop_hook(data.mlx, update, &data);
+// 	mlx_loop(data.mlx);
+// 	print_end(data);
+// 	free_game(data);
+// }

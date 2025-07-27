@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:38:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/10 07:13:43 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:33:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,24 @@ void	add_sword(t_data *data, t_vector2 sword_pos, t_vector2 direction)
 
 void	spawn_sword(t_data *data, t_vector2 direction)
 {
-	t_ennemy	*ennemy;
-	t_vector2	sword_pos;
-
-	sword_pos = set_vector2(data->window.actual.y + direction.y,
-			data->window.actual.x + direction.x);
-	ennemy = data->game.ennemies;
-	data->game.player.attack_cd = 6;
-	while (ennemy)
-	{
-		if (sword_pos.y == ennemy->coords.y && sword_pos.x == ennemy->coords.x)
-		{
-			ennemy->got_hit = 1;
-			ennemy->i_image = 16;
-			return ;
-		}
-		ennemy = ennemy->next;
-	}
-	if (!is_blocked(data->window.screen, sword_pos))
-		add_sword(data, sword_pos, direction);
+	// t_ennemy	*ennemy;
+	// t_vector2	sword_pos;
+	(void)data;
+	(void)direction;
+	// sword_pos = set_vector2(data->window.actual.y + direction.y,
+	// 		data->window.actual.x + direction.x);
+	// ennemy = data->game.ennemies;
+	// data->game.player.attack_cd = 6;
+	// while (ennemy)
+	// {
+	// 	if (sword_pos.y == ennemy->coords.y && sword_pos.x == ennemy->coords.x)
+	// 	{
+	// 		ennemy->got_hit = 1;
+	// 		ennemy->i_image = 16;
+	// 		return ;
+	// 	}
+	// 	ennemy = ennemy->next;
+	// }
+	// if (!is_blocked(data->window.screen, sword_pos))
+	// 	add_sword(data, sword_pos, direction);
 }

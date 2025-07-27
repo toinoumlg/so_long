@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 10:43:16 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:37:28 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include "print_colors.h"
 #include "so_long.h"
 #include <pthread.h>
-
-typedef struct s_pthread_a_star
-{
-	t_vector2				start;
-	t_vector2				end;
-	t_data					*data;
-	struct s_pthread_a_star	*next;
-}							t_pthread_a_star;
 
 t_vector2	set_start(t_vector2 start, t_vector2 coords)
 {
@@ -130,6 +122,11 @@ int	is_a_map_border(t_vector2 max, t_vector2 coords)
 		|| coords.y == max.y);
 }
 
+int	is_closed(signed char **closed_list, t_vector2 coords)
+{
+	return (closed_list[coords.y][coords.x] == '1');
+}
+
 void	a_star_neighbor_direction(t_a_star *a_star, t_vector2 direction)
 {
 	t_a_star_values	new;
@@ -139,12 +136,9 @@ void	a_star_neighbor_direction(t_a_star *a_star, t_vector2 direction)
 	new.coords = set_vector2(actual.y + direction.y, actual.x + direction.x);
 	if (is_destination(new.coords, a_star->end))
 		found_destination(new.coords, actual, a_star);
-	else if (a_star->closed_list[new.coords.y][new.coords.x] == '0'
-		&& !is_blocked(a_star->map, new.coords))
+	if (!is_closed(a_star->closed_list, new.coords) && !is_blocked(a_star->map,
+			new.coords))
 		find_new_f(new, actual, a_star);
-	// else if (is_blocked(data->map.array, new.coords)
-	// 	&& is_a_map_border(data->map.max, new.coords))
-	// 	close_open_list(a_star, new.coords);
 }
 
 t_a_star_values	first_open_list(t_open_list **open_list)
@@ -207,10 +201,12 @@ void	*a_star_routine(void *args)
 	pthread_exit(a_star);
 }
 
-void	append_ret_ptr(t_a_star **ret_list, t_a_star *ret)
+void	append_ret(t_a_star **ret_list, t_a_star *ret)
 {
 	t_a_star	*tmp;
 
+	ret->next = NULL;
+	ret->prev = NULL;
 	if (!*ret_list)
 	{
 		*ret_list = ret;
@@ -219,25 +215,25 @@ void	append_ret_ptr(t_a_star **ret_list, t_a_star *ret)
 	tmp = *ret_list;
 	while (tmp->next)
 		tmp = tmp->next;
+	ret->prev = tmp;
 	tmp->next = ret;
-	ret->next = NULL;
 }
 
 t_a_star	*join_threads(pthread_t *threads)
 {
 	int			i;
-	void		*ret_ptr;
-	t_a_star	*ret_list;
+	void		*ret;
+	t_a_star	*a_star;
 
-	ret_list = NULL;
+	a_star = NULL;
 	i = 0;
 	while (threads[i])
 	{
-		pthread_join(threads[i++], &ret_ptr);
-		append_ret_ptr(&ret_list, (t_a_star *)ret_ptr);
+		pthread_join(threads[i++], &ret);
+		append_ret(&a_star, (t_a_star *)ret);
 	}
 	free(threads);
-	return (ret_list);
+	return (a_star);
 }
 
 void	*set_new_thread_data(t_data *data)
@@ -304,6 +300,5 @@ void	check_valid_paths(t_data *data)
 	data->directions = set_move();
 	set_threads_data(&thread_data, &threads, data);
 	start_threads_pathinding(thread_data, threads);
-	thread_data = join_threads(threads);
-	free_a_star_routine(thread_data);
+	data->pathfinding = join_threads(threads);
 }

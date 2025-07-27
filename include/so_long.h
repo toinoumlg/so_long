@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:04:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 10:24:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/17 09:56:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void					spawn_exit(t_data *data);
 void					update_index(t_data *data);
 // ==> window
 void					get_map_coords_in_screen(t_window *window, t_map *map);
-int						init_screen_array(t_map *map, t_window *window);
+// int						init_screen_array(t_map *map, t_window *window);
 void					print_screen_array(char **screen, t_textures textures,
 							t_window *window, void *mlx);
 void					update_screen_array(t_data *data);
@@ -188,6 +188,6 @@ void					free_array(char **array);
 void					print_array(char **array, t_vector2 end);
 void					print_actual_arrays(t_data *data);
 void					print_list(t_collectible *list);
-void					print_a_star(t_a_star a_star, char **array);
+void					print_a_star(t_key_hook_routine *kh);
 
 #endif

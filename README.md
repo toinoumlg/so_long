@@ -1,3 +1,7 @@
-map got invalid read size if too big need to refacto my max size.
-change so_long.out > so_long
-maybe redo makefile with add prefix/suffix
+boucing ball:
+https://physics.stackexchange.com/questions/256468/model-formula-for-bouncing-ball?rq=1
+
+to do:
+viewport/camera
+buffer input
+keep refacto

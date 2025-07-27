@@ -6,13 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:59:58 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/11 17:02:12 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/27 09:43:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_H
 # define DATA_H
 
+# include <pthread.h>
 # include <sys/time.h>
 
 typedef struct s_vector2
@@ -20,6 +21,13 @@ typedef struct s_vector2
 	int						x;
 	int						y;
 }							t_vector2;
+
+typedef struct s_vector2_list
+{
+	t_vector2				vector;
+	struct s_vector2_list	*next;
+	struct s_vector2_list	*prev;
+}							t_vector2_list;
 
 typedef struct s_a_star_values
 {
@@ -85,19 +93,10 @@ typedef struct s_a_star
 	char					found_end;
 	char					**map;
 	t_possible_directions	directions;
+	int						**final_path;
 	struct s_a_star			*next;
+	struct s_a_star			*prev;
 }							t_a_star;
-
-typedef struct s_window
-{
-	void					*ptr;
-	char					**screen;
-	t_vector2				max;
-	t_vector2				min;
-	t_vector2				move;
-	t_vector2				actual;
-	t_vector2				exit;
-}							t_window;
 
 typedef struct s_image
 {
@@ -108,6 +107,12 @@ typedef struct s_image
 	int						bpp;
 	int						endian;
 }							t_image;
+
+typedef struct s_window
+{
+	void					*ptr;
+	t_vector2				screen_size;
+}							t_window;
 
 typedef struct s_textures
 {
@@ -171,6 +176,48 @@ typedef struct s_timer
 	double					delta_time;
 }							t_timer;
 
+typedef struct s_key_hook_routine
+{
+	void					*mlx;
+	t_a_star				*pathfinding;
+	t_window				*window;
+	t_image					screen[2];
+
+}							t_key_hook_routine;
+
+typedef struct screen_unit
+{
+	int						color;
+	int						*pixel_array;
+	char					c;
+	int						is_new;
+}							t_screen_unit;
+
+typedef struct s_pthread_locks
+{
+	pthread_mutex_t			draw_mutex;
+	pthread_mutex_t			logic_mutex;
+	pthread_mutex_t			key_mutex;
+	pthread_cond_t			draw_cond;
+	pthread_cond_t			logic_cond;
+	int						drawing;
+	int						draw_count;
+	int						draw_goal;
+	int						logic_done;
+	int						key;
+}							t_pthread_locks;
+
+typedef struct s_worker_routine
+{
+	t_screen_unit			***screen_array;
+	t_vector2				index;
+	t_vector2				screen_res;
+	t_vector2				start_unit;
+	t_vector2				end_unit;
+	int						region_id;
+	t_pthread_locks			*locks_data;
+}							t_worker_routine;
+
 typedef struct s_data
 {
 	int						frames;
@@ -183,7 +230,20 @@ typedef struct s_data
 	t_player				*player;
 	t_ennemy				*ennemies;
 	t_collectible			*collectibles;
+	t_a_star				*pathfinding;
 	t_possible_directions	directions;
+	t_pthread_locks			*locks_data;
+	t_vector2				screen_res;
+	t_screen_unit			***screen_array;
 }							t_data;
 
+typedef struct s_mlx_routine
+{
+	void					*ptr;
+	t_image					*screen_image;
+	t_vector2				screen_res;
+	t_window				*window;
+	t_pthread_locks			*locks_data;
+	t_data					*data;
+}							t_mlx_routine;
 #endif

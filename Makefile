@@ -50,6 +50,9 @@ SOURCES_ENNEMY = ennemy_list ennemy_update ennemy_print \
 WINDOW_DIR = $(GAME_DIR)/window
 SOURCES_WINDOW = init_window screen_array
 
+START_MLX_DIR = $(SOURCE_DIR)/start_mlx
+SOURCES_START_MLX = mlx_routine start_mlx worker_routine worker
+
 SOURCES = $(addprefix $(SOURCE_DIR)/, $(addsuffix .c, $(SOURCES_MAIN))) \
 	$(addprefix $(MAP_DIR)/, $(addsuffix .c, $(SOURCES_MAP))) \
 	$(addprefix $(A_STAR_DIR)/, $(addsuffix .c, $(SOURCES_A_STAR))) \
@@ -61,7 +64,8 @@ SOURCES = $(addprefix $(SOURCE_DIR)/, $(addsuffix .c, $(SOURCES_MAIN))) \
 	$(addprefix $(COLLECTIBLE_DIR)/, $(addsuffix .c, $(SOURCES_COLLECTIBLE))) \
 	$(addprefix $(SWORD_DIR)/, $(addsuffix .c, $(SOURCES_SWORD))) \
 	$(addprefix $(ENNEMY_DIR)/, $(addsuffix .c, $(SOURCES_ENNEMY))) \
-	$(addprefix $(WINDOW_DIR)/, $(addsuffix .c, $(SOURCES_WINDOW)))
+	$(addprefix $(WINDOW_DIR)/, $(addsuffix .c, $(SOURCES_WINDOW))) \
+	$(addprefix $(START_MLX_DIR)/, $(addsuffix .c, $(SOURCES_START_MLX)))
 
 SOURCES_LIBFT = $(addprefix $(LIBFT_DIR)/source/, ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 	ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c \

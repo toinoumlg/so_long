@@ -6,13 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 22:58:01 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 15:18:48 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/12 11:07:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_STRING_H
 # define ERROR_STRING_H
 
+# define WRONG_ARGUMENTS "wrong arguments."
 # define FILE_DOESNT_EXIST "file doesn't exist."
 # define FILE_EMPTY "file is empty."
 # define WRONG_BORDERS "border don't contain only walls."

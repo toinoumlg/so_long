@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 15:47:15 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:36:02 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,84 +34,87 @@ int	get_border_image_index(t_vector2 coords, t_vector2 min, t_vector2 max)
 		return (-1);
 }
 
-void	print_border_and_water(t_window *window, t_textures textures, void *mlx)
-{
-	char	c;
-	int		i_border;
+// void	print_border_and_water(t_window *window, t_textures textures, void *mlx)
+// {
+// 	char	c;
+// 	int		i_border;
 
-	c = window->screen[window->actual.y][window->actual.x];
-	if (c == 'W')
-		mlx_put_image_to_window(mlx, window->ptr, textures.water[rand()
-			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
-			* PIXEL_PADDING);
-	if (c == '1')
-	{
-		i_border = get_border_image_index(window->actual, window->min,
-				window->max);
-		if (i_border >= 0)
-			mlx_put_image_to_window(mlx, window->ptr,
-				textures.borders[i_border].image, window->actual.x
-				* PIXEL_PADDING, window->actual.y * PIXEL_PADDING);
-		else
-			combine_image(textures.walls[rand() % 6], textures.ground[rand()
-				% 2], mlx, *window);
-	}
-}
+// 	c = window->screen[window->actual.y][window->actual.x];
+// 	if (c == 'W')
+// 		mlx_put_image_to_window(mlx, window->ptr, textures.water[rand()
+// 			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
+// 			* PIXEL_PADDING);
+// 	if (c == '1')
+// 	{
+// 		i_border = get_border_image_index(window->actual, window->min,
+// 				window->max);
+// 		if (i_border >= 0)
+// 			mlx_put_image_to_window(mlx, window->ptr,
+// 				textures.borders[i_border].image, window->actual.x
+// 				* PIXEL_PADDING, window->actual.y * PIXEL_PADDING);
+// 		else
+// 			combine_image(textures.walls[rand() % 6], textures.ground[rand()
+// 				% 2], mlx, *window);
+// 	}
+// }
 
-void	wich_texture_to_print(t_window *window, t_textures textures, void *mlx)
-{
-	char	c;
+// void	wich_texture_to_print(t_window *window, t_textures textures, void *mlx)
+// {
+// 	char	c;
 
-	c = window->screen[window->actual.y][window->actual.x];
-	if (c == 'W' || c == '1')
-		print_border_and_water(window, textures, mlx);
-	if (c == 'P')
-		combine_image(textures.player[0], textures.ground[rand() % 2], mlx,
-			*window);
-	if (c == '0' || c == 'E')
-		mlx_put_image_to_window(mlx, window->ptr, textures.ground[rand()
-			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
-			* PIXEL_PADDING);
-	if (c == 'C')
-		combine_image(textures.coins[0], textures.ground[rand() % 2], mlx,
-			*window);
-	if (c == '2')
-		combine_image(textures.ennemies[0], textures.ground[0], mlx, *window);
-	window->actual.x++;
-}
+// 	c = window->screen[window->actual.y][window->actual.x];
+// 	if (c == 'W' || c == '1')
+// 		print_border_and_water(window, textures, mlx);
+// 	if (c == 'P')
+// 		combine_image(textures.player[0], textures.ground[rand() % 2], mlx,
+// 			*window);
+// 	if (c == '0' || c == 'E')
+// 		mlx_put_image_to_window(mlx, window->ptr, textures.ground[rand()
+// 			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
+// 			* PIXEL_PADDING);
+// 	if (c == 'C')
+// 		combine_image(textures.coins[0], textures.ground[rand() % 2], mlx,
+// 			*window);
+// 	if (c == '2')
+// 		combine_image(textures.ennemies[0], textures.ground[0], mlx, *window);
+// 	window->actual.x++;
+// }
 
-void	print_screen_array(char **screen, t_textures textures, t_window *window,
-		void *mlx)
-{
-	window->actual.y = 0;
-	while (screen[window->actual.y])
-	{
-		window->actual.x = 0;
-		while (screen[window->actual.y][window->actual.x])
-			wich_texture_to_print(window, textures, mlx);
-		window->actual.y++;
-	}
-}
+// void	print_screen_array(char **screen, t_textures textures, t_window *window,
+// 		void *mlx)
+// {
+// 	window->actual.y = 0;
+// 	while (screen[window->actual.y])
+// 	{
+// 		window->actual.x = 0;
+// 		while (screen[window->actual.y][window->actual.x])
+// 			wich_texture_to_print(window, textures, mlx);
+// 		window->actual.y++;
+// 	}
+// }
 
 int	init_window(t_map *map, t_window *window, void *mlx, t_textures textures)
 {
-	window->move = set_vector2(0, 0);
-	window->screen = ft_calloc(sizeof(char *), (map->max.y + 4) + 1);
-	if (!window->screen)
-		return (-1);
-	window->min = set_vector2(2, 2);
-	window->max = set_vector2(map->max.y + 2, map->max.x + 2);
-	if (init_screen_array(map, window))
-		return (-1);
-	window->ptr = mlx_new_window(mlx, (map->max.x + 4) * PIXEL_PADDING,
-			(map->max.y + 4) * PIXEL_PADDING, "so_long");
-	if (!window->ptr)
-		return (-1);
-	print_screen_array(window->screen, textures, window, mlx);
-	window->exit = set_vector2(map->exit.y + window->min.y, map->exit.x
-			+ window->min.x);
+	// window->move = set_vector2(0, 0);
+	// window->screen = ft_calloc(sizeof(char *), (map->max.y + 4) + 1);
+	// if (!window->screen)
+	// 	return (-1);
+	// window->min = set_vector2(2, 2);
+	// window->max = set_vector2(map->max.y + 2, map->max.x + 2);
+	// if (init_screen_array(map, window))
+	// 	return (-1);
+	// window->ptr = mlx_new_window(mlx, (map->max.x + 4) * PIXEL_PADDING,
+	// 		(map->max.y + 4) * PIXEL_PADDING, "so_long");
+	// if (!window->ptr)
+	// 	return (-1);
+	// print_screen_array(window->screen, textures, window, mlx);
+	// window->exit = set_vector2(map->exit.y + window->min.y, map->exit.x
+	// 		+ window->min.x);
 	// window->actual = set_vector2(map->player_start.y + window->min.y,
 	// 		map->player_start.x + window->min.x);
+	(void)textures;
+	(void)mlx;
+	(void)window;
 	free_map(map);
 	return (0);
 }

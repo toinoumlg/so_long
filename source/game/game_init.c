@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 13:13:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 13:03:33 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/18 20:46:08 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	init_game(t_data *data)
 	set_timer(data);
 	if (init_window(&data->map, &data->window, data->mlx, data->textures))
 		return (free_failed_window_init(*data), -1);
-	update_collectible_coords(data->game.collectibles, data->window.min);
-	update_ennemies_coords(data->game.ennemies, data->window.min);
+	// update_collectible_coords(data->game.collectibles, data->window.min);
+	// update_ennemies_coords(data->game.ennemies, data->window.min);
 	init_hud(data);
 	return (0);
 }

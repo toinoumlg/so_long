@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:13:54 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 21:06:11 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:30:40 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	free_array(char **array)
 void	free_failed_window_init(t_data data)
 {
 	free_array(data.map.array);
-	if (data.window.screen)
-		free_array(data.window.screen);
 	free_collectibles(data.game.collectibles);
 	free_ennemies(data.game.ennemies);
 	free_images_start(data);
@@ -66,7 +64,6 @@ void	free_swords(t_sword *swords)
 
 void	free_game(t_data data)
 {
-	free_array(data.window.screen);
 	free_collectibles(data.game.collectibles);
 	free_ennemies(data.game.ennemies);
 	free_swords(data.game.player.swords);

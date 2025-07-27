@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:08:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 17:37:50 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:30:54 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	spawn_exit(t_data *data)
 	combined.wh = data->textures.ground[0].wh;
 	set_background_color(&data->textures.ground[0], &combined);
 	set_front_color_offset(&data->textures.exit[0], &combined);
-	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
-		data->window.exit.x * PIXEL_PADDING, data->window.exit.y
-		* PIXEL_PADDING);
+	// mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
+	// 	data->window.exit.x * PIXEL_PADDING, data->window.exit.y
+	// 	* PIXEL_PADDING);
 	mlx_destroy_image(data->mlx, combined.image);
 	data->game.game_finished = 2;
 }

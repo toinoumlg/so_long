@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:59:13 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 17:01:41 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/13 12:31:31 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ void	print_hud(t_data *data)
 	int	i;
 
 	i = -1;
-	while (i++ < data->window.max.x + 1)
-	{
-		if (i == 0)
-			print_hud_left_corner(data, i);
-		else if (i == data->window.max.x + 1)
-			print_hud_right_corner(data, i);
-		else
-			print_hud_empty(data, i);
-	}
+	(void)data;
+	(void)i;
+	// while (i++ < data->window.max.x + 1)
+	// {
+	// 	if (i == 0)
+	// 		print_hud_left_corner(data, i);
+	// 	else if (i == data->window.max.x + 1)
+	// 		print_hud_right_corner(data, i);
+	// 	else
+	// 		print_hud_empty(data, i);
+	// }
 }
