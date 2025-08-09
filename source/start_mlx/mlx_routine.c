@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:21:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 10:17:13 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:20:57 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void	start_key_hooks(t_mlx_routine *mlx)
 void	*mlx_routine(void *args)
 {
 	t_mlx_routine *mlx;
-	int current;
 	t_worker_routine *workers;
 
-	current = 0;
 	mlx = (t_mlx_routine *)args;
 	workers = init_workers(mlx->screen_res, mlx->locks_data, mlx->screen_image,
 			mlx->data);
@@ -78,10 +76,9 @@ void	*mlx_routine(void *args)
 			pthread_cond_wait(&mlx->locks_data->draw_cond,
 				&mlx->locks_data->draw_mutex);
 		mlx_put_image_to_window(mlx->ptr, mlx->window->ptr,
-			mlx->screen_image[current].image, 0, 0);
+			mlx->screen_image.image, 0, 0);
 		mlx_do_sync(mlx->ptr);
 		mlx->locks_data->draw_count = 0;
-		current = current ^ 1;
 		mlx->locks_data->drawing = 1;
 		pthread_cond_broadcast(&mlx->locks_data->draw_cond);
 		pthread_mutex_unlock(&mlx->locks_data->draw_mutex);

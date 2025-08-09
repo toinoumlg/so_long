@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 10:20:38 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:24:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #define SPACE_BAR 32
 #define GRAVITY 40 // m/s/s
 #define RHO 0.75   // coefficient of restitution
-#define HSTOP 0.01 // height where we stop bouncing
+#define HSTOP 10 // height where we stop bouncing
 #define KEY_A 97
 #define KEY_D 100
 #define JUMP_FORCE 25.0
@@ -170,26 +170,19 @@ void	start_game_loop(t_data *data)
 	{
 		get_current(&timer);
 		accumulator += timer.delta_time;
-		data->screen_array[0][(data->screen_res.y - 5) / 4
+		data->screen_array[(data->screen_res.y - 5) / 4
 			- (int)test_ball.position.y][(int)test_ball.position.x].c = 0;
-		data->screen_array[1][(data->screen_res.y - 5) / 4
-			- (int)test_ball.position.y][(int)test_ball.position.x].c = 0;
-		data->screen_array[0][(data->screen_res.y - 5) / 4
-			- (int)test_ball.position.y][(int)test_ball.position.x].is_new = 1;
-		data->screen_array[1][(data->screen_res.y - 5) / 4
+		data->screen_array[(data->screen_res.y - 5) / 4
 			- (int)test_ball.position.y][(int)test_ball.position.x].is_new = 1;
 		while (accumulator >= d_time)
 		{
 			update_game_logic(d_time, data, &test_ball);
+			printf("%d\n", test_ball.on_ground);
 			accumulator -= d_time;
 		}
-		data->screen_array[0][(data->screen_res.y - 5) / 4
+		data->screen_array[(data->screen_res.y - 5) / 4
 			- (int)test_ball.position.y][(int)test_ball.position.x].c = 'B';
-		data->screen_array[1][(data->screen_res.y - 5) / 4
-			- (int)test_ball.position.y][(int)test_ball.position.x].c = 'B';
-		data->screen_array[0][(data->screen_res.y - 5) / 4
-			- (int)test_ball.position.y][(int)test_ball.position.x].is_new = 1;
-		data->screen_array[1][(data->screen_res.y - 5) / 4
+		data->screen_array[(data->screen_res.y - 5) / 4
 			- (int)test_ball.position.y][(int)test_ball.position.x].is_new = 1;
 		pthread_mutex_lock(&data->locks_data->logic_mutex);
 		data->locks_data->logic_done = 1;

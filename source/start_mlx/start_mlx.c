@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:17:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 09:44:25 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:17:10 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,14 @@ t_pthread_locks	*init_locks_data(void)
 	return (locks_data);
 }
 
-t_image	*set_screen_images(void *mlx, t_vector2 screen_res)
+t_image	set_screen_images(void *mlx, t_vector2 screen_res)
 {
-	t_image	*screen_image;
+	t_image	screen_image;
 
-	screen_image = malloc(sizeof(t_image) * 2);
-	screen_image[0].image = mlx_new_image(mlx, screen_res.x, screen_res.y);
-	screen_image[0].addr = mlx_get_data_addr(screen_image[0].image,
-			&screen_image[0].bpp, &screen_image[0].size_l,
-			&screen_image[0].endian);
-	screen_image[1].image = mlx_new_image(mlx, screen_res.x, screen_res.y);
-	screen_image[1].addr = mlx_get_data_addr(screen_image[1].image,
-			&screen_image[1].bpp, &screen_image[1].size_l,
-			&screen_image[1].endian);
+	screen_image.image = mlx_new_image(mlx, screen_res.x, screen_res.y);
+	screen_image.addr = mlx_get_data_addr(screen_image.image,
+			&screen_image.bpp, &screen_image.size_l,
+			&screen_image.endian);
 	return (screen_image);
 }
 

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:24:13 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/25 16:38:38 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:18:31 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,17 @@ static t_screen_unit	**init_screen_array(t_vector2 screen_res,
 	return (screen_array);
 }
 
-t_screen_unit	***init_screens_arrays(t_vector2 screen_res, t_image *image)
-{
-	t_screen_unit	***screens_arrays;
-
-	screens_arrays = malloc(sizeof(t_screen_unit **) * 2);
-	screens_arrays[0] = init_screen_array(screen_res, (int *)image[0].addr);
-	screens_arrays[1] = init_screen_array(screen_res, (int *)image[1].addr);
-	return (screens_arrays);
-}
-
 t_worker_routine	*init_workers(t_vector2 screen_res,
-		t_pthread_locks *locks_data, t_image *screen_image, t_data *data)
+		t_pthread_locks *locks_data, t_image screen_image, t_data *data)
 {
 	t_worker_routine	*workers;
-	t_screen_unit		***screen_array;
+	t_screen_unit		**screen_array;
 	int					i;
 	t_vector2			index;
 	int					workers_rows;
 	int					workers_cols;
 
-	screen_array = init_screens_arrays(screen_res, screen_image);
+	screen_array = init_screen_array(screen_res, (int *)screen_image.addr);
 	workers_rows = screen_res.y / UNIT_SIZE / SQRT_THREAD_NBRS;
 	workers_cols = screen_res.x / UNIT_SIZE / SQRT_THREAD_NBRS;
 	i = 0;

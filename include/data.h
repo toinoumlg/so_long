@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:59:58 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 09:43:23 by amalangu         ###   ########.fr       */
+/*   Updated: 2025/07/27 12:20:16 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ typedef struct s_key_hook_routine
 	void					*mlx;
 	t_a_star				*pathfinding;
 	t_window				*window;
-	t_image					screen[2];
+	t_image					screen;
 
 }							t_key_hook_routine;
 
@@ -209,7 +209,7 @@ typedef struct s_pthread_locks
 
 typedef struct s_worker_routine
 {
-	t_screen_unit			***screen_array;
+	t_screen_unit			**screen_array;
 	t_vector2				index;
 	t_vector2				screen_res;
 	t_vector2				start_unit;
@@ -234,13 +234,13 @@ typedef struct s_data
 	t_possible_directions	directions;
 	t_pthread_locks			*locks_data;
 	t_vector2				screen_res;
-	t_screen_unit			***screen_array;
+	t_screen_unit			**screen_array;
 }							t_data;
 
 typedef struct s_mlx_routine
 {
 	void					*ptr;
-	t_image					*screen_image;
+	t_image					screen_image;
 	t_vector2				screen_res;
 	t_window				*window;
 	t_pthread_locks			*locks_data;
