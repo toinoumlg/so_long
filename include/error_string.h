@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 22:58:01 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 11:07:51 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 08:37:55 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # define WRONG_ARGUMENTS "wrong arguments."
 # define FILE_DOESNT_EXIST "file doesn't exist."
+# define FILE_IS_A_DIRECTORY "file is a directory."
 # define FILE_EMPTY "file is empty."
+# define FAILED_OPEN "failed to open file."
 # define WRONG_BORDERS "border don't contain only walls."
 # define INVALID_EXTENSION "invalid file extension, should end with .ber."
 # define MAP_NOT_RECTANGULAR "map isn't rectangular."

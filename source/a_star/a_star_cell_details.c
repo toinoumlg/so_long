@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 21:45:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 10:05:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:34:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_a_star_values	*set_new_cells(t_a_star *a_star)
 	new = malloc(sizeof(t_a_star_values) * (a_star->max.x + 1));
 	if (!new)
 		pthread_exit(a_star);
-	memset(new, 0, sizeof(t_a_star_values) * (a_star->max.x + 1));
+	ft_memset(new, 0, sizeof(t_a_star_values) * (a_star->max.x + 1));
 	return (new);
 }
 
@@ -63,7 +63,7 @@ void	init_and_set_cell_details(t_a_star *a_star)
 				+ 2));
 	if (!a_star->cell_details)
 		pthread_exit(a_star);
-	memset(a_star->cell_details, 0, (sizeof(t_a_star_values *) * (a_star->max.y
+	ft_memset(a_star->cell_details, 0, (sizeof(t_a_star_values *) * (a_star->max.y
 				+ 2)));
 	while (coords.y < a_star->max.y)
 	{

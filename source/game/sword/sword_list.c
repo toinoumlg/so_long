@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 11:38:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/13 12:33:35 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 10:43:55 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	destroy_sword_first(t_sword **swords, t_vector2 coords, t_data *data,
 	if (check_sword_on_collectible(sword, data->game.collectibles))
 		return ;
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
-		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+		data->textures.ground[0].ptr, coords.x * PIXEL_PADDING, coords.y
 		* PIXEL_PADDING);
 	free(sword);
 }
@@ -45,7 +45,7 @@ void	destroy_sword(t_sword **swords, t_vector2 coords, t_data *data)
 	if (check_sword_on_collectible(sword, data->game.collectibles))
 		return ;
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
-		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+		data->textures.ground[0].ptr, coords.x * PIXEL_PADDING, coords.y
 		* PIXEL_PADDING);
 	free(sword);
 }

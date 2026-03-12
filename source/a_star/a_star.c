@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/13 17:37:28 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:32:35 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,33 +159,29 @@ t_a_star_values	first_open_list(t_open_list **open_list)
 
 void	a_star_neighbor(t_a_star *a_star)
 {
-	t_possible_directions	directions;
-	t_vector2				coords;
+	t_vector2	coords;
 
 	coords = a_star->open_list->values.coords;
-	directions = a_star->directions;
 	a_star->closed_list[coords.y][coords.x] = '1';
-	a_star_neighbor_direction(a_star, directions.up);
-	a_star_neighbor_direction(a_star, directions.down);
-	a_star_neighbor_direction(a_star, directions.left);
-	a_star_neighbor_direction(a_star, directions.right);
+	a_star_neighbor_direction(a_star, DIR_UP);
+	a_star_neighbor_direction(a_star, DIR_DOWN);
+	a_star_neighbor_direction(a_star, DIR_LEFT);
+	a_star_neighbor_direction(a_star, DIR_RIGHT);
 	first_open_list(&a_star->open_list);
 	swap_lowest_f(&a_star->open_list);
 }
 
 int	end_is_locked(t_a_star *a_star)
 {
-	t_possible_directions	directions;
-	char					**map;
-	t_vector2				end;
+	char		**map;
+	t_vector2	end;
 
-	directions = a_star->directions;
 	map = a_star->map;
 	end = a_star->end;
-	return (map[end.y + directions.up.y][end.x + directions.up.x] == '1'
-		&& map[end.y + directions.down.y][end.x + directions.down.x] == '1'
-		&& map[end.y + directions.left.y][end.x + directions.left.x] == '1'
-		&& map[end.y + directions.right.y][end.x + directions.right.x] == '1');
+	return (map[end.y + DIR_UP.y][end.x + DIR_UP.x] == '1' && map[end.y
+		+ DIR_DOWN.y][end.x + DIR_DOWN.x] == '1' && map[end.y
+		+ DIR_LEFT.y][end.x + DIR_LEFT.x] == '1' && map[end.y
+		+ DIR_RIGHT.y][end.x + DIR_RIGHT.x] == '1');
 }
 
 void	*a_star_routine(void *args)
@@ -243,10 +239,9 @@ void	*set_new_thread_data(t_data *data)
 	a_star = malloc(sizeof(t_a_star));
 	if (!a_star)
 		exit(1);
-	memset(a_star, 0, sizeof(t_a_star));
+	ft_memset(a_star, 0, sizeof(t_a_star));
 	a_star->map = data->map.array;
 	a_star->max = data->map.max;
-	a_star->directions = data->directions;
 	return (a_star);
 }
 
@@ -262,7 +257,7 @@ void	set_threads_data(t_a_star **thread_data, pthread_t **threads,
 	i++;
 	*thread_data = tmp;
 	collectibles = data->collectibles;
-	tmp->start = data->player->coords;
+	tmp->start = data->player.coords;
 	while (collectibles)
 	{
 		tmp->end = collectibles->coords;
@@ -276,7 +271,7 @@ void	set_threads_data(t_a_star **thread_data, pthread_t **threads,
 	*threads = malloc(sizeof(pthread_t) * (i + 1));
 	if (!*threads)
 		exit(parsing_error(data, ALLOC_ERROR));
-	memset(*threads, 0, sizeof(pthread_t) * (i + 1));
+	ft_memset(*threads, 0, sizeof(pthread_t) * (i + 1));
 }
 
 void	start_threads_pathinding(t_a_star *thread_data, pthread_t *threads)
@@ -297,7 +292,6 @@ void	check_valid_paths(t_data *data)
 	t_a_star	*thread_data;
 	pthread_t	*threads;
 
-	data->directions = set_move();
 	set_threads_data(&thread_data, &threads, data);
 	start_threads_pathinding(thread_data, threads);
 	data->pathfinding = join_threads(threads);

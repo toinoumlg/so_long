@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 12:24:03 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:20:33 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	start_game_loop(t_data *data)
 	accumulator = 0.0;
 	running = 1;
 	set_timer(&timer);
-	sleep(1);
+	// sleep(1);
 	while (running)
 	{
 		get_current(&timer);
@@ -196,8 +196,9 @@ int	main(int ac, char **av)
 	t_data data;
 
 	map_parser(&data, av, ac);
-	start_mlx(&data);
-	start_game_loop(&data);
+	// start_mlx(&data);
+	// start_game_loop(&data);
 	// init_game(&data);
 	// start_game(data);
+	return 0;
 }

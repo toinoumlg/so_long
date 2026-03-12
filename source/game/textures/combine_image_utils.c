@@ -6,36 +6,31 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:21:17 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 15:46:32 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:48:52 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
 
-unsigned int	get_pixel_color(t_image *image, t_vector2 i)
+unsigned int	get_pixel_color(t_img *image, t_vector2 i)
 {
-	return (*(unsigned int *)(image->addr + (i.y * image->size_l + i.x
-			* (image->bpp / 8))));
+	return (image->addr[i.y * image->width + i.x]);
 }
 
-void	put_pixel(t_image *image, t_vector2 i, unsigned int color)
+void	put_pixel(t_img *image, t_vector2 i, t_pxl color)
 {
-	char	*pixel;
-
-	pixel = image->addr + (i.y * image->size_l + i.x * (image->bpp / 8));
-	*(unsigned int *)pixel = color;
+	image->addr[i.y * image->width + i.x] = color;
 }
 
-void	print_front_or_back_offset(t_image *front, t_image *combined,
-		t_vector2 i)
+void	print_front_or_back_offset(t_img *front, t_img *combined, t_vector2 i)
 {
 	t_vector2		offset;
 	unsigned int	front_color;
 	t_vector2		c_comb;
 
-	offset = set_vector2(front->wh.y / 2, front->wh.x / 2);
-	if ((i.x < offset.x || i.y < offset.y) || (i.x >= offset.x + front->wh.x
-			|| i.y >= offset.y + front->wh.y))
+	offset = set_vector2(front->height / 2, front->width / 2);
+	if ((i.x < offset.x || i.y < offset.y) || (i.x >= offset.x + front->width
+			|| i.y >= offset.y + front->height))
 	{
 		front_color = get_pixel_color(combined, i);
 		put_pixel(combined, i, front_color);
@@ -49,15 +44,15 @@ void	print_front_or_back_offset(t_image *front, t_image *combined,
 	}
 }
 
-void	set_front_color_offset(t_image *front, t_image *combined)
+void	set_front_color_offset(t_img *front, t_img *combined)
 {
 	t_vector2	i;
 
 	i.y = 0;
-	while (i.y < combined->wh.y)
+	while (i.y < combined->height)
 	{
 		i.x = 0;
-		while (i.x < combined->wh.x)
+		while (i.x < combined->width)
 		{
 			print_front_or_back_offset(front, combined, i);
 			i.x++;

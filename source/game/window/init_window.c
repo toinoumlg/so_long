@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/13 12:36:02 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 08:29:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_border_image_index(t_vector2 coords, t_vector2 min, t_vector2 max)
 
 // 	c = window->screen[window->actual.y][window->actual.x];
 // 	if (c == 'W')
-// 		mlx_put_image_to_window(mlx, window->ptr, textures.water[rand()
+// 		mlx_put_img_to_window(mlx, window->ptr, textures.water[rand()
 // 			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
 // 			* PIXEL_PADDING);
 // 	if (c == '1')
@@ -49,7 +49,7 @@ int	get_border_image_index(t_vector2 coords, t_vector2 min, t_vector2 max)
 // 		i_border = get_border_image_index(window->actual, window->min,
 // 				window->max);
 // 		if (i_border >= 0)
-// 			mlx_put_image_to_window(mlx, window->ptr,
+// 			mlx_put_img_to_window(mlx, window->ptr,
 // 				textures.borders[i_border].image, window->actual.x
 // 				* PIXEL_PADDING, window->actual.y * PIXEL_PADDING);
 // 		else
@@ -69,7 +69,7 @@ int	get_border_image_index(t_vector2 coords, t_vector2 min, t_vector2 max)
 // 		combine_image(textures.player[0], textures.ground[rand() % 2], mlx,
 // 			*window);
 // 	if (c == '0' || c == 'E')
-// 		mlx_put_image_to_window(mlx, window->ptr, textures.ground[rand()
+// 		mlx_put_img_to_window(mlx, window->ptr, textures.ground[rand()
 // 			% 2].image, window->actual.x * PIXEL_PADDING, window->actual.y
 // 			* PIXEL_PADDING);
 // 	if (c == 'C')

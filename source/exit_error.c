@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:59:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 11:08:24 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:20:43 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 void	free_data(t_data *data)
 {
 	free_map(&data->map);
-	if (data->player)
-		free(data->player);
 	if (data->collectibles)
 		free_collectibles(data->collectibles);
 	if (data->ennemies)

@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 20:02:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/12 10:00:46 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:32:42 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	init_closed_list(t_a_star *a_star)
 	a_star->closed_list = malloc(sizeof(signed char *) * (max.y + 2));
 	if (!a_star->closed_list)
 		pthread_exit(a_star);
-	memset(a_star->closed_list, 0, sizeof(signed char *) * (max.y + 2));
+	ft_memset(a_star->closed_list, 0, sizeof(signed char *) * (max.y + 2));
 	while (i <= max.y)
 	{
 		a_star->closed_list[i] = malloc(sizeof(signed char) * (max.x + 2));

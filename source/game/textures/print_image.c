@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_image.c                                      :+:      :+:    :+:   */
+/*   print_img.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,17 +14,18 @@
 
 void	spawn_exit(t_data *data)
 {
-	t_image	combined;
+	t_img	combined;
 
-	combined.image = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
-	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
-			&combined.size_l, &combined.endian);
-	combined.wh = data->textures.ground[0].wh;
+	combined.ptr = mlx_new_image(data->mlx, PIXEL_PADDING, PIXEL_PADDING);
+	combined.addr = (t_pxl *)mlx_get_data_addr(combined.ptr, &combined.bpp,
+			&combined.lenght, &combined.endian);
+	combined.width = data->textures.ground[0].width;
+	combined.height = data->textures.ground[0].height;
 	set_background_color(&data->textures.ground[0], &combined);
 	set_front_color_offset(&data->textures.exit[0], &combined);
-	// mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image,
+	// mlx_put_img_to_window(data->mlx, data->window.ptr, combined.image,
 	// 	data->window.exit.x * PIXEL_PADDING, data->window.exit.y
 	// 	* PIXEL_PADDING);
-	mlx_destroy_image(data->mlx, combined.image);
+	mlx_destroy_image(data->mlx, combined.ptr);
 	data->game.game_finished = 2;
 }

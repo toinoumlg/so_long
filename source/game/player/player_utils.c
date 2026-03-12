@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 11:41:28 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/13 17:12:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:58:31 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,13 @@ int	is_ennemy_on_next_coords(t_data *data, t_ennemy *ennemy)
 {
 	(void)data;
 	(void)ennemy;
-
 	// if ((ennemy->coords.y == data->window.actual.y
 	// 		+ data->game.player.move_dir.y)
 	// 	&& (ennemy->coords.x == data->window.actual.x
 	// 		+ data->game.player.move_dir.x))
 	// 	return (1);
 	// else
-		return (0);
+	return (0);
 }
 
 int	is_next_coords_blocked(t_data *data)
@@ -59,11 +58,11 @@ int	is_next_coords_blocked(t_data *data)
 void	set_player_direction(int key_stroked, t_data *data)
 {
 	if (key_stroked == 119)
-		data->game.player.move_dir = data->game.moves.up;
+		data->game.player.move_dir = &DIR_UP;
 	if (key_stroked == 97)
-		data->game.player.move_dir = data->game.moves.left;
+		data->game.player.move_dir = &DIR_RIGHT;
 	if (key_stroked == 115)
-		data->game.player.move_dir = data->game.moves.down;
+		data->game.player.move_dir = &DIR_DOWN;
 	if (key_stroked == 100)
-		data->game.player.move_dir = data->game.moves.right;
+		data->game.player.move_dir = &DIR_LEFT;
 }

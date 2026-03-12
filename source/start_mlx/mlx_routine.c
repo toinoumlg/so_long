@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:21:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 12:20:57 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 10:48:04 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	*mlx_routine(void *args)
 			pthread_cond_wait(&mlx->locks_data->draw_cond,
 				&mlx->locks_data->draw_mutex);
 		mlx_put_image_to_window(mlx->ptr, mlx->window->ptr,
-			mlx->screen_image.image, 0, 0);
+			mlx->screen_image.ptr, 0, 0);
 		mlx_do_sync(mlx->ptr);
 		mlx->locks_data->draw_count = 0;
 		mlx->locks_data->drawing = 1;

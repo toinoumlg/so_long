@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 09:56:10 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 21:06:46 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:50:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	set_textures_ennemy_file(char **ennemy_file)
 	ennemy_file[20] = ENNEMY21;
 }
 
-void	set_textures_ennemies(t_image *ennemies, void *mlx)
+void	set_textures_ennemies(t_img *ennemies, void *mlx)
 {
 	char	*ennemy_file[21];
 	int		i;
@@ -47,15 +47,15 @@ void	set_textures_ennemies(t_image *ennemies, void *mlx)
 	i = 0;
 	while (i < 21)
 	{
-		ennemies[i].image = mlx_xpm_file_to_image(mlx, ennemy_file[i],
-				&ennemies[i].wh.x, &ennemies[i].wh.y);
-		ennemies[i].addr = mlx_get_data_addr(ennemies[i].image,
-				&ennemies[i].bpp, &ennemies[i].size_l, &ennemies[i].endian);
+		ennemies[i].ptr = mlx_xpm_file_to_image(mlx, ennemy_file[i],
+				&ennemies[i].width, &ennemies[i].height);
+		ennemies[i].addr = (t_pxl *)mlx_get_data_addr(ennemies[i].ptr,
+				&ennemies[i].bpp, &ennemies[i].lenght, &ennemies[i].endian);
 		i++;
 	}
 }
 
-void	set_textures_coins(t_image *coins, void *mlx)
+void	set_textures_coins(t_img *coins, void *mlx)
 {
 	char	*coin_files[13];
 	int		i;
@@ -76,15 +76,15 @@ void	set_textures_coins(t_image *coins, void *mlx)
 	i = 0;
 	while (i < 13)
 	{
-		coins[i].image = mlx_xpm_file_to_image(mlx, coin_files[i],
-				&coins[i].wh.x, &coins[i].wh.y);
-		coins[i].addr = mlx_get_data_addr(coins[i].image, &coins[i].bpp,
-				&coins[i].size_l, &coins[i].endian);
+		coins[i].ptr = mlx_xpm_file_to_image(mlx, coin_files[i],
+				&coins[i].width, &coins[i].height);
+		coins[i].addr = (t_pxl *)mlx_get_data_addr(coins[i].ptr, &coins[i].bpp,
+				&coins[i].lenght, &coins[i].endian);
 		i++;
 	}
 }
 
-void	set_textures_walls(t_image *walls, void *mlx)
+void	set_textures_walls(t_img *walls, void *mlx)
 {
 	int		i;
 	char	*walls_files[7];
@@ -99,10 +99,10 @@ void	set_textures_walls(t_image *walls, void *mlx)
 	i = 0;
 	while (i < 7)
 	{
-		walls[i].image = mlx_xpm_file_to_image(mlx, walls_files[i],
-				&walls[i].wh.x, &walls[i].wh.y);
-		walls[i].addr = mlx_get_data_addr(walls[i].image, &walls[i].bpp,
-				&walls[i].size_l, &walls[i].endian);
+		walls[i].ptr = mlx_xpm_file_to_image(mlx, walls_files[i],
+				&walls[i].width, &walls[i].height);
+		walls[i].addr = (t_pxl *)mlx_get_data_addr(walls[i].ptr, &walls[i].bpp,
+				&walls[i].lenght, &walls[i].endian);
 		i++;
 	}
 }

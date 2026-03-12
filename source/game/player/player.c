@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 11:23:24 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/13 12:36:41 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:56:50 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	player_attack(int key_stroked, t_data *data)
 {
 	if (key_stroked == 65362)
-		spawn_sword(data, data->game.moves.up);
+		spawn_sword(data, DIR_UP);
 	if (key_stroked == 65364)
-		spawn_sword(data, data->game.moves.down);
+		spawn_sword(data, DIR_DOWN);
 	if (key_stroked == 65361)
-		spawn_sword(data, data->game.moves.left);
+		spawn_sword(data, DIR_LEFT);
 	if (key_stroked == 65363)
-		spawn_sword(data, data->game.moves.right);
+		spawn_sword(data, DIR_RIGHT);
 }
 
 // void	player_move(int key_stroked, t_data *data)

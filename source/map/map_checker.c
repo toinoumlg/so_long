@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 14:26:14 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/13 17:13:20 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:32:13 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
 
 void	check_if_rectangular(t_data *data)
 {
-	int	i;
+	int		i;
+	char	**array;
 
+	array = data->map.array;
 	i = 0;
-	data->map.max.x = ft_strlen(data->map.array[i++]) - 1;
-	while (data->map.array[i]
-		&& ft_strlen(data->map.array[i]) == (size_t)data->map.max.x + 1)
+	data->map.max.x = ft_strlen(array[i++]);
+	while (array[i] && ft_strlen(array[i]) == (size_t)data->map.max.x)
 		i++;
-	if (data->map.array[i])
+	if (array[i])
 		exit(parsing_error(data, MAP_NOT_RECTANGULAR));
-	else
-		data->map.max.y = i - 1;
 }
 
 void	check_border(t_data *data)
@@ -69,23 +68,18 @@ void	add_exit(t_data *data, int x, int y)
 
 void	add_player(t_data *data, int x, int y)
 {
-	if (data->player)
+	if (data->player.coords.x)
 		exit(parsing_error(data, MULTIPLE_PLAYERS));
-	data->player = malloc(sizeof(t_player));
-	if (!data->player)
-		exit(parsing_error(data, ALLOC_ERROR));
-	ft_memset(data->player, 0, sizeof(t_player));
-	data->player->health = 3;
-	data->player->coords = set_vector2(y, x);
+	ft_memset(&data->player, 0, sizeof(t_player));
+	data->player.health = 3;
+	data->player.coords = set_vector2(y, x);
 }
 
-void	check_character_at_coords(t_data *data, int x, int y)
+void	check_char_at_coords(t_data *data, int x, int y)
 {
 	char	c;
-	t_map	*map;
 
-	map = &data->map;
-	c = map->array[y][x];
+	c = data->map.array[y][x];
 	if (!is_in_char_set(c))
 		exit(parsing_error(data, WRONG_CHARACTER));
 	if (c == 'C')
@@ -98,18 +92,18 @@ void	check_character_at_coords(t_data *data, int x, int y)
 		add_player(data, x, y);
 }
 
-void	check_characters(t_data *data)
+void	check_char(t_data *data)
 {
 	t_vector2	coords;
-	t_map		*map;
+	t_vector2	*max;
 
-	map = &data->map;
+	max = &data->map.max;
 	coords = set_vector2(1, 1);
-	while (coords.y < map->max.y && coords.x < map->max.x)
+	while (coords.y < max->y)
 	{
-		check_character_at_coords(data, coords.x, coords.y);
+		check_char_at_coords(data, coords.x, coords.y);
 		coords.x++;
-		if (coords.x == map->max.x)
+		if (coords.x == max->x)
 			coords = set_vector2(coords.y + 1, 1);
 	}
 }
@@ -118,6 +112,6 @@ void	check_map(t_data *data)
 {
 	check_if_rectangular(data);
 	check_border(data);
-	check_characters(data);
+	check_char(data);
 	check_valid_paths(data);
 }

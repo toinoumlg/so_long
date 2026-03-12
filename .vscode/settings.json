@@ -19,7 +19,6 @@
 		"print_colors.h": "c",
 		"ipc.h": "c",
 		"xutil.h": "c",
-		"mlx_int.h": "c",
 		"new": "c",
 		"time.h": "c",
 		"worker_routine.h": "c",

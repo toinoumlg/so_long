@@ -6,14 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:06:11 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 21:06:56 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:52:03 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "textures_path.h"
 
-void	set_textures_border(t_image *borders, void *mlx)
+void	set_textures_border(t_img *borders, void *mlx)
 {
 	char	*borders_files[8];
 	int		i;
@@ -29,15 +29,15 @@ void	set_textures_border(t_image *borders, void *mlx)
 	i = 0;
 	while (i < 8)
 	{
-		borders[i].image = mlx_xpm_file_to_image(mlx, borders_files[i],
-				&borders[i].wh.x, &borders[i].wh.y);
-		borders[i].addr = mlx_get_data_addr(borders[i].image, &borders[i].bpp,
-				&borders[i].size_l, &borders[i].endian);
+		borders[i].ptr = mlx_xpm_file_to_image(mlx, borders_files[i],
+				&borders[i].width, &borders[i].height);
+		borders[i].addr = (t_pxl *)mlx_get_data_addr(borders[i].ptr,
+				&borders[i].bpp, &borders[i].lenght, &borders[i].endian);
 		i++;
 	}
 }
 
-void	set_textures_exit(t_image *exit, void *mlx)
+void	set_textures_exit(t_img *exit, void *mlx)
 {
 	char	*exit_files[1];
 	int		i;
@@ -46,14 +46,14 @@ void	set_textures_exit(t_image *exit, void *mlx)
 	i = -1;
 	while (i++ < 0)
 	{
-		exit[i].image = mlx_xpm_file_to_image(mlx, exit_files[i], &exit[i].wh.x,
-				&exit[i].wh.y);
-		exit[i].addr = mlx_get_data_addr(exit[i].image, &exit[i].bpp,
-				&exit[i].size_l, &exit[i].endian);
+		exit[i].ptr = mlx_xpm_file_to_image(mlx, exit_files[i], &exit[i].width,
+				&exit[i].height);
+		exit[i].addr = (t_pxl *)mlx_get_data_addr(exit[i].ptr, &exit[i].bpp,
+				&exit[i].lenght, &exit[i].endian);
 	}
 }
 
-void	set_textures_water(t_image *water, void *mlx)
+void	set_textures_water(t_img *water, void *mlx)
 {
 	int		i;
 	char	*water_files[2];
@@ -63,14 +63,14 @@ void	set_textures_water(t_image *water, void *mlx)
 	i = -1;
 	while (i++ < 1)
 	{
-		water[i].image = mlx_xpm_file_to_image(mlx, water_files[i],
-				&water[i].wh.x, &water[i].wh.y);
-		water[i].addr = mlx_get_data_addr(water[i].image, &water[i].bpp,
-				&water[i].size_l, &water[i].endian);
+		water[i].ptr = mlx_xpm_file_to_image(mlx, water_files[i],
+				&water[i].width, &water[i].height);
+		water[i].addr = (t_pxl *)mlx_get_data_addr(water[i].ptr, &water[i].bpp,
+				&water[i].lenght, &water[i].endian);
 	}
 }
 
-void	set_textures_ground(t_image *ground, void *mlx)
+void	set_textures_ground(t_img *ground, void *mlx)
 {
 	int		i;
 	char	*ground_files[2];
@@ -80,14 +80,14 @@ void	set_textures_ground(t_image *ground, void *mlx)
 	i = -1;
 	while (i++ < 1)
 	{
-		ground[i].image = mlx_xpm_file_to_image(mlx, ground_files[i],
-				&ground[i].wh.x, &ground[i].wh.y);
-		ground[i].addr = mlx_get_data_addr(ground[i].image, &ground[i].bpp,
-				&ground[i].size_l, &ground[i].endian);
+		ground[i].ptr = mlx_xpm_file_to_image(mlx, ground_files[i],
+				&ground[i].width, &ground[i].height);
+		ground[i].addr = (t_pxl *)mlx_get_data_addr(ground[i].ptr, &ground[i].bpp,
+				&ground[i].lenght, &ground[i].endian);
 	}
 }
 
-void	set_textures_hud(t_image *hud, void *mlx)
+void	set_textures_hud(t_img *hud, void *mlx)
 {
 	char	*hud_files[5];
 	int		i;
@@ -100,9 +100,9 @@ void	set_textures_hud(t_image *hud, void *mlx)
 	i = -1;
 	while (i++ < 4)
 	{
-		hud[i].image = mlx_xpm_file_to_image(mlx, hud_files[i], &hud[i].wh.x,
-				&hud[i].wh.y);
-		hud[i].addr = mlx_get_data_addr(hud[i].image, &hud[i].bpp,
-				&hud[i].size_l, &hud[i].endian);
+		hud[i].ptr = mlx_xpm_file_to_image(mlx, hud_files[i], &hud[i].width,
+				&hud[i].height);
+		hud[i].addr = (t_pxl *)mlx_get_data_addr(hud[i].ptr, &hud[i].bpp,
+				&hud[i].lenght, &hud[i].endian);
 	}
 }

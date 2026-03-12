@@ -6,14 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:57:39 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 21:07:02 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:52:32 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "textures_path.h"
 
-void	set_texture_sword(t_image *sword, void *mlx)
+void	set_texture_sword(t_img *sword, void *mlx)
 {
 	char	*sword_files[4];
 	int		i;
@@ -25,14 +25,14 @@ void	set_texture_sword(t_image *sword, void *mlx)
 	i = -1;
 	while (i++ < 3)
 	{
-		sword[i].image = mlx_xpm_file_to_image(mlx, sword_files[i],
-				&sword[i].wh.x, &sword[i].wh.y);
-		sword[i].addr = mlx_get_data_addr(sword[i].image, &sword[i].bpp,
-				&sword[i].size_l, &sword[i].endian);
+		sword[i].ptr = mlx_xpm_file_to_image(mlx, sword_files[i],
+				&sword[i].width, &sword[i].height);
+		sword[i].addr = (t_pxl *)mlx_get_data_addr(sword[i].ptr, &sword[i].bpp,
+				&sword[i].lenght, &sword[i].endian);
 	}
 }
 
-void	set_textures_player(t_image *player, t_image *sword, void *mlx)
+void	set_textures_player(t_img *player, t_img *sword, void *mlx)
 {
 	char	*player_files[5];
 	int		i;
@@ -46,9 +46,9 @@ void	set_textures_player(t_image *player, t_image *sword, void *mlx)
 	i = -1;
 	while (i++ < 4)
 	{
-		player[i].image = mlx_xpm_file_to_image(mlx, player_files[i],
-				&player[i].wh.x, &player[i].wh.y);
-		player[i].addr = mlx_get_data_addr(player[i].image, &player[i].bpp,
-				&player[i].size_l, &player[i].endian);
+		player[i].ptr = mlx_xpm_file_to_image(mlx, player_files[i],
+				&player[i].width, &player[i].height);
+		player[i].addr = (t_pxl *)mlx_get_data_addr(player[i].ptr, &player[i].bpp,
+				&player[i].lenght, &player[i].endian);
 	}
 }

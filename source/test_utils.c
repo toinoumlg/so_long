@@ -6,11 +6,10 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:19:23 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/18 20:48:11 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:30:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_rgb.c"
 #include "print_colors.h"
 #include "so_long.h"
 #include <pthread.h>
@@ -21,7 +20,7 @@ typedef struct s_pthread_window
 {
 	t_vector2				min;
 	t_vector2				max;
-	t_image					*image;
+	t_img					*image;
 	unsigned int			color;
 	t_a_star				*a_star;
 	t_vector2				map_offset[2];
@@ -61,7 +60,7 @@ unsigned int	set_color(int t, int r, int g, int b)
 }
 
 void	set_window_data(t_pthread_window **pthread_data, t_vector2 screen_size,
-		t_image *image, t_a_star *a_star)
+		t_img *image, t_a_star *a_star)
 {
 	t_pthread_window	*new;
 	t_vector2			index;

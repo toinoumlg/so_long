@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 20:48:04 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/08 14:08:45 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 10:45:39 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 	{
 		*ennemies = ennemy->next;
 		mlx_put_image_to_window(data->mlx, data->window.ptr,
-			data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+			data->textures.ground[0].ptr, coords.x * PIXEL_PADDING, coords.y
 			* PIXEL_PADDING);
 		free(ennemy);
 		return ;
@@ -37,7 +37,7 @@ void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 	}
 	previous->next = ennemy->next;
 	mlx_put_image_to_window(data->mlx, data->window.ptr,
-		data->textures.ground[0].image, coords.x * PIXEL_PADDING, coords.y
+		data->textures.ground[0].ptr, coords.x * PIXEL_PADDING, coords.y
 		* PIXEL_PADDING);
 	free(ennemy);
 }

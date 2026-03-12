@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 19:17:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 12:17:10 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 10:48:21 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@ t_pthread_locks	*init_locks_data(void)
 	return (locks_data);
 }
 
-t_image	set_screen_images(void *mlx, t_vector2 screen_res)
+t_img	set_screen_images(void *mlx, t_vector2 screen_res)
 {
-	t_image	screen_image;
+	t_img	screen_image;
 
-	screen_image.image = mlx_new_image(mlx, screen_res.x, screen_res.y);
-	screen_image.addr = mlx_get_data_addr(screen_image.image,
-			&screen_image.bpp, &screen_image.size_l,
-			&screen_image.endian);
+	screen_image.ptr = mlx_new_image(mlx, screen_res.x, screen_res.y);
+	screen_image.addr = (t_pxl *)mlx_get_data_addr(screen_image.ptr,
+			&screen_image.bpp, &screen_image.lenght, &screen_image.endian);
 	return (screen_image);
 }
 

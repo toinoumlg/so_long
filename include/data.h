@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 20:59:58 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/27 12:20:16 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 10:53:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define DATA_H
 
 # include <pthread.h>
+# include <stdbool.h>
 # include <sys/time.h>
+
+typedef unsigned long		t_pxl;
 
 typedef struct s_vector2
 {
@@ -22,12 +25,32 @@ typedef struct s_vector2
 	int						y;
 }							t_vector2;
 
+# ifndef POSSIBLE_DIRECTIONS
+#  define POSSIBLE_DIRECTIONS
+
+static const t_vector2		DIR_UP = {-1, 0};
+static const t_vector2		DIR_DOWN = {1, 0};
+static const t_vector2		DIR_RIGHT = {0, 1};
+static const t_vector2		DIR_LEFT = {0, -1};
+
+# endif
+
+
 typedef struct s_vector2_list
 {
 	t_vector2				vector;
 	struct s_vector2_list	*next;
 	struct s_vector2_list	*prev;
 }							t_vector2_list;
+
+typedef struct s_input
+{
+	bool					w;
+	bool					a;
+	bool					s;
+	bool					d;
+	bool					attack;
+}							t_input;
 
 typedef struct s_a_star_values
 {
@@ -52,15 +75,6 @@ typedef struct s_collectible
 	struct s_collectible	*next;
 }							t_collectible;
 
-typedef struct s_possible_directions
-{
-	t_vector2				up;
-	t_vector2				down;
-	t_vector2				left;
-	t_vector2				right;
-	t_vector2				zero;
-}							t_possible_directions;
-
 typedef struct s_ennemy
 {
 	t_vector2				coords;
@@ -74,7 +88,6 @@ typedef struct s_ennemy
 typedef struct s_map
 {
 	char					**array;
-	char					*file_path;
 	t_vector2				min;
 	t_vector2				max;
 	t_vector2				exit;
@@ -92,21 +105,21 @@ typedef struct s_a_star
 	t_vector2				max;
 	char					found_end;
 	char					**map;
-	t_possible_directions	directions;
 	int						**final_path;
 	struct s_a_star			*next;
 	struct s_a_star			*prev;
 }							t_a_star;
 
-typedef struct s_image
+typedef struct s_img
 {
-	void					*image;
-	char					*addr;
-	t_vector2				wh;
-	int						size_l;
+	void					*ptr;
+	t_pxl					*addr;
+	int						lenght;
 	int						bpp;
 	int						endian;
-}							t_image;
+	int						width;
+	int						height;
+}							t_img;
 
 typedef struct s_window
 {
@@ -116,17 +129,17 @@ typedef struct s_window
 
 typedef struct s_textures
 {
-	t_image					*ground;
-	t_image					*water;
-	t_image					*walls;
-	t_image					*borders;
-	t_image					*player;
-	t_image					*sword;
-	t_image					*coins;
-	t_image					*exit;
-	t_image					*ennemies;
-	t_image					*hud;
-	t_image					*heart;
+	t_img					*ground;
+	t_img					*water;
+	t_img					*walls;
+	t_img					*borders;
+	t_img					*player;
+	t_img					*sword;
+	t_img					*coins;
+	t_img					*exit;
+	t_img					*ennemies;
+	t_img					*hud;
+	t_img					*heart;
 }							t_textures;
 
 typedef struct s_sword
@@ -144,7 +157,7 @@ typedef struct s_sword
 // status 0 idle 1;
 typedef struct s_player
 {
-	t_vector2				move_dir;
+	const t_vector2			*move_dir;
 	t_vector2				coords;
 	int						health;
 	int						status;
@@ -159,7 +172,6 @@ typedef struct s_game
 {
 	t_collectible			*collectibles;
 	t_ennemy				*ennemies;
-	t_possible_directions	moves;
 	t_player				player;
 	int						actual_sword;
 	int						game_finished;
@@ -181,7 +193,7 @@ typedef struct s_key_hook_routine
 	void					*mlx;
 	t_a_star				*pathfinding;
 	t_window				*window;
-	t_image					screen;
+	t_img					screen;
 
 }							t_key_hook_routine;
 
@@ -227,11 +239,10 @@ typedef struct s_data
 	t_game					game;
 	t_map					map;
 	t_timer					timer;
-	t_player				*player;
+	t_player				player;
 	t_ennemy				*ennemies;
 	t_collectible			*collectibles;
 	t_a_star				*pathfinding;
-	t_possible_directions	directions;
 	t_pthread_locks			*locks_data;
 	t_vector2				screen_res;
 	t_screen_unit			**screen_array;
@@ -240,7 +251,7 @@ typedef struct s_data
 typedef struct s_mlx_routine
 {
 	void					*ptr;
-	t_image					screen_image;
+	t_img					screen_image;
 	t_vector2				screen_res;
 	t_window				*window;
 	t_pthread_locks			*locks_data;

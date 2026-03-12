@@ -1,129 +1,144 @@
-NAME = so_long
-CC = cc
-CFLAGS = -Werror -Wextra -Wall -D_REENTRANT
+NAME := so_long
 
-OBJECTS_DIR = build
-INCLUDE_DIR = include
-MLX_DIR = mlx
-LIBFT_DIR = libft
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -std=gnu89
 
-SOURCE_DIR = source
-SOURCES_MAIN = main free_memory exit_error test_utils
+RM := rm -rf
+MAKEFLAGS += --no-print-directory
 
-MAP_DIR = $(SOURCE_DIR)/map
-SOURCES_MAP = map_init	map_checker
+OBJ_DIR := build
+SRC_DIR := source
+INC_DIR := include
+MLX_DIR := mlx
+LIBFT_DIR := libft
 
-A_STAR_DIR = $(SOURCE_DIR)/a_star
-SOURCES_A_STAR = a_star a_star_utils a_star_list \
-	a_star_cell_details a_star_struct a_star_free_memory
-
-GAME_DIR = $(SOURCE_DIR)/game
-SOURCES_GAME = game free_game game_init 
-
-TEXTURE_DIR = $(GAME_DIR)/textures
-SOURCES_TEXTURE = set_textures print_image combine_image \
-	combine_image_utils set_walls_coins_ennemies \
-	set_textures_others set_textures_player \
-	free_textures
-
-HUD_DIR = $(GAME_DIR)/hud
-SOURCES_HUD = hud hud_swords hud_health hud_utils
-
-UPDATE_DIR = $(GAME_DIR)/update
-SOURCES_UPDATE = update update_index
-
-PLAYER_DIR = $(GAME_DIR)/player
-SOURCES_PLAYER = player player_print player_utils
-
-COLLECTIBLE_DIR = $(GAME_DIR)/collectible
-SOURCES_COLLECTIBLE = collectibles collectible_print \
-	collectible_print_move
-
-SWORD_DIR = $(GAME_DIR)/sword
-SOURCES_SWORD = sword_update sword_list sword_print \
-	sword_utils
-
-ENNEMY_DIR = $(GAME_DIR)/ennemy
-SOURCES_ENNEMY = ennemy_list ennemy_update ennemy_print \
-	ennemy_print_move
-
-WINDOW_DIR = $(GAME_DIR)/window
-SOURCES_WINDOW = init_window screen_array
-
-START_MLX_DIR = $(SOURCE_DIR)/start_mlx
-SOURCES_START_MLX = mlx_routine start_mlx worker_routine worker
-
-SOURCES = $(addprefix $(SOURCE_DIR)/, $(addsuffix .c, $(SOURCES_MAIN))) \
-	$(addprefix $(MAP_DIR)/, $(addsuffix .c, $(SOURCES_MAP))) \
-	$(addprefix $(A_STAR_DIR)/, $(addsuffix .c, $(SOURCES_A_STAR))) \
-	$(addprefix $(GAME_DIR)/, $(addsuffix .c, $(SOURCES_GAME))) \
-	$(addprefix $(TEXTURE_DIR)/, $(addsuffix .c, $(SOURCES_TEXTURE))) \
-	$(addprefix $(HUD_DIR)/, $(addsuffix .c, $(SOURCES_HUD))) \
-	$(addprefix $(UPDATE_DIR)/, $(addsuffix .c, $(SOURCES_UPDATE))) \
-	$(addprefix $(PLAYER_DIR)/, $(addsuffix .c, $(SOURCES_PLAYER))) \
-	$(addprefix $(COLLECTIBLE_DIR)/, $(addsuffix .c, $(SOURCES_COLLECTIBLE))) \
-	$(addprefix $(SWORD_DIR)/, $(addsuffix .c, $(SOURCES_SWORD))) \
-	$(addprefix $(ENNEMY_DIR)/, $(addsuffix .c, $(SOURCES_ENNEMY))) \
-	$(addprefix $(WINDOW_DIR)/, $(addsuffix .c, $(SOURCES_WINDOW))) \
-	$(addprefix $(START_MLX_DIR)/, $(addsuffix .c, $(SOURCES_START_MLX)))
-
-SOURCES_LIBFT = $(addprefix $(LIBFT_DIR)/source/, ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
-	ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c \
-	ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-	ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c \
-	ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
-	ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c)
-
-OBJECTS = $(SOURCES:$(SOURCE_DIR)/%.c=$(OBJECTS_DIR)/%.o)
-
+MLX := ./mlx/libmlx_Linux.a
+LIBFT := ./libft/libft.a
+LIBS := $(MLX) -L/usr/lib/X11 -lXext -lX11 -lm $(LIBFT)
 INCLUDES = -I/usr/include -I./mlx -I./libft/include -I./include
 
-MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-LIBFT_LIB = $(LIBFT_DIR)/libft.a
-LIBS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm $(LIBFT_LIB) -lpthread
+SRC_MAIN := main free_memory exit_error test_utils
 
-DEP = $(OBJECTS:.o=.d)
+SRC_MAP := \
+	map/map_init \
+	map/map_checker
 
-FLUSH_STDOUT = 1> /dev/null
-FLUSH_BOTH = > /dev/null 2>&1
+SRC_A_STAR := \
+	a_star/a_star \
+	a_star/a_star_utils \
+	a_star/a_star_list \
+	a_star/a_star_cell_details \
+	a_star/a_star_struct \
+	a_star/a_star_free_memory
 
-all: $(MLX_LIB) $(LIBFT_LIB) $(OBJECTS_DIR) $(NAME)
+SRC_GAME := \
+	game/game \
+	game/free_game \
+	game/game_init
 
-norminette:
-	clear
-	norminette $(SOURCE_DIR) $(INCLUDE_DIR)
+SRC_TEXTURE := \
+	game/textures/set_textures \
+	game/textures/print_image \
+	game/textures/combine_image \
+	game/textures/combine_image_utils \
+	game/textures/set_walls_coins_ennemies \
+	game/textures/set_textures_others \
+	game/textures/set_textures_player \
+	game/textures/free_textures
 
-$(NAME): $(LIBFT_LIB) $(OBJECTS)
-	@echo Linking $@ executable
-	@$(CC) $(CFLAGS) -o $(NAME) $(INCLUDES) $(OBJECTS) $(LIBS) 
+SRC_HUD := \
+	game/hud/hud \
+	game/hud/hud_swords \
+	game/hud/hud_health \
+	game/hud/hud_utils
 
-$(MLX_LIB):
-	@echo building mlx
-	@make -C $(MLX_DIR) $(FLUSH_BOTH)
+SRC_UPDATE := \
+	game/update/update \
+	game/update/update_index
 
-$(LIBFT_LIB): $(SOURCES_LIBFT)
-	@echo building libft
-	@make -C $(LIBFT_DIR) $(FLUSH_STDOUT)
+SRC_PLAYER := \
+	game/player/player \
+	game/player/player_print \
+	game/player/player_utils
 
-$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c
-	@echo compiling $< into $@
+SRC_COLLECTIBLE := \
+	game/collectible/collectibles \
+	game/collectible/collectible_print \
+	game/collectible/collectible_print_move
+
+SRC_SWORD := \
+	game/sword/sword_update \
+	game/sword/sword_list \
+	game/sword/sword_print \
+	game/sword/sword_utils
+
+SRC_ENNEMY := \
+	game/ennemy/ennemy_list \
+	game/ennemy/ennemy_update \
+	game/ennemy/ennemy_print \
+	game/ennemy/ennemy_print_move
+
+SRC_WINDOW := \
+	game/window/init_window \
+	game/window/screen_array
+
+SRC_START_MLX := \
+	start_mlx/mlx_routine \
+	start_mlx/start_mlx \
+	start_mlx/worker_routine \
+	start_mlx/worker
+
+SRCS := \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_MAIN))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_MAP))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_A_STAR))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_GAME))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_TEXTURE))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_HUD))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_UPDATE))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_PLAYER))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_COLLECTIBLE))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_SWORD))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_ENNEMY))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_WINDOW))) \
+	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_START_MLX)))
+
+OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
+
+all: $(NAME)
+
+$(NAME): $(OBJS) $(MLX) $(LIBFT)
+	@echo "Linking $(NAME)"
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+
+$(MLX):
+	@echo "Building mlx"
+	$(MAKE) -C $(MLX_DIR)
+
+$(LIBFT):
+	@echo "Building libft"
+	$(MAKE) -C $(LIBFT_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -g -c -o $@ $<
-
-$(OBJECTS_DIR):
-	@mkdir -p $(OBJECTS_DIR)
+	@echo "Compiling $<"
+	$(CC) $(CFLAGS) $(INCLUDES) -MMD -MP -g -c -o $@ $<
 
 clean:
-	@rm -rf $(OBJECTS_DIR)
-	@make clean -C $(LIBFT_DIR) $(FLUSH_STDOUT)
-	@make clean -C $(MLX_DIR) $(FLUSH_STDOUT)
+	$(RM) $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
-	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR) $(FLUSH_STDOUT)
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re norminette libft
+norm:
+	norminette $(SRC_DIR) $(INC_DIR)
 
--include $(DEP)
+.PHONY: all clean fclean re norm
+
+-include $(DEPS)

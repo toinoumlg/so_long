@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:35:53 by amalangu          #+#    #+#             */
-/*   Updated: 2025/07/07 22:40:05 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 08:29:51 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	check_calloc_textures(t_textures textures)
 
 int	set_calloc_textures(t_data *data)
 {
-	data->textures.walls = ft_calloc(sizeof(t_image), 7);
-	data->textures.ground = ft_calloc(sizeof(t_image), 2);
-	data->textures.water = ft_calloc(sizeof(t_image), 2);
-	data->textures.borders = ft_calloc(sizeof(t_image), 8);
-	data->textures.player = ft_calloc(sizeof(t_image), 5);
-	data->textures.sword = ft_calloc(sizeof(t_image), 4);
-	data->textures.coins = ft_calloc(sizeof(t_image), 13);
-	data->textures.exit = ft_calloc(sizeof(t_image), 1);
-	data->textures.ennemies = ft_calloc(sizeof(t_image), 21);
-	data->textures.hud = ft_calloc(sizeof(t_image), 5);
+	data->textures.walls = ft_calloc(sizeof(t_img), 7);
+	data->textures.ground = ft_calloc(sizeof(t_img), 2);
+	data->textures.water = ft_calloc(sizeof(t_img), 2);
+	data->textures.borders = ft_calloc(sizeof(t_img), 8);
+	data->textures.player = ft_calloc(sizeof(t_img), 5);
+	data->textures.sword = ft_calloc(sizeof(t_img), 4);
+	data->textures.coins = ft_calloc(sizeof(t_img), 13);
+	data->textures.exit = ft_calloc(sizeof(t_img), 1);
+	data->textures.ennemies = ft_calloc(sizeof(t_img), 21);
+	data->textures.hud = ft_calloc(sizeof(t_img), 5);
 	if (check_calloc_textures(data->textures))
 		return (free_textures(data->textures), -1);
 	return (0);

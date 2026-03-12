@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:59:30 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/18 16:59:38 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/12 09:56:23 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,51 @@ char	*string_hud(t_data *data)
 
 void	print_hud_left_corner(t_data *data, int i)
 {
-	t_image	combined;
+	t_img	combined;
 
-	combined.image = mlx_new_image(data->mlx, data->textures.water[0].wh.x,
-			data->textures.water[0].wh.y);
-	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
-			&combined.size_l, &combined.endian);
-	combined.wh = data->textures.water[0].wh;
+	combined.ptr = mlx_new_image(data->mlx, data->textures.water[0].width,
+			data->textures.water[0].height);
+	combined.addr = (t_pxl *)mlx_get_data_addr(combined.ptr, &combined.bpp,
+			&combined.lenght, &combined.endian);
+	combined.width = data->textures.water[0].width;
+	combined.height = data->textures.water[0].height;
 	set_background_color(&data->textures.water[0], &combined);
 	set_front_color(&data->textures.hud[1], &combined);
-	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image, i
+	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.ptr, i
 		* PIXEL_PADDING, 0);
-	mlx_destroy_image(data->mlx, combined.image);
+	mlx_destroy_image(data->mlx, combined.ptr);
 }
 
 void	print_hud_right_corner(t_data *data, int i)
 {
-	t_image	combined;
+	t_img	combined;
 
-	combined.image = mlx_new_image(data->mlx, data->textures.water[0].wh.x,
-			data->textures.water[0].wh.y);
-	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
-			&combined.size_l, &combined.endian);
-	combined.wh = data->textures.water[0].wh;
+	combined.ptr = mlx_new_image(data->mlx, data->textures.water[0].width,
+			data->textures.water[0].height);
+	combined.addr = (t_pxl *)mlx_get_data_addr(combined.ptr, &combined.bpp,
+			&combined.lenght, &combined.endian);
+	combined.width = data->textures.water[0].width;
+	combined.height = data->textures.water[0].height;
 	set_background_color(&data->textures.water[0], &combined);
 	set_front_color(&data->textures.hud[2], &combined);
-	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image, i
+	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.ptr, i
 		* PIXEL_PADDING, 0);
-	mlx_destroy_image(data->mlx, combined.image);
+	mlx_destroy_image(data->mlx, combined.ptr);
 }
 
 void	print_hud_empty(t_data *data, int i)
 {
-	t_image	combined;
+	t_img	combined;
 
-	combined.image = mlx_new_image(data->mlx, data->textures.water[0].wh.x,
-			data->textures.water[0].wh.y);
-	combined.addr = mlx_get_data_addr(combined.image, &combined.bpp,
-			&combined.size_l, &combined.endian);
-	combined.wh = data->textures.water[0].wh;
+	combined.ptr = mlx_new_image(data->mlx, data->textures.water[0].width,
+			data->textures.water[0].height);
+	combined.addr = (t_pxl *)mlx_get_data_addr(combined.ptr, &combined.bpp,
+			&combined.lenght, &combined.endian);
+	combined.width = data->textures.water[0].width;
+	combined.height = data->textures.water[0].height;
 	set_background_color(&data->textures.water[0], &combined);
 	set_front_color(&data->textures.hud[0], &combined);
-	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.image, i
+	mlx_put_image_to_window(data->mlx, data->window.ptr, combined.ptr, i
 		* PIXEL_PADDING, 0);
-	mlx_destroy_image(data->mlx, combined.image);
+	mlx_destroy_image(data->mlx, combined.ptr);
 }
