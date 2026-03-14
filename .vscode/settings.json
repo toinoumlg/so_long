@@ -1,27 +1,7 @@
 {
+	"debbuger.cwd": "", // folder of makefile
+	"debbuger.bin": "so_long",
 	"files.associations": {
-		"so_long.h": "c",
-		"cstdlib": "c",
-		"error_string.h": "c",
-		"error.h": "c",
-		"exit_error.h": "c",
-		"stdlib.h": "c",
-		"unistd.h": "c",
-		"check.h": "c",
-		"bonus.h": "c",
-		"str.h": "c",
-		"put.h": "c",
-		"swap.h": "c",
-		"type_traits": "c",
-		"concepts": "c",
-		"mem.h": "c",
-		"pthread.h": "c",
-		"print_colors.h": "c",
-		"ipc.h": "c",
-		"xutil.h": "c",
-		"new": "c",
-		"time.h": "c",
-		"worker_routine.h": "c",
-		"start_mlx.h": "c"
-	}
+		"swap.h": "c"
+	} // binnary name
 }
