@@ -6,20 +6,21 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 00:58:19 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 18:47:55 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/04/03 10:51:05 by toinou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/put.h"
 
 int	print_end(t_data data)
 {
 	if (data.game.player.health == 0)
-		return (ft_printf(RED "Player is dead!\n" RESET), 0);
+		return (ft_putstr_fd(RED "Player is dead!\n" RESET,1), 0);
 	if (data.game.game_finished == 3)
-		return (ft_printf(GREEN "Player won!\n" RESET), 0);
+		return (ft_putstr_fd(GREEN "Player won!\n" RESET, 1), 0);
 	if (data.game.game_finished != 3)
-		return (ft_printf(MAGENTA "Game aborted\n" RESET), 0);
+		return (ft_putstr_fd(MAGENTA "Game aborted\n" RESET,1), 0);
 	return (-1);
 }
 

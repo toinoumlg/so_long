@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/str.h"
+#include "../libft/include/swap.h"
 
 char	*string_hud(t_data *data)
 {

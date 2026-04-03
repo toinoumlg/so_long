@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 int	check_calloc_textures(t_textures textures)
 {

@@ -14,7 +14,6 @@
 # define SO_LONG_H
 
 # ifndef INCLUDES
-#  include "../libftprintf/include/ft_printf.h"
 #  include "../mlx/mlx.h"
 #  include "../mlx/mlx_int.h"
 #  include <math.h>

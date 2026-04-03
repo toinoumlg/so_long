@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 void	update_screen_array(t_data *data)
 {
@@ -79,18 +80,4 @@ int	init_screen_array(t_map *map, t_window *window)
 		screen_coords.y++;
 	}
 	return (0);
-}
-
-void	print_actual_arrays(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("actual %d %d\nscreen:\n", data->window.actual.x,
-		data->window.actual.y);
-	while (data->window.screen[i])
-	{
-		ft_printf("[%d]-%s\n", i, data->window.screen[i]);
-		i++;
-	}
 }

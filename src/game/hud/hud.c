@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/str.h"
+#include "../libft/include/swap.h"
 
 void	print_hud_move(t_data *data)
 {

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 int	add_new_collectible(t_map *map, int x, int y)
 {

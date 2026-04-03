@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 t_cell	set_cell_details(t_new_values new, t_vector2 coords)
 {

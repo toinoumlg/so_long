@@ -6,11 +6,12 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:10:31 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 18:35:59 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/04/03 10:53:19 by toinou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 int	get_border_image_index(t_vector2 coords, t_vector2 min, t_vector2 max)
 {

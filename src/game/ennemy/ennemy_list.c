@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 void	destroy_ennemy(t_ennemy **ennemies, t_vector2 coords, t_data *data)
 {

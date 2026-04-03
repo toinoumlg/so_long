@@ -1,4 +1,4 @@
-NAME = a.out
+NAME = so_long
 SRC_DIR = src
 SRCS = main.c									\
 	map/map_init.c								\
@@ -42,8 +42,7 @@ SRCS = main.c									\
 	game/textures/set_textures_others.c			\
 	game/textures/set_textures_player.c			\
 	game/textures/free_textures.c				\
-	free_memory.c								\
-	test_utils.c
+	free_memory.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR = $(SRC_DIR)/obj
@@ -54,29 +53,28 @@ INCLUDES = -I/usr/include -Imlx -Ilibft/include
 MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
 HEADER = include/so_long.h
-LIBFTPRINTF_LIB = $(LIBFTPRINTF_DIR)/libftprintf.a
-LIBFTPRINTF_DIR = libftprintf
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
+LIBFT_DIR = libft
 CHECK_SYSTEM = config.txt
 
-all: $(MLX_LIB) $(LIBFTPRINTF_LIB) $(NAME)
+all: $(MLX_LIB) $(LIBFT_LIB) $(NAME)
 
 norminette:
 	clear
 	norminette $(SRC_DIR) $(INCLUDE_DIR)
 
-gdb: $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB)
-	gcc $(C_FLAGS) -o gdb.out $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB) -g 
+gdb: $(OBJ_DIR) $(OBJS) $(LIBFT_LIB) $(HEADER) $(MLX_LIB)
+	gcc $(C_FLAGS) -o gdb.out $(OBJS) $(MLX_FLAGS) $(LIBFT_LIB) -g
 
-$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFTPRINTF_LIB) $(HEADER) $(MLX_LIB) 
-	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFTPRINTF_LIB)
+$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT_LIB) $(HEADER) $(MLX_LIB)
+	$(CC) $(C_FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFT_LIB)
 
 $(MLX_LIB):
 	make --no-print-directory -C $(MLX_DIR)
 
-$(LIBFTPRINTF_LIB):
-	make -C $(LIBFTPRINTF_DIR)
+$(LIBFT_LIB):
+	make -C $(LIBFT_DIR)
 
-# REMOVE -g
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
 	$(CC) $(C_FLAGS) -g -c -o $@ $< $(INCLUDES)
 
@@ -96,10 +94,11 @@ $(OBJ_DIR):
 
 clean:
 	@rm -fr $(OBJ_DIR)
-	@make clean --no-print-directory -C $(LIBFTPRINTF_DIR)
+	@make clean --no-print-directory -C $(LIBFT_DIR)
+	@make clean --no-print-directory -C $(MLX_DIR)
 
-fclean:
+fclean: clean
 	@rm -fr $(OBJ_DIR) $(NAME)
-	@make fclean --no-print-directory -C $(LIBFTPRINTF_DIR)
+	@make fclean --no-print-directory -C $(LIBFT_DIR)
 
 re: fclean all

@@ -6,11 +6,14 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:58:57 by amalangu          #+#    #+#             */
-/*   Updated: 2025/02/25 18:38:47 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/04/03 10:49:39 by toinou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../libft/include/put.h"
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
+#include "../libft/include/str.h"
 
 int	set_map_array(int fd, t_map *map)
 {
@@ -41,17 +44,17 @@ int	init_map(t_map *map)
 
 	fd = open(map->file_name, O_RDONLY);
 	if (fd < 0)
-		return (ft_printf(RED "Error\nWrong map name\n" RESET),
+		return (ft_putstr_fd(RED "Error\nWrong map name\n" RESET,2),
 			close(fd), -1);
 	if (set_map_array(fd, map))
-		return (ft_printf(RED "Error\nFailed calloc for map array\n" RESET),
+		return (ft_putstr_fd(RED "Error\nFailed calloc for map array\n" RESET,2),
 			-1);
 	map->max = set_vector2((map->actual.y + 4) * PIXEL_PADDING, (map->actual.x
 				+ 4) * PIXEL_PADDING);
 	map->min = set_vector2(5, 5);
 	if (map->max.y / 32 > SCREEN_HEIGHT || map->max.x / 32 > SCREEN_WIDTH
 		|| map->min.x > map->actual.x || map->min.y > map->actual.y)
-		return (ft_printf(RED "Error\nMap is too big or too small\n" RESET),
+		return (ft_putstr_fd(RED "Error\nMap is too big or too small\n" RESET,2),
 			-1);
 	return (0);
 }
@@ -65,17 +68,17 @@ int	set_map(t_map *map)
 	error = check_map(map);
 	if (error == -1)
 		return (free_map(map),
-			ft_printf(RED "Error\nMap is not Rectangular\n" RESET), -1);
+			ft_putstr_fd(RED "Error\nMap is not Rectangular\n" RESET,2), -1);
 	if (error == -2)
 		return (free_map(map),
-			ft_printf(RED "Error\nBorder arent correct\n" RESET), -1);
+			ft_putstr_fd(RED "Error\nBorder arent correct\n" RESET,2), -1);
 	if (error == -3)
 		return (free_collectibles(map->collectibles), free_map(map),
-			ft_printf(RED "Error\nMissing either collectibles,exit or start\n"),
-			ft_printf("Can also be a wrong character in map\n" RESET), -1);
+			ft_putstr_fd(RED "Error\nMissing either collectibles,exit or start\n",2),
+			ft_putstr_fd("Can also be a wrong character in map\n" RESET,2), -1);
 	if (error == -4)
 		return (free_collectibles(map->collectibles), free_map(map),
-			ft_printf(RED "Error\nNo available path for "),
-			ft_printf("taking collectibles and exiting\n" RESET), -1);
+			ft_putstr_fd(RED "Error\nNo available path for ",2),
+			ft_putstr_fd("taking collectibles and exiting\n" RESET,2), -1);
 	return (0);
 }

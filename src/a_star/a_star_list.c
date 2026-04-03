@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 t_a_star_list	*move_lowest_f_to_front(t_a_star_list **open_list)
 {

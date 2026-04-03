@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/mem.h"
 
 void	destroy_sword_first(t_sword **swords, t_vector2 coords, t_data *data,
-		t_sword *sword)
+	                        t_sword *sword)
 {
 	*swords = sword->next_sword;
 	if (check_sword_on_collectible(sword, data->game.collectibles))

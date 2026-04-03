@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
+#include "../libft/include/put.h"
 
 void	free_array(char **array)
 {
@@ -35,7 +36,7 @@ void	free_failed_window_init(t_data data)
 	free(data.map);
 	mlx_destroy_display(data.mlx);
 	free(data.mlx);
-	ft_printf(RED "Error\nFailed calloc window init\n" RESET);
+	ft_putstr_fd(RED "Error\nFailed calloc window init\n" RESET,2);
 }
 
 void	free_failed_textures_init(t_data data)
@@ -46,7 +47,7 @@ void	free_failed_textures_init(t_data data)
 	free(data.map);
 	mlx_destroy_display(data.mlx);
 	free(data.mlx);
-	ft_printf(RED "Error\nFailed calloc on textures\n" RESET);
+	ft_putstr_fd(RED "Error\nFailed calloc on textures\n" RESET,2);
 	return ;
 }
 

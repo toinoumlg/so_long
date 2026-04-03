@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/so_long.h"
-
+#include "../libft/include/str.h"
 int	check_if_rectangular(t_map *map)
 {
 	char	*tmp;
