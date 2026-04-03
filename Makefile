@@ -20,7 +20,7 @@ BSP_INCLUDE := -I$(BSP_DIR)
 LIBFT := $(LIBFT_DIR)/libft.a
 ASTAR := $(ASTAR_DIR)/astar.a
 BSP := $(BSP_DIR)/bsp.a
-LIBS := $(ASTAR) $(LIBFT) $(BSP) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -lm
+LIBS := $(ASTAR) $(LIBFT) $(BSP) -lm
 INCLUDES = -I/usr/include $(LIBFT_INCLUDE) $(BSP_INCLUDE) $(ASTAR_INCLUDE) -I./include 
 
 SRC_MAIN := main free_memory exit_error
@@ -33,9 +33,6 @@ SRC_MAP := \
 SRC_GAME := \
 	game/collectible \
 	game/ennemy
-
-SRC_ENGINE := \
-	engine/loop \
 
 SRCS := \
 	$(addprefix $(SRC_DIR)/,$(addsuffix .c,$(SRC_MAIN))) \

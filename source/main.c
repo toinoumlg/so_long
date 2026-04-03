@@ -6,7 +6,7 @@
 /*   By: amalangu <amalangu@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 16:14:49 by amalangu          #+#    #+#             */
-/*   Updated: 2026/03/13 22:00:57 by amalangu         ###   ########.fr       */
+/*   Updated: 2026/03/14 15:54:30 by amalangu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char *av[])
 		save_to_file(data.map.array);
 	}
 	check_map(&data);
-	init_engine(&data);
+	// init_engine(&data);
 	free_map(&data.map);
 	free_collectibles(data.collectibles);
 	free_ennemies(data.ennemies);
